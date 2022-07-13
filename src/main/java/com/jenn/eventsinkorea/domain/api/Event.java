@@ -2,11 +2,14 @@ package com.jenn.eventsinkorea.domain.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class Event {
     //addr1  cat3  "contentid  eventenddate eventstartdate firstimage firstimage2 mapx": 127.2131685506,

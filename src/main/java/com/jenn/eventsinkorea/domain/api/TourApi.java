@@ -95,7 +95,7 @@ public class TourApi {
             String id = infoObj.get("contentid").toString();
             String title = infoObj.get("title").toString();
             String address = infoObj.get("addr1").toString();
-            String category = infoObj.get("cat3").toString();
+            String category = infoObj.get("cat2").toString();//fesitval or show/concert
             Integer eventStartDate = Integer.parseInt(infoObj.get("eventstartdate").toString());
             Integer eventEndDate = Integer.parseInt(infoObj.get("eventenddate").toString());
             List<String> imgs =imgList(infoObj.get("firstimage").toString(),infoObj.get("firstimage2").toString());
