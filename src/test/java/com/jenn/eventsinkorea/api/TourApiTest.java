@@ -1,6 +1,8 @@
 package com.jenn.eventsinkorea.api;
 
 
+import com.jenn.eventsinkorea.domain.api.Festival;
+import com.jenn.eventsinkorea.domain.api.TourApi;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

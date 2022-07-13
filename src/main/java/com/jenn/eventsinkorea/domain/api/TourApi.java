@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.api;
+package com.jenn.eventsinkorea.domain.api;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,25 +19,22 @@ import org.json.simple.parser.ParseException;
 @Slf4j
 public class TourApi {
 
-        //올해 아직 종료하지 않은 행사들 정보 불러오기
-        public List<Festival> getTourInfo() throws IOException {
-            StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/searchFestival"); /*URL*/
-            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
-            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과수*/
-            urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*현재 페이지 번호*/
-            urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰), AND(안드로이드), WIN(원도우폰), ETC*/
-            urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
-            urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
-            urlBuilder.append("&" + URLEncoder.encode("arrange", "UTF-8") + "=" + URLEncoder.encode("Q", "UTF-8"));
-            urlBuilder.append("&" + URLEncoder.encode("eventStartDate", "UTF-8") + "=" + URLEncoder.encode("20220101", "UTF-8"));
-            urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
-
+        //올해 행사정보 불러오기
+        public List<Festival> getTourInfo() {
             HttpURLConnection conn = null;
             BufferedReader rd = null;
-
-            StringBuilder sb;
             List<Festival> festivals = null;
             try {
+                StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/searchFestival"); /*URL*/
+                urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
+                urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과수*/
+                urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*현재 페이지 번호*/
+                urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰), AND(안드로이드), WIN(원도우폰), ETC*/
+                urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+                urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+                urlBuilder.append("&" + URLEncoder.encode("arrange", "UTF-8") + "=" + URLEncoder.encode("Q", "UTF-8"));
+                urlBuilder.append("&" + URLEncoder.encode("eventStartDate", "UTF-8") + "=" + URLEncoder.encode("20220101", "UTF-8"));
+                urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
                 URL url = new URL(urlBuilder.toString());
                 conn = (HttpURLConnection) url.openConnection();
@@ -50,7 +47,7 @@ public class TourApi {
                 } else {
                     rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
                 }
-                sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder();
                 String line;
                 while ((line = rd.readLine()) != null) {
                     sb.append(line);
@@ -70,7 +67,11 @@ public class TourApi {
             } catch (IOException | ParseException e) {
                 e.printStackTrace();
             } finally {
-                rd.close();
+                try {
+                    rd.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 conn.disconnect();
             }
             return festivals;
