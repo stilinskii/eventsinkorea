@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class TourApiTest {
@@ -12,7 +13,7 @@ public class TourApiTest {
 
     @Test
     void getInfo() throws IOException {
-        String tourInfo = tourApi.getTourInfo();
+        List<Festival> tourInfo = tourApi.getTourInfo();
         Assertions.assertThat(tourInfo).isNotEmpty();
     }
 }

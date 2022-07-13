@@ -19,8 +19,8 @@ public class Festival {
     private String eventStartDate; //eventstartdate
     private String eventEndDate; //eventenddate
     private List<String> imgs; //firstimage firstimage2
-    private Map<String,Integer> map;  //mapx": 127.2131685506, "mapy": 37.2924319247,
-    private String readcount;//readcount
+    private Map<String,Double> map;  //mapx": 127.2131685506, "mapy": 37.2924319247,
+    private Integer readcount;//readcount
     private String tel; //tel
 
 }
