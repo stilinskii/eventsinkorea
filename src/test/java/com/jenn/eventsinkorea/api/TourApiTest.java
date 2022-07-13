@@ -1,7 +1,7 @@
 package com.jenn.eventsinkorea.api;
 
 
-import com.jenn.eventsinkorea.domain.api.Festival;
+import com.jenn.eventsinkorea.domain.api.Event;
 import com.jenn.eventsinkorea.domain.api.TourApi;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class TourApiTest {
 
     @Test
     void getInfo() throws IOException {
-        List<Festival> tourInfo = tourApi.getTourInfo();
+        List<Event> tourInfo = tourApi.getTourInfo();
         Assertions.assertThat(tourInfo).isNotEmpty();
     }
 }

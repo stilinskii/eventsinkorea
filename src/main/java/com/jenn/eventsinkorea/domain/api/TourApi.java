@@ -20,10 +20,10 @@ import org.json.simple.parser.ParseException;
 public class TourApi {
 
         //올해 행사정보 불러오기
-        public List<Festival> getTourInfo() {
+        public List<Event> getTourInfo() {
             HttpURLConnection conn = null;
             BufferedReader rd = null;
-            List<Festival> festivals = null;
+            List<Event> festivals = null;
             try {
                 StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/searchFestival"); /*URL*/
                 urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
@@ -77,8 +77,8 @@ public class TourApi {
             return festivals;
         }
 
-    private List<Festival> getFestivalsList(JSONArray item) {
-        List<Festival> festivals = new ArrayList<>();
+    private List<Event> getFestivalsList(JSONArray item) {
+        List<Event> festivals = new ArrayList<>();
         //    private String id;//contentid
         //    private String title;//title
         //    private String address;//addr1
@@ -96,13 +96,13 @@ public class TourApi {
             String title = infoObj.get("title").toString();
             String address = infoObj.get("addr1").toString();
             String category = infoObj.get("cat3").toString();
-            String eventStartDate = infoObj.get("eventstartdate").toString();
-            String eventEndDate = infoObj.get("eventenddate").toString();
+            Integer eventStartDate = Integer.parseInt(infoObj.get("eventstartdate").toString());
+            Integer eventEndDate = Integer.parseInt(infoObj.get("eventenddate").toString());
             List<String> imgs =imgList(infoObj.get("firstimage").toString(),infoObj.get("firstimage2").toString());
             Map<String,Double> map = mapList(infoObj.get("mapx").toString(),infoObj.get("mapy").toString());
             Integer readcount = Integer.parseInt(infoObj.get("readcount").toString());
             String tel = infoObj.get("tel").toString();
-            festivals.add(new Festival(id,title,address,category,eventStartDate,eventEndDate,imgs,map,readcount,tel));
+            festivals.add(new Event(id,title,address,category,eventStartDate,eventEndDate,imgs,map,readcount,tel));
         }
         return festivals;
     }

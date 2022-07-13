@@ -47,7 +47,7 @@
     <!-- festivlas list -->
     <div class="container pt-5 mt-5">
       <div class="">
-        <h2>Our Menu</h2>
+        <h2>Events in Korea</h2>
       </div>
       <form class="row g-3">
         <div class="col-auto">
@@ -65,14 +65,12 @@
       </form>
 
       <ul class="filters">
-        <li class="active" data-filter="*">All</li>
-        <li data-filter=".burger">Burger</li>
-        <li data-filter=".pizza">Pizza</li>
-        <li data-filter=".pasta">Pasta</li>
-        <li data-filter=".fries">Fries</li>
+        <li data-filter="*">All</li>
+        <li data-filter="festival">Festival</li>
+        <li data-filter="show/concert">Show/Concert</li>
       </ul>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col" th:each="festival:${festivalList}">
+        <div class="col" th:each="event:${eventsList}">
           <div class="card shadow-sm">
             <svg
               class="bd-placeholder-img card-img-top"
@@ -84,12 +82,12 @@
               focusable="false"
             >
               <title>Placeholder</title>
-              <img th:src="${festival.imgs[0]}" height="225" alt="">
+              <img th:src="${event.imgs[0]}" height="225" alt="">
             </svg>
 
             <div class="card-body">
-              <h5 th:text="${festival.title}"></h5>
-              <p class="card-text" th:text="|Festival days : ${festival.eventStartDate} ~ ${festival.eventEndDate}|">
+              <h5 th:text="${event.title}"></h5>
+              <p class="card-text" th:text="|event days : ${event.eventStartDate} ~ ${event.eventEndDate}|">
                 This is a wider card with supporting text below as a natural
                 lead-in to additional content. This content is a little bit
                 longer.
