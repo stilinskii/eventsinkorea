@@ -44,7 +44,7 @@ h2 {
   background-image: url('https://vrthumb.clipartkorea.co.kr/2018/06/08/cm28013783.jpg');
   /* linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), */
   /* Set a specific height */
-  height: 80px;
+  height: 35%;
 
   /* Position and center the image to scale nicely on all screens */
   background-position: center;
@@ -174,4 +174,50 @@ ul {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   /* font-size: 110%; */
+}
+
+/*event category filter buttons*/
+.event-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* li {
+  list-style: none;
+} */
+
+.filter_category {
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  list-style-type: none;
+  margin: 45px 0 20px 0;
+}
+
+.filter_category a {
+  padding: 7px 25px;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+.filter_category a {
+  text-decoration: none;
+  color: #222831;
+}
+
+.filter_category li.active {
+  background-color: #222831;
+  color: #ffffff;
+}
+
+.filter_category a.active {
+  background-color: #222831;
+  color: #ffffff;
 }

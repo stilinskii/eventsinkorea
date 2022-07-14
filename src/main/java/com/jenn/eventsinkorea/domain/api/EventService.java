@@ -1,8 +1,6 @@
 package com.jenn.eventsinkorea.domain.api;
 
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -12,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class EventService {
 
     private TourApi tourApi = new TourApi();
@@ -19,6 +18,7 @@ public class EventService {
     //올해 시작한 행사들중 아직 종료하지 않은 행사들로 걸러내기
     public List<Event> getNotEndedEvents(){
         List<Event> tourInfo = tourApi.getTourInfo();
+        log.info("tourInfoCnt={}",tourInfo.size());
         //오늘날짜
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         String date = simpleDateFormat.format(new Date());

@@ -23,23 +23,16 @@
       <header>
         <nav class="navbar">
           <div class="container" id="nav-container">
-            <ul class="navbar-nav" id="nav">
-              <a class="navbar-brand" href="#"><span>Brand</span></a>
-              <li class="nav-item">
-                <a class="nav-link" id="active" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
+            <ul class="navbar-nav d-flex bd-highlight mb-3" id="nav">
+              <a class="navbar-brand me-auto p-2 mx-5 bd-highlight" href="#" th:href="@{/}"><span>Brand</span></a>
+
               <a href="" class="user_link">
-                <i class="fa fa-user" aria-hidden="true"></i>
+                <i class="fa fa-user fa-2x p-2 mx-5 bd-highlight" aria-hidden="true"></i>
               </a>
               <li class="user_link">
-                <a href="" class="user_option"> Login </a>
+                <a href="" class="user_option p-2 px-5 bd-highlight"> Login </a>
               </li>
+
             </ul>
           </div>
         </nav>
@@ -54,13 +47,19 @@
         <div class="category-container pt-2">
           <ul class="category">
             <li class="category-item">
-              <a href="festivals.html" th:href="@{/festivals}">Festivals</a>
+              <a  href="#">Shopping</a>
+            </li>
+            <li class="category-item">
+              <a  href="#">Food</a>
             </li>
             <li class="category-item">
               <a  href="#">Guides</a>
             </li>
             <li class="category-item">
-              <a  href="#">Board</a>
+              <a href="festivals.html" th:href="@{/events}">Events</a>
+            </li>
+            <li class="category-item">
+              <a  href="#">Community</a>
             </li>
           </ul>
       </div>
