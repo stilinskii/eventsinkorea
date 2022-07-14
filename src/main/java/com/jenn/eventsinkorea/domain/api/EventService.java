@@ -30,6 +30,11 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
+    public List<Event> getCategorizedEvents(String category){
+        List<Event> notEndedEvents = getNotEndedEvents();
+        List<Event> events = notEndedEvents.stream().filter(event -> event.getCategory().equals(category)).collect(Collectors.toList());
+        return events;
+    }
 
 
 }
