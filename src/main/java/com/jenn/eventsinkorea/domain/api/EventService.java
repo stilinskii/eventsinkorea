@@ -52,8 +52,16 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
+    //키워드로 검색 구현
+    //앞뒤로 공백있으면 없애기 구현 TODO
+    public List<Event> getEventsByKeyword(String keyword){
+        List<Event> tourInfo = tourApi.getTourInfo();
+       return tourInfo.stream()
+               .filter(event -> event.getTitle().toLowerCase().contains(keyword.toLowerCase()))
+               .collect(Collectors.toList());
+    }
 
-
+//나중에 쓸지도모름
 //    public List<Event> getCategorizedEvents(String category){
 //        List<Event> notEndedEvents = getNotEndedEvents();
 //        List<Event> events = notEndedEvents.stream().filter(event -> event.getCategory().equals(category)).collect(Collectors.toList());
