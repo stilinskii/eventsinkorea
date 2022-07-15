@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.json.simple.parser.ParseException;
@@ -19,8 +20,12 @@ import org.json.simple.parser.ParseException;
 @Slf4j
 public class TourApi {
 
-        //올해 행사정보 불러오기
+        //1년 전부터 앞으로의 행사정보 불러오기
         public List<Event> getTourInfo() {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+            String date = simpleDateFormat.format(new Date());
+            String aYearAgoFromToday = String.valueOf(Integer.parseInt(date)-10000);
+
             HttpURLConnection conn = null;
             BufferedReader rd = null;
             List<Event> festivals = null;
@@ -33,7 +38,7 @@ public class TourApi {
                 urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
                 urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("arrange", "UTF-8") + "=" + URLEncoder.encode("O", "UTF-8"));
-                urlBuilder.append("&" + URLEncoder.encode("eventStartDate", "UTF-8") + "=" + URLEncoder.encode("20220101", "UTF-8"));
+                urlBuilder.append("&" + URLEncoder.encode("eventStartDate", "UTF-8") + "=" + URLEncoder.encode(aYearAgoFromToday, "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
                 URL url = new URL(urlBuilder.toString());
@@ -106,7 +111,12 @@ public class TourApi {
                 } else {
                     imgs = imgList(infoObj.get("firstimage").toString(), infoObj.get("firstimage2").toString());
                 }
-                Map<String, Double> map = mapList(infoObj.get("mapx").toString(), infoObj.get("mapy").toString());
+                Map<String, Double> map;
+                if(infoObj.get("mapx")==null){
+                    map=Collections.emptyMap();
+                }else{
+                    map = mapList(infoObj.get("mapx").toString(), infoObj.get("mapy").toString());
+                }
                 Integer readcount = Integer.parseInt(infoObj.get("readcount").toString());
                 String tel = infoObj.get("tel").toString();
                 festivals.add(new Event(id, title, address, category, eventStartDate, eventEndDate, imgs, map, readcount, tel));
@@ -115,6 +125,7 @@ public class TourApi {
 
         } catch (NullPointerException e) {
             e.printStackTrace();
+
         }
 
         return festivals;
@@ -134,5 +145,8 @@ public class TourApi {
         map.put("mapy",Double.parseDouble(mapy));
         return map;
     }
+
+    //키워드 검색
+
 }
 

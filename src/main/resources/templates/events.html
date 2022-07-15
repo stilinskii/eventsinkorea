@@ -93,9 +93,9 @@
     </div>
   </form>
   <div class="d-flex filter_category">
-    <a href="#" th:href="@{/events}" th:classappend="${#httpServletRequest.servletPath}=='/events'? 'active'" >All</a>
-    <a href="#" th:href="@{/events/festival}" th:classappend="${#httpServletRequest.servletPath}=='/events/festival'? 'active'">Festival</a>
-    <a href="#" th:href="@{/events/showAndConcert}" th:classappend="${#httpServletRequest.servletPath}=='/events/showAndConcert'? 'active'">Show/Concert</a>
+    <a href="#" th:href="@{/events}" th:classappend="${All}? ${All}" >All</a>
+    <a href="#" th:href="@{/events/ongoing}" th:classappend="${ongoingEvents}? ${ongoingEvents}">Ongoing</a>
+    <a href="#" th:href="@{/events/ended}" th:classappend="${endedEvents}? ${endedEvents}">End</a>
   </div> 
 </div>
 

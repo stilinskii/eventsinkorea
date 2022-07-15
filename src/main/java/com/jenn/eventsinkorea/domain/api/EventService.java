@@ -15,8 +15,15 @@ public class EventService {
 
     private TourApi tourApi = new TourApi();
 
-    //올해 시작한 행사들중 아직 종료하지 않은 행사들로 걸러내기
-    public List<Event> getNotEndedEvents(){
+
+    public List<Event> getEvents(){
+        return tourApi.getTourInfo();
+    }
+
+
+    // refactoring TODO
+    //1년전부터 지금까지 시작한 행사들중 아직 종료하지 않은 행사들로 걸러내기
+    public List<Event> getOngoingEvents(){
         List<Event> tourInfo = tourApi.getTourInfo();
         log.info("tourInfoCnt={}",tourInfo.size());
         //오늘날짜
@@ -30,11 +37,28 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public List<Event> getCategorizedEvents(String category){
-        List<Event> notEndedEvents = getNotEndedEvents();
-        List<Event> events = notEndedEvents.stream().filter(event -> event.getCategory().equals(category)).collect(Collectors.toList());
-        return events;
+
+    public List<Event> getEndedEvents(){
+        List<Event> tourInfo = tourApi.getTourInfo();
+        log.info("tourInfoCnt={}",tourInfo.size());
+        //오늘날짜
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String date = simpleDateFormat.format(new Date());
+        int today = Integer.parseInt(date);
+
+        return tourInfo.stream()
+                .filter(info -> info.getEventEndDate() < today)
+                .sorted(Comparator.comparing(Event::getEventStartDate))
+                .collect(Collectors.toList());
     }
+
+
+
+//    public List<Event> getCategorizedEvents(String category){
+//        List<Event> notEndedEvents = getNotEndedEvents();
+//        List<Event> events = notEndedEvents.stream().filter(event -> event.getCategory().equals(category)).collect(Collectors.toList());
+//        return events;
+//    }
 
 
 }
