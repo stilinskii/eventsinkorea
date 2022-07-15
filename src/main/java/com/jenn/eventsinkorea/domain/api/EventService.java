@@ -21,6 +21,9 @@ public class EventService {
     }
 
 
+
+
+
     // refactoring TODO
     //1년전부터 지금까지 시작한 행사들중 아직 종료하지 않은 행사들로 걸러내기
     public List<Event> getOngoingEvents(){
@@ -32,7 +35,7 @@ public class EventService {
         int today = Integer.parseInt(date);
 
         return tourInfo.stream()
-                .filter(info -> info.getEventEndDate() >= today)
+                .filter(info -> Integer.parseInt(info.getEventEndDate()) >= today)
                 .sorted(Comparator.comparing(Event::getEventStartDate))
                 .collect(Collectors.toList());
     }
@@ -47,7 +50,7 @@ public class EventService {
         int today = Integer.parseInt(date);
 
         return tourInfo.stream()
-                .filter(info -> info.getEventEndDate() < today)
+                .filter(info -> Integer.parseInt(info.getEventEndDate()) < today)
                 .sorted(Comparator.comparing(Event::getEventStartDate))
                 .collect(Collectors.toList());
     }

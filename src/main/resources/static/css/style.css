@@ -221,3 +221,8 @@ ul {
   background-color: #222831;
   color: #ffffff;
 }
+
+/* events card */
+.like-icon {
+  color: rgb(228, 59, 110);
+}

@@ -13,6 +13,8 @@ import java.net.URLEncoder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import org.json.simple.parser.ParseException;
@@ -83,17 +85,6 @@ public class TourApi {
 
     private List<Event> getFestivalsList(JSONArray item) {
         List<Event> festivals = new ArrayList<>();
-        //    private String id;//contentid
-        //    private String title;//title
-        //    private String address;//addr1
-        //    private String category;//cat3
-        //    private String eventStartDate; //eventstartdate
-        //    private String eventEndDate; //eventenddate
-        //    private List<String> imgs; //firstimage firstimage2
-        //    private Map<String,Integer> map;  //mapx": 127.2131685506, "mapy": 37.2924319247,
-        //    private String readcount;//readcount
-        //    private String tel; //tel
-
         try {
             for (Object info : item) {
                 JSONObject infoObj = (JSONObject) info;
@@ -102,10 +93,13 @@ public class TourApi {
                 String title = infoObj.get("title").toString();
                 String address = infoObj.get("addr1").toString();
                 String category = infoObj.get("cat2").toString();//fesitval or show/concert
-                Integer eventStartDate = Integer.parseInt(infoObj.get("eventstartdate").toString());
-                Integer eventEndDate = Integer.parseInt(infoObj.get("eventenddate").toString());
+                String eventStartDate = infoObj.get("eventstartdate").toString();
+                String eventEndDate = infoObj.get("eventenddate").toString();
+                List<String> formattedEventPeriod = getFormattedEventPeriod(eventStartDate, eventEndDate);// [0] startdate, [1] enddate
                 List<String> imgs;
                 //open api 데이터 오류 문제로 데이터 하나에 사진이 없어서 이렇게 처리.
+                //img는 List로 하고 위의 날짜는 array로 한 이유.
+                //img는 없거나 하나만 있을 수도있어서 리스트사용.
                 if (infoObj.get("firstimage") == null) {
                     imgs = Collections.emptyList();
                 } else {
@@ -119,7 +113,16 @@ public class TourApi {
                 }
                 Integer readcount = Integer.parseInt(infoObj.get("readcount").toString());
                 String tel = infoObj.get("tel").toString();
-                festivals.add(new Event(id, title, address, category, eventStartDate, eventEndDate, imgs, map, readcount, tel));
+
+                festivals.add(new Event(id,
+                                        title,
+                                        address,
+                                        category,
+                                        eventStartDate,
+                                        eventEndDate,
+                                        formattedEventPeriod.get(0),
+                                        formattedEventPeriod.get(1),
+                                        imgs, map, readcount, tel));
 
             }
 
@@ -129,6 +132,23 @@ public class TourApi {
         }
 
         return festivals;
+    }
+
+    public List<String> getFormattedEventPeriod(String ...eventPeriodDates) {
+        //LocalDate today = LocalDate.now();
+        //
+        //String formattedDate = today.format(DateTimeFormatter.ofPattern("MMM'.' d'th'"));
+        List<String> formattedEventDates = new ArrayList<>();
+        Arrays.stream(eventPeriodDates).forEach(d->{
+            int year = Integer.parseInt(d.substring(0,4));
+            int month = Integer.parseInt(d.substring(4,6));
+            int day = Integer.parseInt(d.substring(6,8));
+            LocalDate date = LocalDate.of(year, month, day);
+            String formattedDate = date.format(DateTimeFormatter.ofPattern("MMM'.' d'th'"));
+            formattedEventDates.add(formattedDate);
+        });
+
+        return formattedEventDates;
     }
 
     private List<String> imgList(String ...img) {

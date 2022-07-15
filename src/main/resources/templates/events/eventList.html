@@ -117,35 +117,24 @@
               aria-label="Placeholder: Thumbnail"
               preserveAspectRatio="xMidYMid slice"
               focusable="false"
+              style="cursor:pointer;"
+              th:onclick="|location.href=@{/events(contentId=${event.id})}|"
             >
               <title>Placeholder</title>
               <img th:if="${!event.imgs.empty}" th:src="${event.imgs[0]}" height="225" alt="">
             </svg>
 
             <div class="card-body">
-              <h5 th:text="${event.title}"></h5>
-              <p class="card-text" th:text="|event days : ${event.eventStartDate} ~ ${event.eventEndDate}|">
+              <h5 th:text="${event.title}" th:onclick="|location.href='@{/events(contentId=${event.id})}'|" style="cursor:pointer;"> title</h5>
+              <p class="card-text" th:text="|Event Period : ${event.formattedEventStartDate} ~ ${event.formattedEventEndDate}|">
                 This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
+                lead-in to additional content. 
               </p>
               <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                  >
-                    View
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                  >
-                    Edit
-                  </button>
-                </div>
-                <small class="text-muted">9 mins</small>
+                <small class="text-muted" th:text="|read count : ${event.readcount}|">read count : 0</small>
+                  <i class="fa fa-heart-o like-icon"> 155</i>
               </div>
+
             </div>
           </div>
         </div>
