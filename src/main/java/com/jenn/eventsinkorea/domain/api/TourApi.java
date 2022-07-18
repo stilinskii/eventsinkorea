@@ -93,23 +93,11 @@ public class TourApi {
                 String title = infoObj.get("title").toString();
                 String address = infoObj.get("addr1").toString();
                 String category = infoObj.get("cat2").toString();//fesitval or show/concert
-                String eventStartDate = infoObj.get("eventstartdate").toString();
-                String eventEndDate = infoObj.get("eventenddate").toString();
-                List<String> formattedEventPeriod = getFormattedEventPeriod(eventStartDate, eventEndDate);// [0] startdate, [1] enddate
-                List<String> imgs;
-                //open api 데이터 오류 문제로 데이터 하나에 사진이 없어서 이렇게 처리.
-                //img는 없거나 하나만 있을 수도있어서 리스트사용.
-                if (infoObj.get("firstimage") == null) {
-                    imgs = Collections.emptyList();
-                } else {
-                    imgs = imgList(infoObj.get("firstimage").toString(), infoObj.get("firstimage2").toString());
-                }
-                Map<String, Double> map;
-                if(infoObj.get("mapx")==null){
-                    map=Collections.emptyMap();
-                }else{
-                    map = mapList(infoObj.get("mapx").toString(), infoObj.get("mapy").toString());
-                }
+                Integer eventStartDate = Integer.valueOf(infoObj.get("eventstartdate").toString());
+                Integer eventEndDate = Integer.valueOf(infoObj.get("eventenddate").toString());
+                List<String> formattedEventPeriod = getFormattedEventPeriod(infoObj.get("eventstartdate").toString(), infoObj.get("eventenddate").toString());// [0] startdate, [1] enddate
+                List<String> imgs=getImgList(infoObj.get("firstimage"), infoObj.get("firstimage2"));
+                Map<String, Double> map =getMapList(infoObj.get("mapx"), infoObj.get("mapy"));
                 Integer readcount = Integer.parseInt(infoObj.get("readcount").toString());
                 String tel = infoObj.get("tel").toString();
 
@@ -148,18 +136,24 @@ public class TourApi {
         return formattedEventDates;
     }
 
-    private List<String> imgList(String ...img) {
+    private List<String> getImgList(Object ...img) {
+        //open api 데이터 오류 문제로 데이터 하나에 사진이 없어서 이렇게 null처리.
         List<String> imgs = new ArrayList<>();
-        for (String s : img) {
-            imgs.add(s);
-        }
+        Arrays.stream(img).forEach(m ->{
+            if(m!=null){
+                imgs.add(m.toString());
+            }
+        });
         return imgs;
     }
 
-    private Map<String,Double> mapList(String mapx,String mapy) {
+    private Map<String,Double> getMapList(Object mapx,Object mapy) {
+        //지도 정보가 없는 축제가 있어서 널처리. x가 없으면 y도 없음.
         Map<String,Double> map = new HashMap<>();
-        map.put("mapx",Double.parseDouble(mapx));
-        map.put("mapy",Double.parseDouble(mapy));
+        if(mapx!=null){
+        map.put("mapx",Double.parseDouble(mapx.toString()));
+        map.put("mapy",Double.parseDouble(mapy.toString()));
+        }
         return map;
     }
 

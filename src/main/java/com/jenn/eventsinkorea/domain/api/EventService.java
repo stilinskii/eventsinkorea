@@ -15,48 +15,50 @@ public class EventService {
 
     private TourApi tourApi = new TourApi();
 
-
+    //행사시작일 기준으로 오름차순 정렬
     public List<Event> getEvents(){
         return tourApi.getTourInfo().stream().sorted(Comparator.comparing(Event::getEventStartDate))
                 .collect(Collectors.toList());
     }
 
 
-    // refactoring TODO
     //1년전부터 지금까지 시작한 행사들중 아직 종료하지 않은 행사들로 걸러내기
     public List<Event> getOngoingEvents(){
         List<Event> tourInfo = getEvents();
         log.info("tourInfoCnt={}",tourInfo.size());
-        //오늘날짜
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-        String date = simpleDateFormat.format(new Date());
-        int today = Integer.parseInt(date);
+        int today = getToday();
 
         return tourInfo.stream()
-                .filter(info -> Integer.parseInt(info.getEventEndDate()) >= today)
+                .filter(info -> info.getEventEndDate() >= today)
                 .collect(Collectors.toList());
     }
 
-
+    //1년전부터 지금까지 시작한 행사들중 이미 종료한 행사들
     public List<Event> getEndedEvents(){
         List<Event> tourInfo = getEvents();
         log.info("tourInfoCnt={}",tourInfo.size());
         //오늘날짜
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-        String date = simpleDateFormat.format(new Date());
-        int today = Integer.parseInt(date);
+        int today = getToday();
 
         return tourInfo.stream()
-                .filter(info -> Integer.parseInt(info.getEventEndDate()) < today)
+                .filter(info -> info.getEventEndDate() < today)
                 .collect(Collectors.toList());
     }
 
+    //오늘날짜 숫자로
+    private int getToday() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String date = simpleDateFormat.format(new Date());
+        int today = Integer.parseInt(date);
+        return today;
+    }
+
     //키워드로 검색 구현
-    //앞뒤로 공백있으면 없애기 구현 TODO
     public List<Event> getEventsByKeyword(String keyword){
         List<Event> tourInfo = getEvents();
+        String strippedKeyword = keyword.strip();
        return tourInfo.stream()
-               .filter(event -> event.getTitle().toLowerCase().contains(keyword.toLowerCase()))
+               .filter(event -> event.getTitle().toLowerCase().contains(strippedKeyword.toLowerCase()))
                .collect(Collectors.toList());
     }
 

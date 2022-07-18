@@ -19,8 +19,8 @@ public class Event {
     private String title;//title
     private String address;//addr1
     private String category;//cat3
-    private String eventStartDate; //eventstartdate
-    private String eventEndDate; //eventenddate
+    private Integer eventStartDate; //eventstartdate
+    private Integer eventEndDate; //eventenddate
     private String formattedEventStartDate; //
     private String formattedEventEndDate;
     private List<String> imgs; //firstimage firstimage2
