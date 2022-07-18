@@ -17,17 +17,15 @@ public class EventService {
 
 
     public List<Event> getEvents(){
-        return tourApi.getTourInfo();
+        return tourApi.getTourInfo().stream().sorted(Comparator.comparing(Event::getEventStartDate))
+                .collect(Collectors.toList());
     }
-
-
-
 
 
     // refactoring TODO
     //1년전부터 지금까지 시작한 행사들중 아직 종료하지 않은 행사들로 걸러내기
     public List<Event> getOngoingEvents(){
-        List<Event> tourInfo = tourApi.getTourInfo();
+        List<Event> tourInfo = getEvents();
         log.info("tourInfoCnt={}",tourInfo.size());
         //오늘날짜
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -36,13 +34,12 @@ public class EventService {
 
         return tourInfo.stream()
                 .filter(info -> Integer.parseInt(info.getEventEndDate()) >= today)
-                .sorted(Comparator.comparing(Event::getEventStartDate))
                 .collect(Collectors.toList());
     }
 
 
     public List<Event> getEndedEvents(){
-        List<Event> tourInfo = tourApi.getTourInfo();
+        List<Event> tourInfo = getEvents();
         log.info("tourInfoCnt={}",tourInfo.size());
         //오늘날짜
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -51,14 +48,13 @@ public class EventService {
 
         return tourInfo.stream()
                 .filter(info -> Integer.parseInt(info.getEventEndDate()) < today)
-                .sorted(Comparator.comparing(Event::getEventStartDate))
                 .collect(Collectors.toList());
     }
 
     //키워드로 검색 구현
     //앞뒤로 공백있으면 없애기 구현 TODO
     public List<Event> getEventsByKeyword(String keyword){
-        List<Event> tourInfo = tourApi.getTourInfo();
+        List<Event> tourInfo = getEvents();
        return tourInfo.stream()
                .filter(event -> event.getTitle().toLowerCase().contains(keyword.toLowerCase()))
                .collect(Collectors.toList());

@@ -226,3 +226,16 @@ ul {
 .like-icon {
   color: rgb(228, 59, 110);
 }
+
+/* for sorting btns */
+.sorting-btns button {
+  border-style: none;
+  background-color: transparent;
+  font-size: 16px;
+  padding: 10px;
+  margin-left: 15px;
+  border-color: #727272;
+}
+button i {
+  color: rgb(26, 201, 178);
+}

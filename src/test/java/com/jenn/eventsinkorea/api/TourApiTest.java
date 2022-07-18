@@ -24,21 +24,21 @@ public class TourApiTest {
         Assertions.assertThat(tourInfo).isNotEmpty();
     }
 
-    @Test
-    void parseDateTest(){
-        SimpleDateFormat format = new SimpleDateFormat("MMM'.' d'th'", Locale.ENGLISH);
-        Integer eventStartDate = 20220301;
-        Integer eventEndDate = 20220303;
-        String formattedEventStartDate;
-        String formattedEventEndDate;
-        try {
-            formattedEventStartDate = format.parse("Nov. 15th").toString();
-            formattedEventEndDate = format.parse(String.valueOf(eventEndDate)).toString();
-        } catch (java.text.ParseException e) {
-            throw new RuntimeException(e);
-        }
-        log.info("result={},{}",formattedEventStartDate,formattedEventEndDate);
-    }
+//    @Test
+//    void parseDateTest(){
+//        SimpleDateFormat format = new SimpleDateFormat("MMM'.' d'th'", Locale.ENGLISH);
+//        Integer eventStartDate = 20220301;
+//        Integer eventEndDate = 20220303;
+//        String formattedEventStartDate;
+//        String formattedEventEndDate;
+//        try {
+//            formattedEventStartDate = format.parse("Nov. 15th").toString();
+//            formattedEventEndDate = format.parse(String.valueOf(eventEndDate)).toString();
+//        } catch (java.text.ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+//        log.info("result={},{}",formattedEventStartDate,formattedEventEndDate);
+//    }
 
 
 }

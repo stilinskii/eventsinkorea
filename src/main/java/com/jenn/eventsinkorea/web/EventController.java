@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class EventController {
         model.addAttribute("All","active");
         model.addAttribute("eventsList",eService.getEvents());
         log.info("infoCnt={}",eService.getEvents().size());
-        return "/events/eventList";
+        return "/events/events";
     }
 
     @GetMapping("/ongoing")
@@ -34,7 +35,7 @@ public class EventController {
         List<Event> ongoingEvents = eService.getOngoingEvents();
         model.addAttribute("ongoingEvents","active");
         model.addAttribute("eventsList",ongoingEvents);
-        return "/events/eventList";
+        return "/events/events";
     }
 
     @GetMapping("/ended")
@@ -42,14 +43,14 @@ public class EventController {
         List<Event> endedEvents = eService.getEndedEvents();
         model.addAttribute("endedEvents","active");
         model.addAttribute("eventsList",endedEvents);
-        return "events/eventList";
+        return "events/events";
     }
 
     @PostMapping("/search")
-    public String forSearchSubmit(String keyword, Model model){
+    public String forSearchSubmit(String keyword, Model model, @RequestParam(required = false) String[] sort){
         List<Event> eventsByKeyword = eService.getEventsByKeyword(keyword);
         model.addAttribute("eventsList",eventsByKeyword);
-        return "events/eventList";
+        return "events/events";
     }
 
     @GetMapping

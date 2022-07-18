@@ -98,7 +98,6 @@ public class TourApi {
                 List<String> formattedEventPeriod = getFormattedEventPeriod(eventStartDate, eventEndDate);// [0] startdate, [1] enddate
                 List<String> imgs;
                 //open api 데이터 오류 문제로 데이터 하나에 사진이 없어서 이렇게 처리.
-                //img는 List로 하고 위의 날짜는 array로 한 이유.
                 //img는 없거나 하나만 있을 수도있어서 리스트사용.
                 if (infoObj.get("firstimage") == null) {
                     imgs = Collections.emptyList();
@@ -135,16 +134,14 @@ public class TourApi {
     }
 
     public List<String> getFormattedEventPeriod(String ...eventPeriodDates) {
-        //LocalDate today = LocalDate.now();
-        //
-        //String formattedDate = today.format(DateTimeFormatter.ofPattern("MMM'.' d'th'"));
+        //분명 더 좋은 방법이 있을 거 같은데..
         List<String> formattedEventDates = new ArrayList<>();
         Arrays.stream(eventPeriodDates).forEach(d->{
             int year = Integer.parseInt(d.substring(0,4));
             int month = Integer.parseInt(d.substring(4,6));
             int day = Integer.parseInt(d.substring(6,8));
             LocalDate date = LocalDate.of(year, month, day);
-            String formattedDate = date.format(DateTimeFormatter.ofPattern("MMM'.' d'th'"));
+            String formattedDate = date.format(DateTimeFormatter.ofPattern("MMM'.' d'th' yyyy"));
             formattedEventDates.add(formattedDate);
         });
 
