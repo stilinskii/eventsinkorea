@@ -4,9 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,6 +55,22 @@ public class EventService {
     public List<Event> getEventsByKeyword(String keyword){
         List<Event> tourInfo = getEvents();
         String strippedKeyword = keyword.strip();
+
+        //두 단어 이상 검색했을 경우
+        if(strippedKeyword.contains(" ")){
+            List<Event> filteredInfo = new ArrayList<>();
+            String[] keywords = strippedKeyword.split(" ");
+            for (String s : keywords) {
+                tourInfo.stream().forEach(event -> {
+                    if(event.getTitle().contains(s)){
+                        filteredInfo.add(event);
+                    }
+                });
+            }
+            return filteredInfo.stream().distinct().collect(Collectors.toList());
+        }
+
+        //단어 그냥 하나일 경우
        return tourInfo.stream()
                .filter(event -> event.getTitle().toLowerCase().contains(strippedKeyword.toLowerCase()))
                .collect(Collectors.toList());

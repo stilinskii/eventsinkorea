@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova&display=swap');
 body,
 html {
   height: 100%;
@@ -18,6 +18,8 @@ h2 {
 .hero-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
   background-image: url('/images/roof-tile-4495550_960_720.jpg');
+  /* background-image: url('/static/images/roof-tile-4495550_960_720.jpg'); */
+
   /* linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), */
   /* Set a specific height */
   height: 55%;
@@ -44,7 +46,7 @@ h2 {
   background-image: url('https://vrthumb.clipartkorea.co.kr/2018/06/08/cm28013783.jpg');
   /* linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), */
   /* Set a specific height */
-  height: 35%;
+  height: 8%;
 
   /* Position and center the image to scale nicely on all screens */
   background-position: center;
@@ -198,7 +200,7 @@ ul {
   -ms-flex-pack: center;
   justify-content: center;
   list-style-type: none;
-  margin: 45px 0 20px 0;
+  margin: 25px 0 20px 0;
 }
 
 .filter_category a {
@@ -238,4 +240,15 @@ ul {
 }
 button i {
   color: rgb(26, 201, 178);
+}
+
+/* common */
+span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.page_title h1 {
+  font-family: 'Ibarra Real Nova', serif;
+  padding: 80px;
 }

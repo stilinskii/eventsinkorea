@@ -47,8 +47,9 @@ public class EventController {
     }
 
     @PostMapping("/search")
-    public String forSearchSubmit(String keyword, Model model, @RequestParam(required = false) String[] sort){
+    public String forSearchSubmit(String keyword, Model model){
         List<Event> eventsByKeyword = eService.getEventsByKeyword(keyword);
+        model.addAttribute("keyword",keyword);
         model.addAttribute("eventsList",eventsByKeyword);
         return "events/events";
     }

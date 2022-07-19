@@ -34,12 +34,12 @@ public class TourApi {
             try {
                 StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/searchFestival"); /*URL*/
                 urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
-                urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과수*/
+                urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("999", "UTF-8")); /*한 페이지 결과수*/
                 urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*현재 페이지 번호*/
                 urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰), AND(안드로이드), WIN(원도우폰), ETC*/
                 urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
                 urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
-                urlBuilder.append("&" + URLEncoder.encode("arrange", "UTF-8") + "=" + URLEncoder.encode("R", "UTF-8"));
+                urlBuilder.append("&" + URLEncoder.encode("arrange", "UTF-8") + "=" + URLEncoder.encode("O", "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("eventStartDate", "UTF-8") + "=" + URLEncoder.encode(aYearAgoFromToday, "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
@@ -88,6 +88,9 @@ public class TourApi {
         try {
             for (Object info : item) {
                 JSONObject infoObj = (JSONObject) info;
+                if(infoObj.get("firstimage")==null){
+                    continue;
+                }
                 //객체필드
                 String id = infoObj.get("contentid").toString();
                 String title = infoObj.get("title").toString();
@@ -110,6 +113,7 @@ public class TourApi {
                                         formattedEventPeriod.get(0),
                                         formattedEventPeriod.get(1),
                                         imgs, map, readcount, tel));
+
 
             }
 
@@ -137,12 +141,9 @@ public class TourApi {
     }
 
     private List<String> getImgList(Object ...img) {
-        //open api 데이터 오류 문제로 데이터 하나에 사진이 없어서 이렇게 null처리.
         List<String> imgs = new ArrayList<>();
         Arrays.stream(img).forEach(m ->{
-            if(m!=null){
-                imgs.add(m.toString());
-            }
+            imgs.add(m.toString());
         });
         return imgs;
     }
