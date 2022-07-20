@@ -15,7 +15,7 @@ public class EventService {
 
     //행사시작일 기준으로 오름차순 정렬
     public List<Event> getEvents(){
-        return tourApi.getTourInfo().stream().sorted(Comparator.comparing(Event::getEventStartDate))
+        return tourApi.getEventsInfoFromAPI().stream().sorted(Comparator.comparing(Event::getEventStartDate))
                 .collect(Collectors.toList());
     }
 

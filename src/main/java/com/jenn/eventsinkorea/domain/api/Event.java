@@ -1,7 +1,6 @@
 package com.jenn.eventsinkorea.domain.api;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,15 +16,15 @@ public class Event {
 
     private String id;//contentid
     private String title;//title
-    private String address;//addr1
-    private String category;//cat3
+    private String address;//addr1 x
+    private String category;//cat3 x
     private Integer eventStartDate; //eventstartdate
     private Integer eventEndDate; //eventenddate
-    private String formattedEventStartDate; //
+    private String formattedEventStartDate;
     private String formattedEventEndDate;
     private List<String> imgs; //firstimage firstimage2
-    private Map<String,Double> map;  //mapx": 127.2131685506, "mapy": 37.2924319247,
+    private Map<String,Double> map;  //mapx": 127.2131685506, "mapy": 37.2924319247, x
     private Integer readcount;//readcount
-    private String tel; //tel
+    private String tel; //tel x
 
 }

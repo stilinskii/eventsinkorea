@@ -19,4 +19,6 @@ class EventServiceTest {
             Assertions.assertThat(event.getTitle().contains(searchKeyword));
         }
     }
+
+
 }

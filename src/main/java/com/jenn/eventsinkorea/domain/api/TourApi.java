@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -23,14 +24,12 @@ import org.json.simple.parser.ParseException;
 public class TourApi {
 
         //1년 전부터 앞으로의 행사정보 불러오기
-        public List<Event> getTourInfo() {
+        public List<Event> getEventsInfoFromAPI() {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
             String date = simpleDateFormat.format(new Date());
             String aYearAgoFromToday = String.valueOf(Integer.parseInt(date)-10000);
 
-            HttpURLConnection conn = null;
-            BufferedReader rd = null;
-            List<Event> festivals = null;
+            List<Event> events = null;
             try {
                 StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/searchFestival"); /*URL*/
                 urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
@@ -43,7 +42,23 @@ public class TourApi {
                 urlBuilder.append("&" + URLEncoder.encode("eventStartDate", "UTF-8") + "=" + URLEncoder.encode(aYearAgoFromToday, "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
-                URL url = new URL(urlBuilder.toString());
+                JSONArray itemArray = (JSONArray) (getItems(urlBuilder).get("item"));
+                events = getEventsList(itemArray);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return events;
+        }
+
+        private JSONObject getItems(StringBuilder urlBuilder) {
+            URL url = null;
+            HttpURLConnection conn = null;
+            BufferedReader rd = null;
+            JSONObject items;
+            try {
+                url = new URL(urlBuilder.toString());
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Content-type", "application/json");
@@ -64,14 +79,10 @@ public class TourApi {
                 JSONObject obj = (JSONObject) parser.parse(sb.toString());
                 JSONObject response = (JSONObject) obj.get("response");
                 JSONObject body = (JSONObject) response.get("body");
-                JSONObject items = (JSONObject) body.get("items");
-                JSONArray item = (JSONArray) items.get("item");
-
-                festivals = getFestivalsList(item);
-
+                items = (JSONObject) body.get("items");
 
             } catch (IOException | ParseException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             } finally {
                 try {
                     rd.close();
@@ -80,14 +91,16 @@ public class TourApi {
                 }
                 conn.disconnect();
             }
-            return festivals;
+            return items;
         }
 
-    private List<Event> getFestivalsList(JSONArray item) {
+
+    private List<Event> getEventsList(JSONArray item) {
         List<Event> festivals = new ArrayList<>();
         try {
             for (Object info : item) {
                 JSONObject infoObj = (JSONObject) info;
+                //이미지 없으면 패스
                 if(infoObj.get("firstimage")==null){
                     continue;
                 }
@@ -99,7 +112,7 @@ public class TourApi {
                 Integer eventStartDate = Integer.valueOf(infoObj.get("eventstartdate").toString());
                 Integer eventEndDate = Integer.valueOf(infoObj.get("eventenddate").toString());
                 List<String> formattedEventPeriod = getFormattedEventPeriod(infoObj.get("eventstartdate").toString(), infoObj.get("eventenddate").toString());// [0] startdate, [1] enddate
-                List<String> imgs=getImgList(infoObj.get("firstimage"), infoObj.get("firstimage2"));
+                List<String> mainImgs= getImgsList(infoObj);
                 Map<String, Double> map =getMapList(infoObj.get("mapx"), infoObj.get("mapy"));
                 Integer readcount = Integer.parseInt(infoObj.get("readcount").toString());
                 String tel = infoObj.get("tel").toString();
@@ -112,7 +125,7 @@ public class TourApi {
                                         eventEndDate,
                                         formattedEventPeriod.get(0),
                                         formattedEventPeriod.get(1),
-                                        imgs, map, readcount, tel));
+                                        mainImgs, map, readcount, tel));
 
 
             }
@@ -140,11 +153,21 @@ public class TourApi {
         return formattedEventDates;
     }
 
-    private List<String> getImgList(Object ...img) {
+    private List<String> getImgsList(Object itemObj) {
         List<String> imgs = new ArrayList<>();
-        Arrays.stream(img).forEach(m ->{
-            imgs.add(m.toString());
-        });
+        if(itemObj instanceof JSONArray){
+            JSONArray itemArray = (JSONArray) itemObj;
+            for (Object o : itemArray) {
+                JSONObject obj = (JSONObject) o;
+                String detailImg = obj.get("originimgurl").toString();
+                imgs.add(detailImg);
+            }
+        }else if(itemObj instanceof JSONObject){
+            JSONObject item = (JSONObject) itemObj;
+            imgs.add(item.get("firstimage").toString());
+            imgs.add(item.get("firstimage2").toString());
+        }
+
         return imgs;
     }
 
@@ -157,6 +180,116 @@ public class TourApi {
         }
         return map;
     }
+
+    public EventCommonInfo getEventCommonInfo(String contentId) {
+        //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailCommon?&contentId=697135&overviewYN=Y&mapinfoYN=Y
+        EventCommonInfo eventCommonInfo;
+        try {
+            StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailCommon"); /*URL*/
+            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
+            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*한 페이지 결과수*/
+            urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*현재 페이지 번호*/
+            urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰), AND(안드로이드), WIN(원도우폰), ETC*/
+            urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+            urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(contentId, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("overviewYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("mapinfoYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("addrinfoYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("defaultYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("firstImageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+
+            JSONObject items = getItems(urlBuilder);
+            JSONObject item = (JSONObject) items.get("item");
+            Map<String, Double> map = getMapList(item.get("mapx"), item.get("mapy"));
+            String introduction = item.get("overview").toString();
+            String homepage = null;
+            if (item.get("homepage") != null) {
+                homepage = item.get("homepage").toString();
+            }
+            String address = item.get("addr1").toString();
+            String title = item.get("title").toString();
+            List<String> imgs = getImgsList(item);
+
+            eventCommonInfo = new EventCommonInfo(map, introduction, homepage, address, title, imgs);
+
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return eventCommonInfo;
+    }
+
+    public EventDetail getEventDetail(String contentId){
+            EventDetail eventDetail;
+            //C&MobileApp=AppTest&contentId=1353950&contentTypeId=85&introYN=Y
+        //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailIntro?&contentTypeId=85&contentId=1827088&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y
+        try {
+            StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailIntro"); /*URL*/
+            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
+            urlBuilder.append("&" + URLEncoder.encode("contentTypeId", "UTF-8") + "=" + URLEncoder.encode("85", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(contentId, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰), AND(안드로이드), WIN(원도우폰), ETC*/
+            urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("TourAPI3.0_Guide", "UTF-8")); /*서비스명=어플명*/
+            urlBuilder.append("&" + URLEncoder.encode("introYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+
+            JSONObject items = getItems(urlBuilder);
+            JSONObject item = (JSONObject) items.get("item");
+
+            String contentid = item.get("contentid").toString();
+            String eventPlace = item.get("eventplace").toString();
+            String tel = item.get("sponsor1tel").toString();
+            String sponsor = item.get("sponsor1").toString();
+            String playtime = item.get("playtime").toString();
+            String admissionFee = item.get("usetimefestival").toString();
+            String program = item.get("program").toString();
+            String eventStartDate = item.get("eventstartdate").toString();
+            String eventEndDate = item.get("eventenddate").toString();
+            List<String> formattedEventPeriod = getFormattedEventPeriod(eventStartDate, eventEndDate);
+            List<String> imgs = getDetailImgs(contentId);
+            eventDetail = new EventDetail(getEventCommonInfo(contentId),
+                                            contentid,
+                                            eventPlace,
+                                            tel,
+                                            sponsor,
+                                            playtime,
+                                            admissionFee,
+                                            program,
+                                            formattedEventPeriod.get(0),
+                                            formattedEventPeriod.get(1),
+                                            imgs);
+
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return eventDetail;
+    }
+
+    public List<String> getDetailImgs(String contentId){
+            //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailImage?serviceKey=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D&numOfRows=10&pageSize=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=1353950&imageYN=Y
+        List<String> subImgs;
+        try {
+            StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailImage"); /*URL*/
+            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
+            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과수*/
+            urlBuilder.append("&" + URLEncoder.encode("pageSize", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과수*/
+            urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*현재 페이지 번호*/
+            urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰), AND(안드로이드), WIN(원도우폰), ETC*/
+            urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+            urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(contentId, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("contentTypeId", "UTF-8") + "=" + URLEncoder.encode("85", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("imageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+
+            JSONArray itemArray = (JSONArray) (getItems(urlBuilder).get("item"));
+            subImgs = getImgsList(itemArray);
+
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return subImgs;
+    }
+
 
 
 
