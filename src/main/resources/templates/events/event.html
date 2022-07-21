@@ -1,10 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>detail page</h1>
-</body>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- bootstrap core css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link
+      href="/static/css/style.css"
+      th:href="@{/css/style.css}"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $('.slider').bxSlider();
+      });
+    </script>
+
+    <title>Events</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <div class="sub-page" th:replace="fragments/common :: subPageNav('events')">
+      <header>
+        <nav class="navbar">
+          <div class="container" id="nav-container">
+            <ul class="navbar-nav" id="nav">
+              <a class="navbar-brand" href="#" th:href="@{/}"
+                ><span>Brand</span></a
+              >
+              <li class="nav-item">
+                <a class="nav-link" href="#">Events</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Guides</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Community</a>
+              </li>
+              <a href="" class="user_link">
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </a>
+              <li class="user_link">
+                <a href="" class="user_option"> Login </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    </div>
+    <!-- navbar end -->
+    <!-- content start -->
+
+    <div class="container mt-5 p-5" id="event-detail">
+      <div class="icons d-flex justify-content-end">
+        <i class="fa fa-heart-o like-icon"> 155</i>
+        <i class="fa fa-share-alt"></i>
+      </div>
+      <div class="event-detail-box">
+        <div class="title pb-4">
+          <h1>Discover Seoul Pass</h1>
+        </div>
+        <div class="slider">
+          <img src="/static/images/roof-tile-4495550_960_720.jpg" alt="" />
+
+          <div>I am a slide.</div>
+          <div>I am another slide.</div>
+        </div>
+        <div class="container quick-info">
+          <ul class="row">
+            <li class="col">
+              <p class="title">EVENT PERIOD</p>
+              <p>2222-55-55 ~ 2022-88-88</p>
+            </li>
+            <li class="col">
+              <p class="title">EVENT PLACE</p>
+              <p>Area around Bosingak B</p>
+            </li>
+            <li class="col">
+              <p class="title">ADMISSION FEE</p>
+              <p>Free</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="intro">
+          <hr />
+          <h2 class="py-3">Introduction</h2>
+          <h5>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam,
+            sit unde? Enim iure delectus dolorum, magnam provident minima
+            molestiae. In eaque aliquid aspernatur dolorem fugiat iusto quam
+            corrupti tenetur ullam.
+          </h5>
+          <h5 class="mt-4">
+            <p>Program</p>
+            dfsdfa
+          </h5>
+          <hr />
+        </div>
+        <div class="detail">
+          <h2 class="py-3">Location & More Info</h2>
+          <div class="detail-box d-flex">
+            <div class="map">
+              <img
+                src="/static/images/roof-tile-4495550_960_720.jpg"
+                width="400px"
+                height="500px"
+                alt=""
+              />
+            </div>
+            <div class="content">
+              <div class="location">
+                <h4>Location</h4>
+                <ul>
+                  <li>Event Place: 행사장소</li>
+                  <li>Address: 주소</li>
+                  <li>Contact: 연락처</li>
+                </ul>
+              </div>
+              <br />
+              <div class="more-info">
+                <h4>More Info</h4>
+                <ul>
+                  <li>Sponsor: 주최자정보</li>
+                  <li>Homepage: dkfjdkfjdkfjdkj</li>
+                  <li>Play time: 공연시간</li>
+                  <!-- <li>Admission Fee: 이용요금</li> -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container p-5 d-flex justify-content-center" back-to-list-btn">
+      <button class="btn btn-secondary">back to list</button>
+    </div>
+
+    <div>
+      <!-- <script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"
+      ></script> -->
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"
+      ></script>
+
+      <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
+      <!-- <script src="/static/js/app.js" th:src="@{/js/app.js}"></script> -->
+      <script
+        src="https://kit.fontawesome.com/661f25159f.js"
+        crossorigin="anonymous"
+      ></script>
+    </div>
+  </body>
 </html>
