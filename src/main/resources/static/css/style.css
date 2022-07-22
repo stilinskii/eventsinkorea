@@ -277,8 +277,14 @@ span {
   align-items: center;
 }
 
-.title h1 {
+.event-detail-box {
   font-family: 'Inter', sans-serif;
+}
+
+.event-detail-box h1,
+h2,
+h4 {
+  font-family: 'Ibarra Real Nova', serif;
   font-weight: bold;
 }
 
@@ -295,34 +301,18 @@ span {
   height: auto;
 }
 
-.back-to-list-btn {
-  max-width: 800px;
-}
-
 .quick-info .title {
   font-weight: bold;
 }
 
 .quick-info li {
   list-style: none;
-  font-family: 'Inter', sans-serif;
 }
 
 .detail {
   display: flex;
   flex-direction: column;
   width: 100%;
-}
-
-.event-detail-box {
-  font-family: 'Inter', sans-serif;
-}
-.event-detail-box h2 {
-  font-weight: bold;
-}
-
-h5 p {
-  font-weight: bold;
 }
 
 /* more info and location */
@@ -337,3 +327,9 @@ h5 p {
 .detail li {
   list-style: inside;
 }
+
+i {
+  cursor: pointer;
+}
+
+/* event detail end */

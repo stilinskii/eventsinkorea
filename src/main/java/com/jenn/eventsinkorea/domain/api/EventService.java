@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -74,6 +75,18 @@ public class EventService {
        return tourInfo.stream()
                .filter(event -> event.getTitle().toLowerCase().contains(strippedKeyword.toLowerCase()))
                .collect(Collectors.toList());
+    }
+
+
+    public EventDetail getEventDetail(String contentId){
+        EventDetail eventDetail = tourApi.getEventDetail(contentId);
+        //대표이미지와 서브이미지들을 합쳐서 eventDetail에 담기.
+        List<String> mainImgs = eventDetail.getEventCommonInfo().getImgs();
+        List<String> subImgs = eventDetail.getImgs();
+        List<String> imgs = Stream.concat(mainImgs.stream(), subImgs.stream())
+                .collect(Collectors.toList());
+        eventDetail.setImgs(imgs);
+        return eventDetail;
     }
 
 //나중에 쓸지도모름

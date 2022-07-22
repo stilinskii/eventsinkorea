@@ -80,7 +80,8 @@ public class TourApi {
                 JSONObject response = (JSONObject) obj.get("response");
                 JSONObject body = (JSONObject) response.get("body");
                 items = (JSONObject) body.get("items");
-
+            }catch(ClassCastException e){
+                items = null;
             } catch (IOException | ParseException e) {
                 throw new RuntimeException(e);
             } finally {
@@ -280,6 +281,11 @@ public class TourApi {
             urlBuilder.append("&" + URLEncoder.encode("contentTypeId", "UTF-8") + "=" + URLEncoder.encode("85", "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("imageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+
+            JSONObject items = getItems(urlBuilder);
+            if(items==null){
+                return Collections.emptyList();
+            }
 
             JSONArray itemArray = (JSONArray) (getItems(urlBuilder).get("item"));
             subImgs = getImgsList(itemArray);

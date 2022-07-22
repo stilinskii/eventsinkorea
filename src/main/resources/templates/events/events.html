@@ -105,14 +105,14 @@
               preserveAspectRatio="xMidYMid slice"
               focusable="false"
               style="cursor:pointer;"
-              th:onclick="|location.href=@{/events(contentId=${event.id})}|"
+              th:onclick="|location.href=@{/events/eventDetail(contentId=${event.id})}|"
             >
               <title>Placeholder</title>
               <img th:if="${!event.imgs.empty}" th:src="${event.imgs[0]}" height="225" alt="">
             </svg>
 
             <div class="card-body">
-              <h5 th:text="${event.title}" th:onclick="|location.href='@{/events(contentId=${event.id})}'|" style="cursor:pointer;"> title</h5>
+              <h5 th:text="${event.title}" th:onclick="|location.href='@{/events/eventDetail(contentId=${event.id})}'|" style="cursor:pointer;"> title</h5>
               <p class="card-text" th:text="|Event Period : ${event.formattedEventStartDate} ~ ${event.formattedEventEndDate}|">
                 This is a wider card with supporting text below as a natural
                 lead-in to additional content. 

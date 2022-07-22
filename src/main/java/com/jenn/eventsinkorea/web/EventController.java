@@ -2,6 +2,7 @@ package com.jenn.eventsinkorea.web;
 
 
 import com.jenn.eventsinkorea.domain.api.Event;
+import com.jenn.eventsinkorea.domain.api.EventDetail;
 import com.jenn.eventsinkorea.domain.api.EventService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,8 +55,10 @@ public class EventController {
         return "events/events";
     }
 
-    @GetMapping
-    public String content(String contentId){
+    @GetMapping("/eventDetail")
+    public String content(String contentId,Model model){
+        EventDetail eventDetail = eService.getEventDetail(contentId);
+        model.addAttribute("eventDetail",eventDetail);
         return "events/event";
     }
 

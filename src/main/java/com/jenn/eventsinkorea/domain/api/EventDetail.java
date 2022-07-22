@@ -29,7 +29,7 @@ public class EventDetail {
     //소개정보 api
     private String contentId;
     private String eventPlace;//eventplace 행사장소
-    private String tel; //sponsor1tel
+    private String contact; //sponsor1tel
     private String sponsor; //sponsor1
     private String playtime;// playtime
     private String admissionFee; //usetimefestival
