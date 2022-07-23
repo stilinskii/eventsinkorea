@@ -24,12 +24,18 @@
         <ul class="navbar-nav" id="nav">
           <a class="navbar-brand" href="#" th:href="@{/}"><span>Brand</span></a>
           <li class="nav-item">
-            <a class="nav-link" th:id="${menu} == 'events' ? 'active'" href="#"
+            <a
+              class="nav-link"
+              th:id="${menu} == 'events' ? 'active'"
+              th:href="@{/events/All}"
               >Events</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:id="${menu} == 'guides' ? 'active'" href="#"
+            <a
+              class="nav-link"
+              th:id="${menu} == 'guides' ? 'active'"
+              th:href="@{/guides}"
               >Guides</a
             >
           </li>
@@ -37,7 +43,7 @@
             <a
               class="nav-link"
               th:id="${menu} == 'community' ? 'active'"
-              href="#"
+              th:href="@{/board}"
               >Community</a
             >
           </li>

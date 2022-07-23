@@ -1,3 +1,4 @@
+// google map
 var map;
 function initMap() {
   let x = parseFloat(document.querySelector('.mapX').value);
@@ -19,6 +20,7 @@ function initMap() {
   });
 }
 
+//url 복사
 function clipboardShare() {
   // 1. 새로운 element 생성
   var tmpTextarea = document.createElement('textarea');

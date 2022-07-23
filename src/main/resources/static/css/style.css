@@ -234,6 +234,10 @@ ul {
   color: rgb(228, 59, 110);
 }
 
+.event img {
+  cursor: pointer;
+}
+
 /* for sorting btns */
 .sorting-btns button {
   border-style: none;

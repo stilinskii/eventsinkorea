@@ -23,7 +23,9 @@
 
     <script>
       $(document).ready(function () {
-        $('.slider').bxSlider();
+        $('.slider').bxSlider({
+          adaptiveHeight: true,
+        });
       });
     </script>
 
@@ -98,7 +100,7 @@
             </li>
             <li class="col">
               <p class="title">ADMISSION FEE</p>
-              <p th:text="${eventDetail.admissionFee}">Free</p>
+              <p th:utext="${eventDetail.admissionFee}">Free</p>
             </li>
           </ul>
         </div>
@@ -114,7 +116,7 @@
           </h5>
           <div class="program mt-4" th:if="${eventDetail.program != ''}">
             <h4>Program</h4>
-            <h5 th:text="program">dfsdfa</h5>
+            <h5 th:utext="program">dfsdfa</h5>
           </div>
           <hr />
         </div>
@@ -190,10 +192,7 @@
         defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALSsMnJDu2daXSQKmlKMXDYoqeymOuPZ8&callback=initMap&region=kr"
       ></script>
-      <script
-        src="/static/js/googleMap.js"
-        th:src="@{/js/googleMap.js}"
-      ></script>
+      <script src="/static/js/event.js" th:src="@{/js/event.js}"></script>
       <!-- <script
         src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="

@@ -53,7 +53,7 @@ public class TourApi {
         }
 
         private JSONObject getItems(StringBuilder urlBuilder) {
-            URL url = null;
+            URL url;
             HttpURLConnection conn = null;
             BufferedReader rd = null;
             JSONObject items;
@@ -81,6 +81,7 @@ public class TourApi {
                 JSONObject body = (JSONObject) response.get("body");
                 items = (JSONObject) body.get("items");
             }catch(ClassCastException e){
+                //items가 없을떄 이 에러가 남. 그럴땐 null 리턴
                 items = null;
             } catch (IOException | ParseException e) {
                 throw new RuntimeException(e);
@@ -203,11 +204,8 @@ public class TourApi {
             JSONObject items = getItems(urlBuilder);
             JSONObject item = (JSONObject) items.get("item");
             Map<String, Double> map = getMapList(item.get("mapx"), item.get("mapy"));
-            String introduction = item.get("overview").toString();
-            String homepage = null;
-            if (item.get("homepage") != null) {
-                homepage = item.get("homepage").toString();
-            }
+            String introduction = nullChk(item.get("overview"));
+            String homepage = nullChk(item.get("homepage"));
             String address = item.get("addr1").toString();
             String title = item.get("title").toString();
             List<String> imgs = getImgsList(item);
@@ -222,7 +220,7 @@ public class TourApi {
 
     public EventDetail getEventDetail(String contentId){
             EventDetail eventDetail;
-            //C&MobileApp=AppTest&contentId=1353950&contentTypeId=85&introYN=Y
+
         //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailIntro?&contentTypeId=85&contentId=1827088&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y
         try {
             StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailIntro"); /*URL*/
@@ -238,12 +236,12 @@ public class TourApi {
             JSONObject item = (JSONObject) items.get("item");
 
             String contentid = item.get("contentid").toString();
-            String eventPlace = item.get("eventplace").toString();
-            String tel = item.get("sponsor1tel").toString();
+            String eventPlace = nullChk(item.get("eventplace")); // 해당사항 없으면 NPE 일어남.
+            String tel = nullChk(item.get("sponsor1tel"));
             String sponsor = item.get("sponsor1").toString();
-            String playtime = item.get("playtime").toString();
-            String admissionFee = item.get("usetimefestival").toString();
-            String program = item.get("program").toString();
+            String playtime = item.get("playtime").toString(); // 해당사항 없으면 이면 알아서 공백리턴해줌
+            String admissionFee = item.get("usetimefestival").toString(); // 해당사항 없으면 이면 알아서 공백리턴해줌
+            String program = item.get("program").toString(); // 해당사항 없으면 이면 알아서 공백리턴해줌
             String eventStartDate = item.get("eventstartdate").toString();
             String eventEndDate = item.get("eventenddate").toString();
             List<String> formattedEventPeriod = getFormattedEventPeriod(eventStartDate, eventEndDate);
@@ -259,16 +257,24 @@ public class TourApi {
                                             formattedEventPeriod.get(0),
                                             formattedEventPeriod.get(1),
                                             imgs);
-
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
         return eventDetail;
     }
 
+
+    private String nullChk(Object itemField){
+            if(itemField==null){
+                return "";
+            }else{
+                return itemField.toString();
+            }
+    }
+
     public List<String> getDetailImgs(String contentId){
             //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailImage?serviceKey=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D&numOfRows=10&pageSize=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=1353950&imageYN=Y
-        List<String> subImgs;
+        List<String> subImgs = new ArrayList<>();
         try {
             StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailImage"); /*URL*/
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
@@ -283,12 +289,20 @@ public class TourApi {
             urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
             JSONObject items = getItems(urlBuilder);
+            //사진이 없을때
             if(items==null){
                 return Collections.emptyList();
             }
+            //사진이 1개일때.
+            if(items.get("item") instanceof JSONObject){
+                //바로 꺼내기
+                subImgs.add(((JSONObject) items.get("item")).get("originimgurl").toString());
+            }else{
+                //사진이 여러개일때 ( 이 경우가 대부분 )
+                JSONArray itemArray = (JSONArray) (items.get("item"));
+                subImgs = getImgsList(itemArray);
+            }
 
-            JSONArray itemArray = (JSONArray) (getItems(urlBuilder).get("item"));
-            subImgs = getImgsList(itemArray);
 
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
