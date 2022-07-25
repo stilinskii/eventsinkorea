@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.domain.api;
+package com.jenn.eventsinkorea.domain.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

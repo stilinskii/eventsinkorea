@@ -1,5 +1,8 @@
-package com.jenn.eventsinkorea.domain.api;
+package com.jenn.eventsinkorea.domain.event;
 
+import com.jenn.eventsinkorea.domain.api.TourApi;
+import com.jenn.eventsinkorea.domain.event.Event;
+import com.jenn.eventsinkorea.domain.event.EventDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

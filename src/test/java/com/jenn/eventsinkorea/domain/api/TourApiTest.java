@@ -1,10 +1,9 @@
 package com.jenn.eventsinkorea.domain.api;
 
-import org.assertj.core.api.Assertions;
+import com.jenn.eventsinkorea.domain.event.EventDetail;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class TourApiTest {
     TourApi tourApi = new TourApi();

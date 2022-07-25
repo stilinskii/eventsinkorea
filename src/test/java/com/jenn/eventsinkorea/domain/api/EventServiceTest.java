@@ -1,5 +1,7 @@
 package com.jenn.eventsinkorea.domain.api;
 
+import com.jenn.eventsinkorea.domain.event.Event;
+import com.jenn.eventsinkorea.domain.event.EventService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

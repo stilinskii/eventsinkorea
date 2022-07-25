@@ -1,6 +1,9 @@
 package com.jenn.eventsinkorea.domain.api;
 
 
+import com.jenn.eventsinkorea.domain.event.Event;
+import com.jenn.eventsinkorea.domain.event.EventCommonInfo;
+import com.jenn.eventsinkorea.domain.event.EventDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

@@ -43,8 +43,8 @@
       </header>
     </div>
 
-    <!-- search and filtering start-->
-<div class="container">
+    <div class="container">
+  <!-- search and filtering start-->
 <div class="event-search">
   <div class="page_title">
     <h1>Events in Korea</h1>
@@ -69,12 +69,11 @@
       <button type="submit" class="btn btn-primary mb-3">Search</button>
     </div>
   </form>
-
 </div>
   <!-- search and filtering end-->
 
 <!-- sorting buttons start -->
-<div class="d-flex bd-highlight">
+<section class="d-flex bd-highlight">
   <span id="totalCnt" class="me-auto bd-highlight"> total : 11 </span>
   <div class="sorting-btns bd-highlight">
       <button type="button" onclick="sortElementByDate('event_date',this)">Date 
@@ -82,18 +81,20 @@
       <button type="button" onclick="sortElementByDate('event_readcount',this)">View <i class="fa fa-sort"></i></button>
       <button type="button" onclick="sortElementByDate('event_like',this)">Like <i class="fa fa-sort"></i></button>
   </div>
-</div>
+</section>
 <!-- sorting buttons end -->
 
 
 <!-- festivlas list start-->
 
-<div class="container" >
+<main class="container" >
+  <div class="row">
+
       <span th:if="${keyword}" th:text="|Results searched by '${keyword}' :|" class="mb-4">Results searched by</span>
       <div th:if="${eventsList.empty}" class="pt-5">
         <span class="display-4" th:text="|There are no events found with '${keyword}'.|">There are no events.</span>
       </div>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="all_events">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 col-11" id="all_events">
         <div class="col event" th:each="event:${eventsList}">
           <div class="card shadow-sm">
             <svg
@@ -129,14 +130,31 @@
           </div>
         </div>
       </div>
+
+      <div class="col-1 recentlyViewed">
+        <span >Recently<br>Viewed</span>
+        <div class="recentlyViewed-box mb-2 ">
+          <div class="box-content">
+             <div th:each="viewed : ${recentlyViewed}">
+              <a th:href="@{/events/eventDetail(contentId=${viewed.key})}" th:title="${viewed.value.title}" >
+              <img th:src="${viewed.value.img}" alt="" width="80px" height="80px">
+              <p th:text="${viewed.value.title}"></p>
+              </a>
+             </div> 
+            </div>
+          </div>  
+      </div>
+
     </div>
+    </main>
     <!-- festivlas list end-->
     <div class="d-flex justify-content-center m-5">
       <button type="button" class="btn btn-warning more-btn">More</button>
     </div>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
   </div>
 
-<!-- top으로 돌아왔을때 more 원상복귀 구현 -->
+
   <div>
     <script
   src="https://code.jquery.com/jquery-3.6.0.js"
@@ -144,7 +162,7 @@
   crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
-    <script src="/static/js/events.js" th:src="@{/js/events.js}"></script>
+    <script defer src="/static/js/events.js" th:src="@{/js/events.js}"></script>
     <script
     src="https://kit.fontawesome.com/661f25159f.js"
     crossorigin="anonymous"
