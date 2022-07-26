@@ -16,7 +16,7 @@
   </head>
   <body>
     <!-- navbar -->
-    <div class="sub-page" th:replace="fragments/common :: subPageNav('events')">
+    <div class="sub-page" th:replace="/fragments/nav :: subPageNav('events')">
       <header>
         <nav class="navbar">
           <div class="container" id="nav-container">
@@ -31,12 +31,20 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Community</a>
               </li>
-              <a href="" class="user_link">
-                <i class="fa fa-user" aria-hidden="true"></i>
-              </a>
-              <li class="user_link">
+              <li class="nav-item">
+                <a th:href="">
+                  <i class="fa fa-cog"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="user_link">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li class="user_link nav-item">
                 <a href="" class="user_option"> Login </a>
               </li>
+
             </ul>
           </div>
         </nav>

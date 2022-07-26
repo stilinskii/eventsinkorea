@@ -1,0 +1,88 @@
+<nav
+  th:fragment="nav-admin(menu)"
+  class="navbar navbar-expand-md navbar-dark bg-dark"
+>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/" target="_blank"></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarCollapse"
+      aria-controls="navbarCollapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse">
+    <a class="navbar-brand" href="/" target="_blank">KoreanBuddy</a>
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link" th:classappend="${menu} == 'Home' ? 'active'" aria-current="page" th:href="@{/admin}"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:classappend="${menu} == 'Users' ? 'active'" aria-current="page" th:href="@{/admin/users}">Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:classappend="${menu} == 'Pages' ? 'active'" aria-current="page" th:href="@{/admin/pages}">Pages</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- navbar -->
+<div class="sub-page" th:fragment="subPageNav(menu)">
+  <header>
+    <nav class="navbar">
+      <div class="container" id="nav-container">
+        <ul class="navbar-nav" id="nav">
+          <a class="navbar-brand" href="#" th:href="@{/}"
+            ><span>KoreanBuddy</span></a
+          >
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              th:id="${menu} == 'events' ? 'active'"
+              th:href="@{/events/All}"
+              >Events</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              th:id="${menu} == 'buddy' ? 'active'"
+              th:href="@{/buddy}"
+              >Buddy</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              th:id="${menu} == 'community' ? 'active'"
+              th:href="@{/board}"
+              >Community</a
+            >
+          </li>
+
+          <li class="nav-item">
+            <a th:href="@{/admin}" class="user_link">
+              <i class="fa fa-cog"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="user_link">
+              <i class="fa fa-user" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li class="user_link nav-item">
+            <a href="" class="user_option"> Login </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+</div>

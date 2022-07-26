@@ -16,49 +16,6 @@
   <title th:text="${title}">Hello</title>
 </head>
 
-<!-- navbar -->
-<div class="sub-page" th:fragment="subPageNav(menu)">
-  <header>
-    <nav class="navbar">
-      <div class="container" id="nav-container">
-        <ul class="navbar-nav" id="nav">
-          <a class="navbar-brand" href="#" th:href="@{/}"><span>Brand</span></a>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              th:id="${menu} == 'events' ? 'active'"
-              th:href="@{/events/All}"
-              >Events</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              th:id="${menu} == 'guides' ? 'active'"
-              th:href="@{/guides}"
-              >Guides</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              th:id="${menu} == 'community' ? 'active'"
-              th:href="@{/board}"
-              >Community</a
-            >
-          </li>
-          <a href="" class="user_link">
-            <i class="fa fa-user" aria-hidden="true"></i>
-          </a>
-          <li class="user_link">
-            <a href="" class="user_option"> Login </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-</div>
-
 <div th:fragment="scripts">
   <script
     src="https://code.jquery.com/jquery-3.6.0.js"
