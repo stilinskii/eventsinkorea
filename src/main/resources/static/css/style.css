@@ -23,6 +23,10 @@ a {
   text-decoration: none;
   color: #222831;
 }
+
+li {
+  list-style: none;
+}
 /* The hero image */
 .hero-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
@@ -431,4 +435,19 @@ i {
   height: 20px;
   font-size: 15px;
   margin: 0;
+}
+
+/* Admin */
+form {
+  width: 50%;
+}
+
+div.search {
+  width: 100%;
+}
+div.search select {
+  width: 37%;
+}
+.periodSelect {
+  width: 100%;
 }

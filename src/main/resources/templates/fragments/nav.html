@@ -1,6 +1,6 @@
 <nav
   th:fragment="nav-admin(menu)"
-  class="navbar navbar-expand-md navbar-dark bg-dark"
+  class="navbar navbar-expand-md navbar-dark bg-dark nav-admin"
 >
   <div class="container-fluid">
     <a class="navbar-brand" href="/" target="_blank"></a>
@@ -15,19 +15,38 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse">
-    <a class="navbar-brand" href="/" target="_blank">KoreanBuddy</a>
+    <div
+      class="collapse navbar-collapse justify-content-center"
+      id="navbarCollapse"
+    >
+      <a class="navbar-brand" href="/" target="_blank">KoreanBuddy</a>
       <ul class="nav justify-content-center">
         <li class="nav-item">
-          <a class="nav-link" th:classappend="${menu} == 'Home' ? 'active'" aria-current="page" th:href="@{/admin}"
-            >Home</a
+          <a
+            class="nav-link"
+            th:id="${menu} == 'Home' ? 'active'"
+            aria-current="page"
+            th:href="@{/admin}"
+            >Admin Home</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:classappend="${menu} == 'Users' ? 'active'" aria-current="page" th:href="@{/admin/users}">Users</a>
+          <a
+            class="nav-link"
+            th:id="${menu} == 'Users' ? 'active'"
+            aria-current="page"
+            th:href="@{/admin/users}"
+            >Users</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:classappend="${menu} == 'Pages' ? 'active'" aria-current="page" th:href="@{/admin/pages}">Pages</a>
+          <a
+            class="nav-link"
+            th:id="${menu} == 'Pages' ? 'active'"
+            aria-current="page"
+            th:href="@{/admin/pages}"
+            >Pages</a
+          >
         </li>
       </ul>
     </div>
