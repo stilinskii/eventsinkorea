@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
@@ -26,10 +27,11 @@ public class User {
 
     @NotNull
     @Size(min=5,max=30)
-    private String user_id;
+    @Column(name = "user_id")
+    private String userId;
 
     @NotNull
-   // @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
+    //@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
     private String pwd;
 
     @NotNull
@@ -45,7 +47,7 @@ public class User {
     private Date join_date;
 
     public User(String user_id, String pwd, String username, String email, String nationality) {
-        this.user_id = user_id;
+        this.userId = user_id;
         this.pwd = pwd;
         this.username = username;
         this.email = email;

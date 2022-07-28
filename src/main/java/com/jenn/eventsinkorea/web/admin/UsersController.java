@@ -7,11 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -38,15 +40,33 @@ public class UsersController {
 
 
     @PostMapping("edit")
-    public String editSubmit(@Validated @ModelAttribute User user, BindingResult bindingResult, Integer id){
+    public String editSubmit(@Validated @ModelAttribute("user") Form form, BindingResult bindingResult, Integer id, RedirectAttributes redirectAttributes, Model model){
+        log.info("controller access");
+        if(bindingResult.hasErrors()){
+            log.info("bindingResult={}",bindingResult);
+            return "admin/users/edit";
+        }
+
+        //user_id 중복체크
+        User byUser_idAndIdNot = userRepo.findByUserIdAndIdNot(form.getUserId(), id);
+        if(byUser_idAndIdNot!=null){
+            log.info("duplicate access");
+//            bindingResult.addError(new FieldError("user", "userId", "Id already exists, choose another."));
+            bindingResult.rejectValue("userId","userIdExists");
+            log.info("bindingResult={}",bindingResult);
+            return "admin/users/edit";
+        }
+
         User userToBeEdited = userRepo.getById(id);
-        userToBeEdited.setUser_id(user.getUser_id());
-        userToBeEdited.setUsername(user.getUsername());
-        userToBeEdited.setEmail(user.getEmail());
-        userToBeEdited.setNationality(user.getNationality());
+        userToBeEdited.setUserId(form.getUserId());
+        userToBeEdited.setUsername(form.getUsername());
+        userToBeEdited.setEmail(form.getEmail());
+        userToBeEdited.setNationality(form.getNationality());
 
         userRepo.save(userToBeEdited);
-        return "redirect:/admin/users/edit";
+        redirectAttributes.addFlashAttribute("edit","Edit Success");
+
+        return "redirect:/admin/users/edit?id="+id;
     }
 
 }

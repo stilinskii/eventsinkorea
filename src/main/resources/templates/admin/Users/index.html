@@ -74,14 +74,10 @@
                     <option value="audi">6 month</option>
                     <option value="기간입력">기간입력</option>
                   </select>
-               
-            
-                  <select class="form-select" name="cars" id="cars">
-                    <option value="volvo">Nationality</option>
-                    <option value="saab">Saab</option>
-                    <option value="opel">Opel</option>
-                    <option value="audi">Audi</option>
-                  </select>
+                    <select class="form-select">
+                        <th:block th:replace="/fragments/countriesDropDown :: countries"></th:block>
+                    </select>
+<!--                    <select id="nationality" th:replace="/fragments/countriesDropDown :: countries('index')" th:field="*{nationality}"></select>-->
                   <select class="form-select" name="cars" id="cars">
                     <option value="volvo">All</option>
                     <option value="saab">Id</option>
@@ -121,7 +117,7 @@
             <tbody>
             <tr th:each="user : ${users}">
                 <th scope="row">1</th>
-                <td th:text="${user.user_id}">Mark</td>
+                <td th:text="${user.userId}">Mark</td>
                 <td th:text="${user.username}">Otto</td>
                 <td th:text="${user.email}">@mdo</td>
                 <td th:text="${user.nationality}">@mdo</td>

@@ -65,30 +65,39 @@
         <div class="py-5 text-center">
             <h1>Edit User Information</h1>
         </div>
+        <div class="alert alert-success" role="alert" th:if="${edit}" th:text="${edit}">
+            A simple success alert—check it out!
+        </div>
         <form th:action th:object="${user}" method="post" class="d-flex flex-column bd-highlight mb-3">
             <div class="row mb-3">
                 <label for="inputId" class="col-sm-2 col-form-label">ID</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputId" th:field="*{user_id}">
+                  <input type="text" class="form-control" id="inputId" th:field="*{userId}" th:errorclass="is-invalid" >
+                    <div class="invalid-feedback" th:errors="*{userId}">회원아이디오류</div>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputUsername" th:field="*{username}">
+                  <input type="text" class="form-control" id="inputUsername" th:field="*{username}" th:errorclass="is-invalid">
+                    <div class="invalid-feedback" th:errors="*{username}">회원이름오류</div>
                 </div>
             </div>
             
             <div class="row mb-3">
                 <label for="email" class="col-2 col-form-label">Email</label>
                 <div class="col-10">
-                  <input type="email" class="form-control" id="email" th:field="*{email}">
+                  <input type="email" class="form-control" id="email" th:field="*{email}" th:errorclass="is-invalid">
+                    <div class="invalid-feedback" th:errors="*{email}">이메일오류</div>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="nationality" class="col-sm-2 col-form-label">Nationality</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="nationality" th:field="*{nationality}">
+                    <select id="nationality" class="form-select" th:field="*{nationality}" th:errorclass="is-invalid">
+                        <th:block th:replace="/fragments/countriesDropDown :: countries"></th:block>
+                    </select>
+                    <div class="invalid-feedback" th:errors="*{nationality}">국적입력오류</div>
                 </div>
             </div>
             <div class="row mb-3">
@@ -97,7 +106,7 @@
                   <input type="text" class="form-control" id="join_date" th:field="*{join_date}" readonly>
                 </div>
             </div>
-            <input type="hidden" class="form-control" th:field="*{id}">
+
             <hr class="my-4">
             <div class="row">
                 <div class="col">
@@ -107,7 +116,7 @@
                 <div class="col">
                     <a class="w-100 btn btn-secondary btn-lg"
                     th:href="@{/admin/users}"
-                            type="button">cancle</a>
+                            type="button">cancel</a>
                 </div>
             </div>
         </form>
@@ -124,11 +133,12 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"
     ></script>
-    <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
-    <script src="/static/js/app.js" th:src="@{/js/app.js}"></script>
     <script
             src="https://kit.fontawesome.com/661f25159f.js"
             crossorigin="anonymous"
     ></script>
+
+</div>
+<script src="/static/js/admin.js" th:src="@{/js/admin.js}"></script>
 </body>
 </html>
