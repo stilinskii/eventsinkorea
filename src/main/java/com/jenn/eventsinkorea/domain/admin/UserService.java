@@ -26,16 +26,8 @@ public class UserService {
         userRepo.deleteById(id);
     }
 
-    public FieldError editUserInfo(UserEditForm form, Integer id) {
+    public void editUserInfo(UserEditForm form, Integer id) {
 
-        //중복확인
-        //boolean으로 바꿀 수 있을까?
-        User UserIdExists = userRepo.findByUserIdAndIdNot(form.getUserId(), id);
-        if(UserIdExists!=null){
-            return new FieldError("form","userId",form.getUserId(),false,new String[]{"userIdExists"} ,null,null);
-        }
-
-        //성공로직
         User userToBeEdited = userRepo.getById(id);
         userToBeEdited.setUserId(form.getUserId());
         userToBeEdited.setUsername(form.getUsername());
@@ -44,7 +36,7 @@ public class UserService {
 
         userRepo.save(userToBeEdited);
 
-        return null;
+
     }
 
 //    public List<User> findBySearch(UserSearchForm form) {

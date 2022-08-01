@@ -29,6 +29,8 @@ public class UsersController {
     private final UserRepository userRepo;
     private final UserService userService;
 
+    private final UserEditFormValidator userEditFormValidator;
+
     @GetMapping
     public String users(Model model){
         model.addAttribute("users", userService.findAll());
@@ -43,22 +45,17 @@ public class UsersController {
     }
 
 
-    //모양새가 딱히 좋아보이진 않음. TODO
+    //아이디를 꼭 넘겨야하나? TODO
     @PostMapping("edit")
     public String editSubmit(@Validated @ModelAttribute("user") UserEditForm form, BindingResult bindingResult, Integer id, RedirectAttributes redirectAttributes){
-
+        userEditFormValidator.validate(form,bindingResult);
         if(bindingResult.hasErrors()){
             log.info("bindingResult={}",bindingResult);
             return "admin/users/edit";
         }
 
-        //userId 중복체크
-        FieldError fieldError = userService.editUserInfo(form, id);
-        if(fieldError!=null){
-        bindingResult.addError(fieldError);
-            return "admin/users/edit";
-        }
-
+        //성공로직
+        userService.editUserInfo(form, id);
         redirectAttributes.addFlashAttribute("edit","Edit Success");
 
         return "redirect:/admin/users/edit?id="+id;

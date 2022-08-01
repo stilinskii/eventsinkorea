@@ -9,7 +9,8 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    User findByUserIdAndIdNot(String user_id, Integer id);
+    User findByUserIdAndIdNot(String userId, Integer id);
+    User findByUserId(String userId);
     //List<User> findByCreatedAtAfter(Date today);
 
 //    List<User> findByUserIdContaining(String userId);
