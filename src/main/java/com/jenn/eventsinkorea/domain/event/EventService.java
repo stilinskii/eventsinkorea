@@ -1,8 +1,7 @@
 package com.jenn.eventsinkorea.domain.event;
 
-import com.jenn.eventsinkorea.domain.api.TourApi;
-import com.jenn.eventsinkorea.domain.event.Event;
-import com.jenn.eventsinkorea.domain.event.EventDetail;
+import com.jenn.eventsinkorea.domain.event.model.Event;
+import com.jenn.eventsinkorea.domain.event.model.EventDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,7 @@ import java.util.stream.Stream;
 public class EventService {
 
     private TourApi tourApi = new TourApi();
+
 
     //행사시작일 기준으로 오름차순 정렬
     public List<Event> getEvents(){

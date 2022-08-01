@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.domain.api;
+package com.jenn.eventsinkorea.domain.event.api;
 
 public interface ApiCategoryConst {
     String FESTIVAL="A0207";

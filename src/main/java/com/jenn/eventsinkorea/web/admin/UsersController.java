@@ -1,7 +1,10 @@
 package com.jenn.eventsinkorea.web.admin;
 
-import com.jenn.eventsinkorea.domain.admin.User;
+import com.jenn.eventsinkorea.domain.admin.model.User;
 import com.jenn.eventsinkorea.domain.admin.UserRepository;
+import com.jenn.eventsinkorea.domain.admin.UserService;
+import com.jenn.eventsinkorea.web.admin.form.UserEditForm;
+import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/users")
@@ -24,10 +27,11 @@ import java.util.Optional;
 public class UsersController {
 
     private final UserRepository userRepo;
+    private final UserService userService;
 
     @GetMapping
     public String users(Model model){
-        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("users", userService.findAll());
         return "admin/users/index";
     }
 
@@ -39,34 +43,41 @@ public class UsersController {
     }
 
 
+    //모양새가 딱히 좋아보이진 않음. TODO
     @PostMapping("edit")
-    public String editSubmit(@Validated @ModelAttribute("user") Form form, BindingResult bindingResult, Integer id, RedirectAttributes redirectAttributes, Model model){
-        log.info("controller access");
+    public String editSubmit(@Validated @ModelAttribute("user") UserEditForm form, BindingResult bindingResult, Integer id, RedirectAttributes redirectAttributes){
+
         if(bindingResult.hasErrors()){
             log.info("bindingResult={}",bindingResult);
             return "admin/users/edit";
         }
 
-        //user_id 중복체크
-        User byUser_idAndIdNot = userRepo.findByUserIdAndIdNot(form.getUserId(), id);
-        if(byUser_idAndIdNot!=null){
-            log.info("duplicate access");
-//            bindingResult.addError(new FieldError("user", "userId", "Id already exists, choose another."));
-            bindingResult.rejectValue("userId","userIdExists");
-            log.info("bindingResult={}",bindingResult);
+        //userId 중복체크
+        FieldError fieldError = userService.editUserInfo(form, id);
+        if(fieldError!=null){
+        bindingResult.addError(fieldError);
             return "admin/users/edit";
         }
 
-        User userToBeEdited = userRepo.getById(id);
-        userToBeEdited.setUserId(form.getUserId());
-        userToBeEdited.setUsername(form.getUsername());
-        userToBeEdited.setEmail(form.getEmail());
-        userToBeEdited.setNationality(form.getNationality());
-
-        userRepo.save(userToBeEdited);
         redirectAttributes.addFlashAttribute("edit","Edit Success");
 
         return "redirect:/admin/users/edit?id="+id;
     }
+
+    @GetMapping("/delete")
+    public String delete(Integer id){
+        userService.deleteUser(id);
+
+        return "redirect:/admin/users";
+    }
+
+//    @PostMapping("/search")
+//    public String search(UserSearchForm form,Model model){
+//        log.info("form.getOption={}",form.getOption());
+//        List<User> userBySearch = userService.findBySearch(form);
+//        model.addAttribute("users",userBySearch);
+//        return "admin/users/index";
+//    }
+
 
 }

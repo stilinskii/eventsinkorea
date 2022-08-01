@@ -1,8 +1,8 @@
 package com.jenn.eventsinkorea.web.event;
 
 
-import com.jenn.eventsinkorea.domain.event.Event;
-import com.jenn.eventsinkorea.domain.event.EventDetail;
+import com.jenn.eventsinkorea.domain.event.model.Event;
+import com.jenn.eventsinkorea.domain.event.model.EventDetail;
 import com.jenn.eventsinkorea.domain.event.EventService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

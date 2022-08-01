@@ -1,9 +1,9 @@
-package com.jenn.eventsinkorea.domain.api;
+package com.jenn.eventsinkorea.domain.event;
 
 
-import com.jenn.eventsinkorea.domain.event.Event;
-import com.jenn.eventsinkorea.domain.event.EventCommonInfo;
-import com.jenn.eventsinkorea.domain.event.EventDetail;
+import com.jenn.eventsinkorea.domain.event.model.Event;
+import com.jenn.eventsinkorea.domain.event.model.EventCommonInfo;
+import com.jenn.eventsinkorea.domain.event.model.EventDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -238,7 +238,7 @@ public class TourApi {
             JSONObject items = getItems(urlBuilder);
             JSONObject item = (JSONObject) items.get("item");
 
-            String contentid = item.get("contentid").toString();
+
             String eventPlace = nullChk(item.get("eventplace")); // 해당사항 없으면 NPE 일어남.
             String tel = nullChk(item.get("sponsor1tel"));
             String sponsor = item.get("sponsor1").toString();
@@ -250,7 +250,7 @@ public class TourApi {
             List<String> formattedEventPeriod = getFormattedEventPeriod(eventStartDate, eventEndDate);
             List<String> imgs = getDetailImgs(contentId);
             eventDetail = new EventDetail(getEventCommonInfo(contentId),
-                                            contentid,
+                                            contentId,
                                             eventPlace,
                                             tel,
                                             sponsor,
@@ -294,7 +294,7 @@ public class TourApi {
             JSONObject items = getItems(urlBuilder);
             //사진이 없을때
             if(items==null){
-                return Collections.emptyList();
+                return subImgs;
             }
             //사진이 1개일때.
             if(items.get("item") instanceof JSONObject){
@@ -314,7 +314,34 @@ public class TourApi {
     }
 
 
+    public String getRandomContentIdForTest() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String date = simpleDateFormat.format(new Date());
+        String aYearAgoFromToday = String.valueOf(Integer.parseInt(date) - 10000);
 
+        String contentId = null;
+        try {
+            StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/searchFestival"); /*URL*/
+            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
+            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*한 페이지 결과수*/
+            urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*현재 페이지 번호*/
+            urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰), AND(안드로이드), WIN(원도우폰), ETC*/
+            urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+            urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("arrange", "UTF-8") + "=" + URLEncoder.encode("O", "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("eventStartDate", "UTF-8") + "=" + URLEncoder.encode(aYearAgoFromToday, "UTF-8"));
+            urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+
+            JSONObject items = getItems(urlBuilder);
+            JSONObject item = (JSONObject) items.get("item");
+            contentId = item.get("contentid").toString();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contentId;
+    }
 
 }
 

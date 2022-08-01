@@ -1,5 +1,6 @@
-package com.jenn.eventsinkorea.domain.event;
+package com.jenn.eventsinkorea.domain.event.model;
 
+import com.jenn.eventsinkorea.domain.event.model.EventCommonInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

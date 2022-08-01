@@ -1,21 +1,16 @@
-package com.jenn.eventsinkorea.domain.admin;
+package com.jenn.eventsinkorea.domain.admin.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-
+@Builder
 @Entity
+@Table(name = "Users")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,6 +18,7 @@ import java.util.Date;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
@@ -44,7 +40,9 @@ public class User {
 
     @NotNull
     private String nationality;
-    private Date join_date;
+
+    @Column(name = "join_date")
+    private Date joinDate;
 
     public User(String user_id, String pwd, String username, String email, String nationality) {
         this.userId = user_id;
