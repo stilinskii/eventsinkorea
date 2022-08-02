@@ -63,7 +63,7 @@
 </nav>
 
 <!-- navbar -->
-<div class="sub-page" th:fragment="subPageNav(menu)">
+<div class="sub-page" th:fragment="nav(menu)">
   <header>
     <nav class="navbar">
       <div class="container" id="nav-container">
@@ -71,33 +71,33 @@
           <a class="navbar-brand" href="#" th:href="@{/}"
             ><span>KoreanBuddy</span></a
           >
-          <!-- <li class="nav-item" th:each="page:${cpages}" th:if="${page.slug != 'home'}">
-            <a  class="nav-link" aria-current="page" th:href="@{'/' + ${page.slug}}" th:text="${page.title}">Home</a>
-          </li> -->
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              th:id="${menu} == 'events' ? 'active'"
-              th:href="@{/events/All}"
-              >Events</a
-            >
+          <li class="nav-item" th:each="page:${cpages}" th:if="${page.slug != 'home'}">
+            <a  class="nav-link" aria-current="page" th:id="${menu} == ${page.title} ? 'active'" th:href="@{|/${page.slug}|}" th:text="${page.title}">Home</a>
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              th:id="${menu} == 'buddy' ? 'active'"
-              th:href="@{/buddy}"
-              >Buddy</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              th:id="${menu} == 'community' ? 'active'"
-              th:href="@{/board}"
-              >Community</a
-            >
-          </li>
+<!--          <li class="nav-item">-->
+<!--            <a-->
+<!--              class="nav-link"-->
+<!--              th:id="${menu} == 'Events' ? 'active'"-->
+<!--              th:href="@{/events/All}"-->
+<!--              >Events</a-->
+<!--            >-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a-->
+<!--              class="nav-link"-->
+<!--              th:id="${menu} == 'Buddy' ? 'active'"-->
+<!--              th:href="@{/buddy}"-->
+<!--              >Buddy</a-->
+<!--            >-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a-->
+<!--              class="nav-link"-->
+<!--              th:id="${menu} == 'Community' ? 'active'"-->
+<!--              th:href="@{/board}"-->
+<!--              >Community</a-->
+<!--            >-->
+<!--          </li>-->
 
           <li class="nav-item">
             <a th:href="@{/admin}" class="user_link">

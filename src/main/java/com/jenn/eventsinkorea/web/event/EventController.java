@@ -23,7 +23,7 @@ public class EventController {
     private final EventService eService;
 
 
-    @GetMapping("/All")
+    @GetMapping
     public String eventsIndex(Model model, HttpSession session){
         model.addAttribute("All","active");
         model.addAttribute("eventsList",eService.getEvents());

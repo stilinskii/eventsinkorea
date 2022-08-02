@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/admin/users")
 @RequiredArgsConstructor
 @Slf4j
-public class UsersController {
+public class AdminUsersController {
 
     private final UserRepository userRepo;
     private final AdminUserService userService;

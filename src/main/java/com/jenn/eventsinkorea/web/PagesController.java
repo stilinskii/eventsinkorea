@@ -1,16 +1,31 @@
 package com.jenn.eventsinkorea.web;
 
+import com.jenn.eventsinkorea.domain.admin.PageRepository;
+import com.jenn.eventsinkorea.domain.admin.model.Page;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@Slf4j
+@Controller
+@RequiredArgsConstructor
 public class PagesController {
 
-    //    @GetMapping("/{slug}")
-    //    public String page(@PathVariable String slug,Model model){
-    //        Page page = pageRepo.findBySlug(slug);
-    //        if(page==null){
-    //            return "redirect:/";
-    //        }
-    //        model.addAttribute("page",page);
-    //        return "page";
-    //    }
+        private final PageRepository pageRepository;
+
+        @GetMapping("/{slug}")
+        public String page(@PathVariable String slug, Model model){
+            log.info("PagesController access");
+            Page page = pageRepository.findBySlug(slug);
+            if(page==null){
+                return "redirect:/";
+            }
+            model.addAttribute("page",page);
+            return "page";
+        }
 
     // slug받고 해당 slug 홈페이지로 redirect.
     //response entity로 해당 페이지 response code

@@ -25,11 +25,11 @@ public class Common {
 
     @ModelAttribute
     public void shareData(Model model, HttpSession session){
-        List<Page> pages = pageRepo.findAll();
+        List<Page> pages = pageRepo.findAllByOrderBySortingAsc();
 
-        List<Category> categories = categoryRepo.findAll();
+    //    List<Category> categories = categoryRepo.findAll();
 
-        boolean cartActive = false;
+
 
 //        if(session.getAttribute("cart")!=null){
 //            HashMap<Integer, Cart> cart = (HashMap<Integer, Cart>) session.getAttribute("cart");
@@ -48,7 +48,7 @@ public class Common {
 //        }
 
         model.addAttribute("cpages",pages);
-        model.addAttribute("ccategories",categories);
-        model.addAttribute("cartActive",cartActive);
+     //   model.addAttribute("ccategories",categories);
+
     }
 }

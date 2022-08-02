@@ -16,7 +16,7 @@
   </head>
   <body>
     <!-- navbar -->
-    <div class="sub-page" th:replace="/fragments/nav :: subPageNav('events')">
+    <div class="sub-page" th:replace="/fragments/nav :: nav('Events')">
       <header>
         <nav class="navbar">
           <div class="container" id="nav-container">
@@ -59,7 +59,7 @@
   </div>
 
   <div class="d-flex filter_category">
-    <a href="#" th:href="@{/events/All}" th:classappend="${All}? ${All}" >All</a>
+    <a href="#" th:href="@{/events}" th:classappend="${All}? ${All}" >All</a>
     <a href="#" th:href="@{/events/ongoing}" th:classappend="${ongoingEvents}? ${ongoingEvents}">Ongoing</a>
     <a href="#" th:href="@{/events/ended}" th:classappend="${endedEvents}? ${endedEvents}">End</a>
   </div> 
