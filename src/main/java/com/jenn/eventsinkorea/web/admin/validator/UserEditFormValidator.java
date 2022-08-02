@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.web.admin;
+package com.jenn.eventsinkorea.web.admin.validator;
 
 import com.jenn.eventsinkorea.domain.admin.UserRepository;
 import com.jenn.eventsinkorea.domain.admin.model.User;

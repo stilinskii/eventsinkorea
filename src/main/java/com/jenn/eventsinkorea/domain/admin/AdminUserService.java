@@ -1,20 +1,17 @@
 package com.jenn.eventsinkorea.domain.admin;
 
 import com.jenn.eventsinkorea.domain.admin.model.User;
-import com.jenn.eventsinkorea.web.admin.SearchOption;
 import com.jenn.eventsinkorea.web.admin.form.UserEditForm;
-import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.FieldError;
 
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class AdminUserService {
     private final UserRepository userRepo;
 
 

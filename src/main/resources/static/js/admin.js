@@ -20,6 +20,6 @@ console.dir(joined_date);
  */
 $(function () {
   $('a.confirmDeletion').click(function () {
-    if (!confirm('Are you sure you want to delete this user?')) return false;
+    if (!confirm('Are you sure you want to delete?')) return false;
   });
 });
