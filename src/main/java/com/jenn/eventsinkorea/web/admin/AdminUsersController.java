@@ -35,7 +35,7 @@ public class AdminUsersController {
     }
 
     @GetMapping("edit")
-    public String edit(Integer id,Model model){
+    public String edit(Long id,Model model){
         User user = userRepo.getById(id);
         model.addAttribute("user",user);
         return "admin/users/edit";
@@ -44,7 +44,7 @@ public class AdminUsersController {
 
     //아이디를 꼭 넘겨야하나? TODO
     @PostMapping("edit")
-    public String editSubmit(@Validated @ModelAttribute("user") UserEditForm form, BindingResult bindingResult, Integer id, RedirectAttributes redirectAttributes){
+    public String editSubmit(@Validated @ModelAttribute("user") UserEditForm form, BindingResult bindingResult, Long id, RedirectAttributes redirectAttributes){
         userEditFormValidator.validate(form,bindingResult);
         if(bindingResult.hasErrors()){
             log.info("bindingResult={}",bindingResult);
@@ -59,7 +59,7 @@ public class AdminUsersController {
     }
 
     @GetMapping("/delete")
-    public String delete(Integer id){
+    public String delete(Long id){
         userService.deleteUser(id);
 
         return "redirect:/admin/users";

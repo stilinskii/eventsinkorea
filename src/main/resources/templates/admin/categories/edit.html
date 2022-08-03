@@ -95,20 +95,24 @@
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
           There are errors
         </div>
-
+        <label for="">Page:</label>
+        <select class="form-select pageName" th:field="*{pageId}">
+          <th:block th:each="cpage : ${cpages}">
+            <option th:value="${cpage.Id}" th:text="${cpage.title}">
+              Community
+            </option>
+          </th:block>
+        </select>
         <div class="form-group">
           <label for="">Name:</label>
           <input
             type="text"
             class="form-control"
             th:field="*{name}"
+            th:errorclass="is-invalid"
             placeholder="Name"
           />
-          <span
-            class="error"
-            th:if="${#fields.hasErrors('name')}"
-            th:errors="*{name}"
-          ></span>
+          <div class="invalid-feedback" th:errors="*{name}"></div>
         </div>
 
         <input type="hidden" th:field="*{id}" />

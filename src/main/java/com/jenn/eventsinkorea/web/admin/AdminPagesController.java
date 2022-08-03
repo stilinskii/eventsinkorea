@@ -61,7 +61,7 @@ public class AdminPagesController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable int id, Model model){
+    public String editForm(@PathVariable Long id, Model model){
         model.addAttribute("page",pageRepository.findById(id).get());
 
         return "admin/pages/edit";
@@ -94,7 +94,7 @@ public class AdminPagesController {
 
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable int id, RedirectAttributes redirectAttributes){
+    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes){
         pageRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("message","Page deleted");
         redirectAttributes.addFlashAttribute("alertClass","alert-success");
@@ -111,7 +111,7 @@ public class AdminPagesController {
         Page page;
 
         for (int pageId : id) {
-            page = pageRepository.getOne(pageId);
+            page = pageRepository.getOne((long) pageId);
             page.setSorting(count);
             pageRepository.save(page);
             count++;

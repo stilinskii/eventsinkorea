@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PageRepository extends JpaRepository<Page,Integer> {
+public interface PageRepository extends JpaRepository<Page,Long> {
     List<Page> findAllByOrderBySortingAsc();
     Page findBySlug(String slug);
 
-    Page findBySlugAndIdNot(String slug, int id);
+    Page findBySlugAndIdNot(String slug, Long id);
 }

@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category,Integer> {
+public interface CategoryRepository extends JpaRepository<Category,Long> {
     Category findByName(String name);
-    Category findByNameAndIdNot(String name,int id);
+    Category findByNameAndIdNot(String name,Long id);
 
     List<Category> findAllByOrderBySortingAsc();
-
+    List<Category> findByPageIdOrderBySortingAsc(Long pageId);
     Category findBySlug(String slug);
 }

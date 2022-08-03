@@ -18,7 +18,7 @@
   </head>
   <body>
     <!-- 사진위에 navbar넣으려면 hero 안에 넣어야 한다, -->
-    <div class="hero-image">
+    <div class="hero-image" th:replace="fragments/nav :: nav-front('index')">
       <header>
         <nav class="navbar">
           <div class="container" id="nav-container">
@@ -57,7 +57,7 @@
       <div class="category-container pt-2">
         <ul class="category">
           <li class="category-item">
-            <a href="events.html" th:href="@{/events/All}">Events</a>
+            <a href="events.html" th:href="@{/events}">Events</a>
           </li>
           <li class="category-item">
             <a href="#">Buddy</a>

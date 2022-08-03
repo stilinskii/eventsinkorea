@@ -19,11 +19,11 @@ public class AdminUserService {
         return userRepo.findAll();
     }
 
-    public void deleteUser(Integer id){
+    public void deleteUser(Long id){
         userRepo.deleteById(id);
     }
 
-    public void editUserInfo(UserEditForm form, Integer id) {
+    public void editUserInfo(UserEditForm form, Long id) {
 
         User userToBeEdited = userRepo.getById(id);
         userToBeEdited.setUserId(form.getUserId());

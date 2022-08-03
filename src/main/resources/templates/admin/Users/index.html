@@ -64,7 +64,7 @@
     <main class="container">
       <div class="bg-light p-5 rounded d-flex flex-column align-items-center">
         <table class="table caption-top">
-          <h1 class="py-3 mb-5">Users</h1>
+          <h1 class="display-2 py-3 mb-5">Users</h1>
           <form role="search" method="post" th:action="@{/admin/users/search}">
             <div class="search d-flex flex-row">
               <select
@@ -83,7 +83,6 @@
                   th:replace="/fragments/countriesDropDown :: countries"
                 ></th:block>
               </select>
-              <!--                    <select id="nationality" th:replace="/fragments/countriesDropDown :: countries('index')" th:field="*{nationality}"></select>-->
               <select class="form-select" name="option">
                 <option value="All">All</option>
                 <option value="Id">Id</option>
