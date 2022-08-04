@@ -34,6 +34,7 @@ public class TourApi {
 
             List<Event> events = null;
             try {
+                //http://api.visitkorea.or.kr/openapi/service/rest/EngService/searchFestival?serviceKey=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D&numOfRows=999&pageNo=1&MobileOS=ETC&MobileApp=AppTest&listYN=Y&arrange=R&eventStartDate=20210804&_type=json
                 StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/searchFestival"); /*URL*/
                 urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
                 urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("999", "UTF-8")); /*한 페이지 결과수*/
@@ -41,7 +42,7 @@ public class TourApi {
                 urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰), AND(안드로이드), WIN(원도우폰), ETC*/
                 urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
                 urlBuilder.append("&" + URLEncoder.encode("listYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
-                urlBuilder.append("&" + URLEncoder.encode("arrange", "UTF-8") + "=" + URLEncoder.encode("O", "UTF-8"));
+                urlBuilder.append("&" + URLEncoder.encode("arrange", "UTF-8") + "=" + URLEncoder.encode("R", "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("eventStartDate", "UTF-8") + "=" + URLEncoder.encode(aYearAgoFromToday, "UTF-8"));
                 urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
@@ -105,8 +106,9 @@ public class TourApi {
         try {
             for (Object info : item) {
                 JSONObject infoObj = (JSONObject) info;
+
                 //이미지 없으면 패스
-                if(infoObj.get("firstimage")==null){
+                if(!infoObj.get("firstimage").toString().contains("http")){
                     continue;
                 }
                 //객체필드
@@ -187,7 +189,7 @@ public class TourApi {
     }
 
     public EventCommonInfo getEventCommonInfo(String contentId) {
-        //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailCommon?&contentId=697135&overviewYN=Y&mapinfoYN=Y
+        //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailCommon?serviceKey=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D&numOfRows=1&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=715355&overviewYN=Y&mapinfoYN=Y&addrinfoYN=Y&defaultYN=Y&firstImageYN=Y&_type=json
         EventCommonInfo eventCommonInfo;
         try {
             StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailCommon"); /*URL*/
@@ -204,8 +206,10 @@ public class TourApi {
             urlBuilder.append("&" + URLEncoder.encode("firstImageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
+
             JSONObject items = getItems(urlBuilder);
-            JSONObject item = (JSONObject) items.get("item");
+            JSONArray itemArray = (JSONArray) items.get("item");
+            JSONObject item = (JSONObject) itemArray.get(0);
             Map<String, Double> map = getMapList(item.get("mapx"), item.get("mapy"));
             String introduction = nullChk(item.get("overview"));
             String homepage = nullChk(item.get("homepage"));
@@ -224,7 +228,7 @@ public class TourApi {
     public EventDetail getEventDetail(String contentId){
             EventDetail eventDetail;
 
-        //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailIntro?&contentTypeId=85&contentId=1827088&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y
+        //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailIntro?serviceKey=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D&contentTypeId=85&contentId=715355&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&_type=json
         try {
             StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailIntro"); /*URL*/
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
@@ -232,12 +236,11 @@ public class TourApi {
             urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(contentId, "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰), AND(안드로이드), WIN(원도우폰), ETC*/
             urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("TourAPI3.0_Guide", "UTF-8")); /*서비스명=어플명*/
-            urlBuilder.append("&" + URLEncoder.encode("introYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
             JSONObject items = getItems(urlBuilder);
-            JSONObject item = (JSONObject) items.get("item");
-
+            JSONArray itemArray = (JSONArray) items.get("item");
+            JSONObject item = (JSONObject) itemArray.get(0);
 
             String eventPlace = nullChk(item.get("eventplace")); // 해당사항 없으면 NPE 일어남.
             String tel = nullChk(item.get("sponsor1tel"));
@@ -276,18 +279,17 @@ public class TourApi {
     }
 
     public List<String> getDetailImgs(String contentId){
-            //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailImage?serviceKey=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D&numOfRows=10&pageSize=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=1353950&imageYN=Y
+            //http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailImage?serviceKey=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=715355&imageYN=Y&_type=json
         List<String> subImgs = new ArrayList<>();
         try {
             StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/EngService/detailImage"); /*URL*/
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=YHl9nW394M7v47pQqImVXKdls5fjMA5tKRCD%2BZjjEFfHIWc%2BD6QKWxxmpManad2uIcE1b0Icw1AIhQcxDOUf7A%3D%3D"); /*Service Key*/
             urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과수*/
-            urlBuilder.append("&" + URLEncoder.encode("pageSize", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과수*/
             urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*현재 페이지 번호*/
             urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰), AND(안드로이드), WIN(원도우폰), ETC*/
             urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
             urlBuilder.append("&" + URLEncoder.encode("contentId", "UTF-8") + "=" + URLEncoder.encode(contentId, "UTF-8"));
-            urlBuilder.append("&" + URLEncoder.encode("contentTypeId", "UTF-8") + "=" + URLEncoder.encode("85", "UTF-8"));
+//            urlBuilder.append("&" + URLEncoder.encode("contentTypeId", "UTF-8") + "=" + URLEncoder.encode("85", "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("imageYN", "UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8"));
             urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
