@@ -1,7 +1,7 @@
 package com.jenn.eventsinkorea.web.admin;
 
 import com.jenn.eventsinkorea.domain.admin.AdminPagesService;
-import com.jenn.eventsinkorea.domain.admin.PageRepository;
+import com.jenn.eventsinkorea.domain.admin.repository.PageRepository;
 import com.jenn.eventsinkorea.domain.admin.model.Page;
 import com.jenn.eventsinkorea.web.admin.validator.PageValidator;
 import lombok.RequiredArgsConstructor;

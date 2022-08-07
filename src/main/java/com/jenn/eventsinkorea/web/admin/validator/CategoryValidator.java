@@ -1,6 +1,6 @@
 package com.jenn.eventsinkorea.web.admin.validator;
 
-import com.jenn.eventsinkorea.domain.admin.CategoryRepository;
+import com.jenn.eventsinkorea.domain.admin.repository.CategoryRepository;
 import com.jenn.eventsinkorea.domain.admin.model.Category;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

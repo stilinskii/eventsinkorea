@@ -26,7 +26,7 @@ public class Page {
     private String content;
     private int sorting;
 
-//    @OneToMany(mappedBy = "page", fetch = FetchType.LAZY)
-//    private List<Category> categories = new ArrayList<>();
+    @OneToMany(mappedBy = "page", fetch = FetchType.LAZY)
+    private List<Category> categories = new ArrayList<>();
 
 }

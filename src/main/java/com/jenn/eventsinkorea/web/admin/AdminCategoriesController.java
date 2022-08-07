@@ -1,8 +1,8 @@
 package com.jenn.eventsinkorea.web.admin;
 
 
-import com.jenn.eventsinkorea.domain.admin.CategoryRepository;
-import com.jenn.eventsinkorea.domain.admin.PageRepository;
+import com.jenn.eventsinkorea.domain.admin.repository.CategoryRepository;
+import com.jenn.eventsinkorea.domain.admin.repository.PageRepository;
 import com.jenn.eventsinkorea.domain.admin.model.Category;
 import com.jenn.eventsinkorea.web.admin.validator.CategoryValidator;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +22,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminCategoriesController {
 
-    private final CategoryRepository categoryRepo;
+    private final CategoryRepository categoryRepository;
+    private final PageRepository pageRepository;
     private final CategoryValidator categoryValidator;
 
 
     @GetMapping
     public String index(Model model){
-        List<Category> categories = categoryRepo.findAllByOrderBySortingAsc();
+        List<Category> categories = categoryRepository.findAllByOrderBySortingAsc();
         model.addAttribute("categories",categories);
         return "admin/categories/index";
     }
@@ -36,7 +37,7 @@ public class AdminCategoriesController {
     //ajax
     @PostMapping("/dataSend")
     public String dataSend(Model model, Long pageId){
-        List<Category> categories = categoryRepo.findByPageIdOrderBySortingAsc(pageId);
+        List<Category> categories = categoryRepository.findCategoriesByPageId(pageId);
         model.addAttribute("categories",categories);
         return "admin/categories/index :: #categories";
     }
@@ -47,7 +48,7 @@ public class AdminCategoriesController {
     }
 
     @PostMapping("/add")
-    public String forAddSubmit(@Valid Category category, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String forAddSubmit(@Valid Category category, BindingResult bindingResult, Long pageId, RedirectAttributes redirectAttributes){
 
         categoryValidator.validate(category,bindingResult);
         if(bindingResult.hasErrors()){
@@ -57,19 +58,21 @@ public class AdminCategoriesController {
         }
 
         //성공로직
-        redirectAttributes.addFlashAttribute("message","Category added");
-        redirectAttributes.addFlashAttribute("alertClass","alert-success");
         String slug = category.getName().toLowerCase().replace(" ","-");
+        category.setPage(pageRepository.getById(pageId));
         category.setSlug(slug);
         category.setSorting(100);
-        categoryRepo.save(category);
+        categoryRepository.save(category);
+
+        redirectAttributes.addFlashAttribute("message","Category added");
+        redirectAttributes.addFlashAttribute("alertClass","alert-success");
 
         return "redirect:/admin/categories/add";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model){
-        model.addAttribute("category",categoryRepo.findById(id).get());
+        model.addAttribute("category", categoryRepository.findById(id).get());
         return "admin/categories/edit";
     }
 
@@ -79,7 +82,7 @@ public class AdminCategoriesController {
         categoryValidator.validate(category,bindingResult);
         if(bindingResult.hasErrors()){
             //수정할때 카테고리 이름이 지워져도 페이지 제목에 원래 수정하려했던 페이지 이름 표시
-            Category categoryCurrent = categoryRepo.findById(category.getId()).get();
+            Category categoryCurrent = categoryRepository.findById(category.getId()).get();
             model.addAttribute("categoryName",categoryCurrent.getName());
             return "admin/categories/edit";
         }
@@ -87,7 +90,7 @@ public class AdminCategoriesController {
        //성공로직
         String slug = category.getName().toLowerCase().replace(" ","-");
         category.setSlug(slug);
-        categoryRepo.save(category);
+        categoryRepository.save(category);
         redirectAttributes.addFlashAttribute("message","Category edited");
         redirectAttributes.addFlashAttribute("alertClass","alert-success");
 
@@ -97,7 +100,7 @@ public class AdminCategoriesController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes){
-        categoryRepo.deleteById(id);
+        categoryRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("message","Category deleted");
         redirectAttributes.addFlashAttribute("alertClass","alert-success");
         return "redirect:/admin/categories";
@@ -109,9 +112,9 @@ public class AdminCategoriesController {
         int count = 1;
         Category category;
         for (int categoryId : id) {
-            category = categoryRepo.findById((long) categoryId).get();
+            category = categoryRepository.findById((long) categoryId).get();
             category.setSorting(count);
-            categoryRepo.save(category);
+            categoryRepository.save(category);
             count++;
         }
         //return "ok";

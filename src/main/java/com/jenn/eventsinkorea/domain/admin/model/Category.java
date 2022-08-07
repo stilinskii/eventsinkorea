@@ -26,13 +26,13 @@ public class Category {
 
     private int sorting;
 
-    @NotNull
-    @Column(name = "page_id")
-    private Long pageId;
+//    @NotNull
+//    @Column(name = "page_id")
+//    private Long pageId;
 
 
 //없애야하나..?
-//    @ManyToOne
-//    @JoinColumn(name = "page_id",referencedColumnName="id")
-//    private Page page;
+    @ManyToOne
+    @JoinColumn(name = "page_id",referencedColumnName="id")
+    private Page page;
 }

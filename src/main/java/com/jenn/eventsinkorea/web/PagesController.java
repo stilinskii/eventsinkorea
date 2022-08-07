@@ -1,6 +1,6 @@
 package com.jenn.eventsinkorea.web;
 
-import com.jenn.eventsinkorea.domain.admin.PageRepository;
+import com.jenn.eventsinkorea.domain.admin.repository.PageRepository;
 import com.jenn.eventsinkorea.domain.admin.model.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

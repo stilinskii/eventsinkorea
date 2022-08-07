@@ -1,5 +1,6 @@
 package com.jenn.eventsinkorea.domain.event;
 
+import com.jenn.eventsinkorea.domain.event.api.TourApi;
 import com.jenn.eventsinkorea.domain.event.model.Event;
 import com.jenn.eventsinkorea.domain.event.model.EventDetail;
 import org.junit.jupiter.api.Test;

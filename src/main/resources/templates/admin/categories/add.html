@@ -93,7 +93,7 @@
           There are errors
         </div>
         <label for="">Page:</label>
-        <select class="form-select pageName" th:field="*{pageId}">
+        <select class="form-select pageName" name="pageId">
           <th:block th:each="cpage : ${cpages}">
             <option th:value="${cpage.Id}" th:text="${cpage.title}">
               Community

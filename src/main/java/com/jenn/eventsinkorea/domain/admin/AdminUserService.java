@@ -1,6 +1,7 @@
 package com.jenn.eventsinkorea.domain.admin;
 
 import com.jenn.eventsinkorea.domain.admin.model.User;
+import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.web.admin.form.UserEditForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

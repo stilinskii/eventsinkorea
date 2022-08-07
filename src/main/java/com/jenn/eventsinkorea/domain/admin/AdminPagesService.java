@@ -1,6 +1,7 @@
 package com.jenn.eventsinkorea.domain.admin;
 
 import com.jenn.eventsinkorea.domain.admin.model.Page;
+import com.jenn.eventsinkorea.domain.admin.repository.PageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,8 @@
 package com.jenn.eventsinkorea.web;
 
 
-import com.jenn.eventsinkorea.domain.admin.CategoryRepository;
-import com.jenn.eventsinkorea.domain.admin.PageRepository;
-import com.jenn.eventsinkorea.domain.admin.model.Category;
+import com.jenn.eventsinkorea.domain.admin.repository.CategoryRepository;
+import com.jenn.eventsinkorea.domain.admin.repository.PageRepository;
 import com.jenn.eventsinkorea.domain.admin.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
 
 //intercepter 적용. 다른 메서드전에 이거 호출

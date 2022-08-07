@@ -1,7 +1,7 @@
 package com.jenn.eventsinkorea.web.admin;
 
 import com.jenn.eventsinkorea.domain.admin.model.User;
-import com.jenn.eventsinkorea.domain.admin.UserRepository;
+import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.admin.AdminUserService;
 import com.jenn.eventsinkorea.web.admin.form.UserEditForm;
 import com.jenn.eventsinkorea.web.admin.validator.UserEditFormValidator;

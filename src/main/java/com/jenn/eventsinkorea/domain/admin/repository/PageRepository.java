@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.domain.admin;
+package com.jenn.eventsinkorea.domain.admin.repository;
 
 import com.jenn.eventsinkorea.domain.admin.model.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
