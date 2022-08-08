@@ -2,6 +2,7 @@ package com.jenn.eventsinkorea.web.admin.form;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -13,7 +14,9 @@ public class UserSearchForm {
     private String nationality;
     private String option;//All / id / username / email
     private String joinedDate;//all / 1week / 1month / 6month
-    private String from;
-    private String to;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date from;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date to;
 
 }

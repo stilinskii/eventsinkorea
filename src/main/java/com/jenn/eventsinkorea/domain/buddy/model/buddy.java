@@ -5,9 +5,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.criteria.CriteriaBuilder;
 
-@Entity
-@Table(name = "buddies")
-public class buddy {
-    @Id
-    private Integer id;
-}
+//@Entity
+//@Table(name = "buddies")
+//public class buddy {
+//    @Id
+//    private Integer id;
+//}

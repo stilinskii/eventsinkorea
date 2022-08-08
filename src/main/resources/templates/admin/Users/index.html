@@ -70,13 +70,14 @@
               <select
                 class="form-select"
                 name="joinedDate"
+                id="joinedDate"
                 onchange="OnChange();"
               >
                 <option value="Joined Date">Joined Date</option>
                 <option value="1 week">1 week</option>
                 <option value="1 month">1 month</option>
                 <option value="6 month">6 month</option>
-                <option value="기간입력">기간입력</option>
+                <option value="Enter Date">Enter Date</option>
               </select>
               <select class="form-select" name="nationality">
                 <th:block
@@ -133,7 +134,7 @@
               <td th:text="${user.username}">Otto</td>
               <td th:text="${user.email}">@mdo</td>
               <td th:text="${user.nationality}">@mdo</td>
-              <td th:text="${user.joinDate}">@mdo</td>
+              <td th:text="${user.joinedDate}">@mdo</td>
               <td>
                 <a
                   type="button"

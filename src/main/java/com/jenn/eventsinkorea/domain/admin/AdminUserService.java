@@ -3,6 +3,7 @@ package com.jenn.eventsinkorea.domain.admin;
 import com.jenn.eventsinkorea.domain.admin.model.User;
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.web.admin.form.UserEditForm;
+import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,21 +38,7 @@ public class AdminUserService {
 
     }
 
-//    public List<User> findBySearch(UserSearchForm form) {
-//
-////            log.info("SearchOption.ID={}",SearchOption.);
-//        if(form.getOption().equals("Id")){
-//            List<User> byUserIdContaining = userRepo.findByUserIdContaining(form.getKeyword());
-//            log.info("form.getKeyword()={}",form.getKeyword());
-//            return byUserIdContaining;
-//        }else if(form.getOption().equals("Username")){
-//            List<User> byUsernameContaining = userRepo.findByUsernameContaining(form.getKeyword());
-//            return byUsernameContaining;
-//        }else if(form.getOption().equals("Email")){
-//            userRepo.findByEmailContaining(form.getKeyword());
-//        }
-//
-//
-//        return userRepo.findByUserIdContainingOrEmailContainingOrUsernameContaining(form.getKeyword());
-//    }
+    public List<User> findUsersBySearch(UserSearchForm form){
+        return userRepo.findUsersBySearch(form);
+    }
 }

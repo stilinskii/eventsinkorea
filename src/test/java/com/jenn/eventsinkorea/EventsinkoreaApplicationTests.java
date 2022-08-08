@@ -5,22 +5,28 @@ import entity.Hello;
 import entity.QHello;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@SpringBootTest
+@SpringBootTest
+@Transactional
+@Commit
 class EventsinkoreaApplicationTests {
 
 	@Autowired
-	JPAQueryFactory query;
+	EntityManager em;
 
 	@Test
 	void contextLoads() {
-
-
 		Hello hello = new Hello();
+		em.persist(hello);
+
+		JPAQueryFactory query = new JPAQueryFactory(em);
 		QHello qHello = new QHello("h");
 
 		Hello result = query

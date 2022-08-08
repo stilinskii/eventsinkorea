@@ -42,7 +42,7 @@ public class User {
     private String nationality;
 
     @Column(name = "join_date")
-    private Date joinDate;
+    private Date joinedDate;
 
     public User(String user_id, String pwd, String username, String email, String nationality) {
         this.userId = user_id;

@@ -22,7 +22,7 @@ public class AdminService {
 
         AtomicInteger cnt= new AtomicInteger();
         users.stream().forEach(user -> {
-            Date join_date = user.getJoinDate();
+            Date join_date = user.getJoinedDate();
             if(join_date==new Date()){
                 cnt.getAndIncrement();
             }
