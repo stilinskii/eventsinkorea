@@ -1,71 +1,163 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace = "fragments/common :: head('Events')">
+  <head th:replace="fragments/common :: head('Events')">
     <meta charset="utf-8" />
 
     <!-- bootstrap core css -->
     <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-            rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
     />
     <!-- Custom styles for this template -->
-    <link href="/static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
-
+    <link
+      href="/static/css/style.css"
+      th:href="@{/css/style.css}"
+      rel="stylesheet"
+    />
 
     <title>Events</title>
-</head>
-<body>
-<!-- navbar -->
-<div class="sub-page" th:replace="/fragments/nav :: nav-front('Buddy')">
-    <header>
+  </head>
+  <body>
+    <!-- navbar -->
+    <div class="sub-page" th:replace="/fragments/nav :: nav-front('Buddy')">
+      <header>
         <nav class="navbar">
-            <div class="container" id="nav-container">
-                <ul class="navbar-nav" id="nav">
-                    <a class="navbar-brand" href="#" th:href="@{/}"><span>Brand</span></a>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Events</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Guides</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Community</a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="user_link">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li class="user_link nav-item">
-                        <a href="" class="user_option"> Login </a>
-                    </li>
-
-                </ul>
-            </div>
+          <div class="container" id="nav-container">
+            <ul class="navbar-nav" id="nav">
+              <a class="navbar-brand" href="#" th:href="@{/}"
+                ><span>Brand</span></a
+              >
+              <li class="nav-item">
+                <a class="nav-link" href="#">Events</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Guides</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Community</a>
+              </li>
+              <li class="nav-item">
+                <a th:href="">
+                  <i class="fa fa-cog"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="user_link">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li class="user_link nav-item">
+                <a href="" class="user_option"> Login </a>
+              </li>
+            </ul>
+          </div>
         </nav>
-    </header>
-</div>
+      </header>
+    </div>
 
-<div class="container"></div>
+    <div class="container">
+      <div class="d-flex flex-column align-items-center">
+        <div class="write_buddy pt-3">
+          <a href="" class="btn btn-secondary">be a buddy</a>
+        </div>
+        <div class="p-3 m-5">
+          <h1>Buddy</h1>
+          <p>Find your local travel buddy</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <h4>filter</h4>
+          <div class="filters my-3">
+            <select class="form-select">
+              <option value="Joined Date">language</option>
+              <option value="1 week">1 week</option>
+              <option value="1 month">1 month</option>
+              <option value="6 month">6 month</option>
+              <option value="Enter Date">Enter Date</option>
+            </select>
 
+            <select class="form-select my-2">
+              <option value="Joined Date">location</option>
+              <option value="1 week">1 week</option>
+              <option value="1 month">1 month</option>
+              <option value="6 month">6 month</option>
+              <option value="Enter Date">Enter Date</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="sorting-dropdown">
+            <select class="form-select mb-2">
+              <option value="Joined Date">sorting</option>
+              <option value="1 week">1 week</option>
+              <option value="1 month">1 month</option>
+              <option value="6 month">6 month</option>
+              <option value="Enter Date">Enter Date</option>
+            </select>
+          </div>
+          <div class="buddy_info border-top" style="background-color: white">
+            <div class="lang"><p>learning : English / native : Korean</p></div>
+            <div class="info d-flex justify-content-between">
+              <div class="mt-2 p-4">
+                <h3>name</h3>
+                <p>intro</p>
+                <i class="fa fa-star mt-4">2.0(12)</i>
+              </div>
+              <div class="m-3">
+                <img
+                  src="/static/images/roof-tile-4495550_960_720.jpg"
+                  alt=""
+                  height="130"
+                  width="130"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="buddy_info border-top" style="background-color: white">
+            <div class="lang"><p>learning : English / native : Korean</p></div>
+            <div class="info d-flex justify-content-between">
+              <div class="mt-2 p-4">
+                <h3>name</h3>
+                <p>intro</p>
+                <i class="fa fa-star mt-4">2.0(12)</i>
+              </div>
+              <div class="m-3">
+                <img
+                  src="/static/images/roof-tile-4495550_960_720.jpg"
+                  alt=""
+                  height="130"
+                  width="130"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </div>
 
-<div>
-    <script
-            src="https://code.jquery.com/jquery-3.6.0.js"
-            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
-    <script defer src="/static/js/events.js" th:src="@{/js/events.js}"></script>
-    <script
-            src="https://kit.fontawesome.com/661f25159f.js"
-            crossorigin="anonymous"
-    ></script>
-</div>
-</body>
+    <div>
+      <script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"
+      ></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"
+      ></script>
+      <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
+      <script
+        defer
+        src="/static/js/events.js"
+        th:src="@{/js/events.js}"
+      ></script>
+      <script
+        src="https://kit.fontawesome.com/661f25159f.js"
+        crossorigin="anonymous"
+      ></script>
+    </div>
+  </body>
 </html>

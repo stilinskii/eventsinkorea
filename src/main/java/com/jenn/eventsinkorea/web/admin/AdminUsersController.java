@@ -39,7 +39,7 @@ public class AdminUsersController {
 //    }
 
     @GetMapping
-    public String users(Model model){
+    public String users(Model model, @ModelAttribute("searchForm") UserSearchForm searchForm){
         model.addAttribute("users", userService.findAll());
         return "admin/users/index";
     }
@@ -52,7 +52,7 @@ public class AdminUsersController {
     }
 
 
-    //아이디를 꼭 넘겨야하나? TODO
+    //아이디를 꼭 넘겨야하나? 응. edit 할때 아이디중복확인때 필요함. 다른방법도있지만(같은아이디 2개인지확인) 굳이?
     @PostMapping("edit")
     public String editSubmit(@Validated @ModelAttribute("user") UserEditForm form, BindingResult bindingResult, Long id, RedirectAttributes redirectAttributes){
         userEditFormValidator.validate(form,bindingResult);
@@ -79,6 +79,8 @@ public class AdminUsersController {
     public String search(UserSearchForm form, Model model){
         log.info("form.getOption={}",form.getOption());
         List<User> userBySearch = userService.findUsersBySearch(form);
+
+        model.addAttribute("searchForm",form);
         model.addAttribute("users",userBySearch);
         return "admin/users/index";
     }

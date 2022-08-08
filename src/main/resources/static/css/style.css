@@ -451,3 +451,34 @@ div.search select {
 .periodSelect {
   width: 100%;
 }
+
+/* buddy start */
+.buddy_info .lang {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+}
+
+.buddy_info .lang p {
+  margin: 0;
+  padding-top: 10px;
+}
+
+.write_buddy {
+  margin-right: 180px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.sorting-dropdown {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+.sorting-dropdown select {
+  width: 150px;
+}
