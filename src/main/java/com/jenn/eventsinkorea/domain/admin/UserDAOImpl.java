@@ -32,10 +32,8 @@ public class UserDAOImpl implements UserDAO {
     public BooleanExpression joinedDateBetween(UserSearchForm searchForm){
         //1 week , 1 month , 6 month , Enter Date.
         Calendar date = Calendar.getInstance();
-
 //        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 //        Integer weekAgo = Integer.parseInt(format.format(week.getTime()));
-
 
         String joinedDateOption = searchForm.getJoinedDate();
         if(Objects.isNull(joinedDateOption) || joinedDateOption.equals("Joined Date")){
@@ -52,14 +50,10 @@ public class UserDAOImpl implements UserDAO {
                 return user.joinedDate.goe(date.getTime());
             }else{
                 return user.joinedDate.goe(searchForm.getFrom()).and(user.joinedDate.loe(searchForm.getTo()));
-                //시간까지 같이 측정돼서 원하는대로 안나옴.
+                //시간까지 같이 측정돼서 원하는대로 안나옴. TODO
             }
         }
     }
-
-
-
-
 
 
 
