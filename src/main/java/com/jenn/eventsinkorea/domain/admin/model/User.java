@@ -41,7 +41,7 @@ public class User {
     @NotNull
     private String nationality;
 
-    @Column(name = "join_date")
+    @Column(name = "joined_date")
     private Date joinedDate;
 
     public User(String user_id, String pwd, String username, String email, String nationality) {

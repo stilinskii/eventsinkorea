@@ -19,6 +19,10 @@ h2 {
   font-family: 'Ibarra Real Nova', serif;
 }
 
+i.fa.fa-star {
+  color: #ffda33;
+}
+
 a {
   text-decoration: none;
   color: #222831;
@@ -481,4 +485,8 @@ div.search select {
 }
 .sorting-dropdown select {
   width: 150px;
+}
+
+.ck.ck-content {
+  height: 200px;
 }

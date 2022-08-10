@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments/common :: head('Events')">
+    <meta charset="utf-8" />
+
+    <!-- bootstrap core css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link
+      href="/static/css/style.css"
+      th:href="@{/css/style.css}"
+      rel="stylesheet"
+    />
+
+    <title>Events</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <div class="sub-page" th:replace="/fragments/nav :: nav-front('Buddy')">
+      <header>
+        <nav class="navbar">
+          <div class="container" id="nav-container">
+            <ul class="navbar-nav" id="nav">
+              <a class="navbar-brand" href="#" th:href="@{/}"
+                ><span>Brand</span></a
+              >
+              <li class="nav-item">
+                <a class="nav-link" href="#">Events</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Guides</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Community</a>
+              </li>
+              <li class="nav-item">
+                <a th:href="">
+                  <i class="fa fa-cog"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="user_link">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li class="user_link nav-item">
+                <a href="" class="user_option"> Login </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    </div>
+
+    <div class="container mt-4">
+      <div class="bg-light p-5 rounded">
+        <div class="d-flex flex-column align-items-center">
+          <img
+            src="/static/images/roof-tile-4495550_960_720.jpg"
+            th:src="${buddy.imgUrl}"
+            width="160px"
+            height="160px"
+            alt=""
+            class="mt-3"
+          />
+          <div class="p-3 m-3">
+            <h1 style="text-align: center" th:text="${buddy.user.username}">
+              Buddy Name
+            </h1>
+          </div>
+          <p th:text="|learning language : ${buddy.learningLang}|">
+            learning language : English
+          </p>
+          <p th:text="|native language : ${buddy.nativeLang}|">
+            native language : Korean
+          </p>
+          <button class="btn btn-primary m-3">request</button>
+        </div>
+        <hr />
+        <div>
+          <h4>Introduction</h4>
+          <p class="m-5" th:utext="${buddy.intro}">hihihihi</p>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-end">
+          <h4>Review</h4>
+          <div class="ms-auto">
+            <div class="d-flex">
+              <i class="fa fa-star mt-1 mx-1"></i>
+              <p>2.0</p>
+            </div>
+            <p>based on 3 reviews</p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <h6>Lily</h6>
+          <div>It was nice to see you !</div>
+          <p>2022/08/88</p>
+        </div>
+      </div>
+    </div>
+    <div class="container p-5 d-flex justify-content-center">
+      <button class="btn btn-secondary" onclick="javascript:history.back();">
+        back to list
+      </button>
+    </div>
+    <div>
+      <script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"
+      ></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"
+      ></script>
+      <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
+      <script
+        defer
+        src="/static/js/events.js"
+        th:src="@{/js/events.js}"
+      ></script>
+      <script
+        src="https://kit.fontawesome.com/661f25159f.js"
+        crossorigin="anonymous"
+      ></script>
+    </div>
+  </body>
+</html>
