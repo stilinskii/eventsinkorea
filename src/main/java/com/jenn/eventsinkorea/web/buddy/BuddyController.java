@@ -1,11 +1,10 @@
 package com.jenn.eventsinkorea.web.buddy;
 
-import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.buddy.BuddyRepository;
 import com.jenn.eventsinkorea.domain.buddy.BuddyService;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
-import lombok.Getter;
+import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringOption;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -23,7 +23,6 @@ public class BuddyController {
 
     private final BuddyService service;
     private final BuddyRepository buddyRepository;
-    private final UserRepository userRepository;
     private final BeABuddyFormValidator buddyFormValidator;
     @GetMapping
     public String index(Model model){
@@ -56,5 +55,14 @@ public class BuddyController {
         Buddy buddy = buddyRepository.getById(buddyId);
         model.addAttribute("buddy",buddy);
         return "buddy/buddy";
+    }
+
+    //ajax
+    @PostMapping("/filtering")
+    public String buddyFiltering(BuddyFilteringOption buddyFiltering, Model model){
+        log.info("buddyFiltering={}",buddyFiltering);
+        List<Buddy> buddies = service.getFilteredbuddies(buddyFiltering);
+        model.addAttribute("buddies", buddies);
+        return "buddy/buddies :: #buddies";
     }
 }

@@ -33,7 +33,7 @@ public class S3Uploader {
     }
 
     private String upload(File uploadFile, String dirName) {
-        String fileName = dirName + "/" + UUID.randomUUID() + "_" + uploadFile.getName();
+        String fileName = "static/"+ dirName + "/" + UUID.randomUUID() + "_" + uploadFile.getName();
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile);
         return uploadImageUrl;

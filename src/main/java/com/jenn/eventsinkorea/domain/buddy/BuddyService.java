@@ -4,11 +4,13 @@ import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.file.S3Uploader;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
+import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringOption;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class BuddyService {
         MultipartFile image = form.getImage();
         String S3Url;
         try {
-            S3Url = s3Uploader.upload(image, "static");
+            S3Url = s3Uploader.upload(image, "buddy");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -40,5 +42,9 @@ public class BuddyService {
 
         buddyRepository.save(buddy);
 
+    }
+
+    public List<Buddy> getFilteredbuddies(BuddyFilteringOption option){
+        return buddyRepository.filteringBuddy(option);
     }
 }

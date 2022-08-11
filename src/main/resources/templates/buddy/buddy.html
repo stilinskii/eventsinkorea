@@ -71,12 +71,18 @@
               Buddy Name
             </h1>
           </div>
-          <p th:text="|learning language : ${buddy.learningLang}|">
-            learning language : English
+          <p class="d-flex flex-column align-items-center">
+            <span th:text="|learning language : ${buddy.learningLang}|">
+              learning language : English
+            </span>
+            <span th:text="|native language : ${buddy.nativeLang}|">
+              native language : Korean
+            </span>
+            <span th:text="|location : ${buddy.location}|">
+              location : all
+            </span>
           </p>
-          <p th:text="|native language : ${buddy.nativeLang}|">
-            native language : Korean
-          </p>
+
           <button class="btn btn-primary m-3">request</button>
         </div>
         <hr />

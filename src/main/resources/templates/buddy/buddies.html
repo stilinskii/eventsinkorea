@@ -68,23 +68,62 @@
         </div>
       </div>
       <div class="row">
+        <!-- ===========buddy filter============== -->
         <div class="col-2">
-          <h4>filter</h4>
-          <div class="filters my-3">
-            <select class="form-select">
-              <th:block
-                th:replace="/fragments/dropDownRef :: languages"
-              ></th:block>
-            </select>
-
-            <select class="form-select my-2">
-              <option value="Joined Date">location</option>
-              <th:block
-                th:replace="/fragments/dropDownRef :: locations"
-              ></th:block>
-            </select>
+          <div class="d-flex">
+            <h4 class="me-auto">filter</h4>
+            <i
+              class="fa fa-repeat mx-2 pt-2"
+              onClick="window.location.reload();"
+            ></i>
           </div>
+          <main>
+            <div class="filters my-3">
+              <div class="form-floating">
+                <select
+                  class="form-select my-2 learning-lang"
+                  id="floatingSelect"
+                  aria-label="Floating label select example"
+                >
+                  <th:block
+                    th:replace="/fragments/dropDownRef :: languages"
+                  ></th:block>
+                </select>
+                <label for="floatingSelect">Learning language</label>
+              </div>
+
+              <div class="form-floating">
+                <select
+                  class="form-select my-2 native-lang"
+                  id="floatingSelect"
+                  aria-label="Floating label select example"
+                >
+                  <th:block
+                    th:replace="/fragments/dropDownRef :: languages"
+                  ></th:block>
+                </select>
+                <label for="floatingSelect">native language</label>
+              </div>
+
+              <div class="form-floating">
+                <select
+                  class="form-select my-2 location"
+                  id="floatingSelect"
+                  aria-label="Floating label select example"
+                >
+                  <th:block
+                    th:replace="/fragments/dropDownRef :: locations"
+                  ></th:block>
+                </select>
+                <label for="floatingSelect">location</label>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm filter-btn">
+              filter
+            </button>
+          </main>
         </div>
+        <!-- ===========buddy filter end============== -->
         <div class="col-8">
           <div class="sorting-dropdown">
             <select class="form-select mb-2">
@@ -94,40 +133,42 @@
               <option value="Latest">Latest</option>
             </select>
           </div>
-          <th:block th:each="buddy:${buddies}">
-            <a th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}" href="#">
-              <div
-                class="buddy_info border-top"
-                style="background-color: white"
-              >
-                <div class="lang">
-                  <p
-                    th:text="|learning : ${buddy.learningLang} / native : ${buddy.nativeLang}|"
-                  >
-                    learning : English / native : Korean
-                  </p>
-                </div>
-                <div class="info d-flex justify-content-between">
-                  <div class="mt-2 p-4">
-                    <h3 th:text="${buddy.user.username}">name</h3>
-                    <p th:utext="${buddy.intro}">intro</p>
-                    <div class="d-flex">
-                      <i class="fa fa-star mt-1 mx-1"></i>
-                      <p>2.0 (12)</p>
+          <main id="buddies">
+            <th:block th:each="buddy:${buddies}">
+              <a th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}" href="#">
+                <div
+                  class="buddy_info border-top"
+                  style="background-color: white"
+                >
+                  <div class="lang">
+                    <p
+                      th:text="|learning : ${buddy.learningLang} / native : ${buddy.nativeLang}|"
+                    >
+                      learning : English / native : Korean
+                    </p>
+                  </div>
+                  <div class="info d-flex justify-content-between">
+                    <div class="mt-2 p-4">
+                      <h3 th:text="${buddy.user.username}">name</h3>
+                      <p th:utext="${buddy.intro}">intro</p>
+                      <div class="d-flex">
+                        <i class="fa fa-star mt-1 mx-1"></i>
+                        <p>2.0 (12)</p>
+                      </div>
+                    </div>
+                    <div class="m-3">
+                      <img
+                        th:src="${buddy.imgUrl}"
+                        alt=""
+                        height="130"
+                        width="130"
+                      />
                     </div>
                   </div>
-                  <div class="m-3">
-                    <img
-                      th:src="${buddy.imgUrl}"
-                      alt=""
-                      height="130"
-                      width="130"
-                    />
-                  </div>
                 </div>
-              </div>
-            </a>
-          </th:block>
+              </a>
+            </th:block>
+          </main>
           <div class="buddy_info border-top" style="background-color: white">
             <div class="lang"><p>learning : English / native : Korean</p></div>
             <div class="info d-flex justify-content-between">
@@ -154,27 +195,26 @@
       </div>
     </div>
 
-    <div>
-      <script
-        src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"
-      ></script>
-      <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
-      <script
-        defer
-        src="/static/js/events.js"
-        th:src="@{/js/events.js}"
-      ></script>
+    <div th:replace="/fragments/common :: scripts">
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
       <script
         src="https://kit.fontawesome.com/661f25159f.js"
         crossorigin="anonymous"
       ></script>
     </div>
+    <script defer src="/static/js/events.js" th:src="@{/js/events.js}"></script>
+    <script
+      defer
+      src="/static/js/buddies.js"
+      th:src="@{/js/buddies.js}"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/661f25159f.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

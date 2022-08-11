@@ -490,3 +490,7 @@ div.search select {
 .ck.ck-content {
   height: 200px;
 }
+
+.filter-box {
+  width: 100%;
+}
