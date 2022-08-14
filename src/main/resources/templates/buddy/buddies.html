@@ -148,9 +148,9 @@
                     </p>
                   </div>
                   <div class="info d-flex justify-content-between">
-                    <div class="mt-2 p-4">
+                    <div class="mt-2 p-4 buddy-detail-box">
                       <h3 th:text="${buddy.user.username}">name</h3>
-                      <p th:utext="${buddy.intro}">intro</p>
+                      <p th:text="${buddy.intro}" class="ellipsis">intro</p>
                       <div class="d-flex">
                         <i class="fa fa-star mt-1 mx-1"></i>
                         <p>2.0 (12)</p>

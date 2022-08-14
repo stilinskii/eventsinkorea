@@ -1,13 +1,10 @@
 package com.jenn.eventsinkorea.web;
 
-import com.jenn.eventsinkorea.domain.admin.model.User;
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Slf4j
 @Controller

@@ -1,8 +1,7 @@
 package com.jenn.eventsinkorea.web.admin.validator;
 
-import com.jenn.eventsinkorea.domain.admin.model.Category;
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
-import com.jenn.eventsinkorea.domain.admin.model.User;
+import com.jenn.eventsinkorea.domain.user.User;
 import com.jenn.eventsinkorea.web.admin.form.UserEditForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,7 +23,7 @@ public class UserEditFormValidator implements Validator {
         UserEditForm form = (UserEditForm) target;
 //        User userIdExists = form.getId()==null ? userRepository.findByUserId(form.getUserId())
 //                : userRepository.findByUserIdAndIdNot(form.getUserId(), form.getId());
-        User userIdExists = userRepository.findByUserIdAndIdNot(form.getUserId(), form.getId());
+        User userIdExists = userRepository.findByUsernameAndIdNot(form.getUserId(), form.getId());
         if(userIdExists!=null){
             errors.rejectValue("userId","userIdExists");
         }

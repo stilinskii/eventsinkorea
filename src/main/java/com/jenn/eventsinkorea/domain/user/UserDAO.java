@@ -1,6 +1,6 @@
-package com.jenn.eventsinkorea.domain.admin;
+package com.jenn.eventsinkorea.domain.user;
 
-import com.jenn.eventsinkorea.domain.admin.model.User;
+import com.jenn.eventsinkorea.domain.user.User;
 import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;
 
 import java.util.List;

@@ -1,11 +1,14 @@
-package com.jenn.eventsinkorea.domain.admin.model;
+package com.jenn.eventsinkorea.domain.user;
 
+import com.jenn.eventsinkorea.domain.user.Role;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 @Builder
@@ -24,7 +27,7 @@ public class User {
     @NotNull
     @Size(min=5,max=30)
     @Column(name = "user_id")
-    private String userId;
+    private String username;
 
     @NotNull
     //@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
@@ -32,7 +35,8 @@ public class User {
 
     @NotNull
     @Size(min=2,max=30)
-    private String username;
+    @Column(name = "username")
+    private String name;
 
     @NotNull
     @Email
@@ -44,10 +48,14 @@ public class User {
     @Column(name = "joined_date")
     private Date joinedDate;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
+
+
     public User(String user_id, String pwd, String username, String email, String nationality) {
-        this.userId = user_id;
+        this.username = user_id;
         this.pwd = pwd;
-        this.username = username;
+        this.name = username;
         this.email = email;
         this.nationality = nationality;
     }

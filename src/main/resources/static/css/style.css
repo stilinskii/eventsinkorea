@@ -487,10 +487,27 @@ div.search select {
   width: 150px;
 }
 
-.ck.ck-content {
-  height: 200px;
-}
-
 .filter-box {
   width: 100%;
 }
+
+.ellipsis {
+  width: 100%;
+  max-width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.buddy-detail-box {
+  width: 80%;
+}
+
+/* p.ellipsis {
+  background-color: red;
+  width: 100%;
+  max-width: 800px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */

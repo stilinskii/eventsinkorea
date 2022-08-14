@@ -1,6 +1,6 @@
 package com.jenn.eventsinkorea.web.admin;
 
-import com.jenn.eventsinkorea.domain.admin.model.User;
+import com.jenn.eventsinkorea.domain.user.User;
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.admin.AdminUserService;
 import com.jenn.eventsinkorea.web.admin.form.UserEditForm;
@@ -8,18 +8,13 @@ import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;
 import com.jenn.eventsinkorea.web.admin.validator.UserEditFormValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Controller

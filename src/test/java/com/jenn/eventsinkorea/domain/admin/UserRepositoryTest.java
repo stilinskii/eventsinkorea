@@ -1,6 +1,6 @@
 package com.jenn.eventsinkorea.domain.admin;
 
-import com.jenn.eventsinkorea.domain.admin.model.User;
+import com.jenn.eventsinkorea.domain.user.User;
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -25,15 +25,15 @@ class UserRepositoryTest {
         //given
         User user = User.builder()
                 .id(1L)
-                .userId("hhgggg")
+                .username("hhgggg")
                 .pwd("123212312")
-                .username("herong")
+                .name("herong")
                 .email("lhy98410@naver.com")
                 .nationality("Korea")
                 .build();
         underTest.save(user);
         //when
-        User byUserIdAndIdNot = underTest.findByUserIdAndIdNot(user.getUserId(), user.getId() - 1);
+        User byUserIdAndIdNot = underTest.findByUsernameAndIdNot(user.getUsername(), user.getId() - 1);
 
         //then
         assertThat(byUserIdAndIdNot).isNotNull();

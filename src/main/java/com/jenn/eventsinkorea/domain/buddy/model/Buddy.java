@@ -1,6 +1,6 @@
 package com.jenn.eventsinkorea.domain.buddy.model;
 
-import com.jenn.eventsinkorea.domain.admin.model.User;
+import com.jenn.eventsinkorea.domain.user.User;
 
 import lombok.*;
 
@@ -34,6 +34,9 @@ public class Buddy {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+//    @JoinTable(name = "buddies_users",
+//            joinColumns = @JoinColumn(name = "buddy_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private User user;
 
     public Buddy() {

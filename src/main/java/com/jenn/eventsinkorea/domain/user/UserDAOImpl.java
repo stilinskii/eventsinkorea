@@ -1,6 +1,7 @@
-package com.jenn.eventsinkorea.domain.admin;
+package com.jenn.eventsinkorea.domain.user;
 
-import com.jenn.eventsinkorea.domain.admin.model.User;
+import com.jenn.eventsinkorea.domain.user.User;
+import com.jenn.eventsinkorea.domain.user.UserDAO;
 import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -11,7 +12,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-import static com.jenn.eventsinkorea.domain.admin.model.QUser.user;
+import static com.jenn.eventsinkorea.domain.user.QUser.user;
 
 @Repository(value="userDAOImpl")
 @RequiredArgsConstructor
@@ -83,7 +84,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public BooleanExpression userIdContains(String keyword){
-        return Objects.isNull(keyword) ? null : user.userId.contains(keyword);
+        return Objects.isNull(keyword) ? null : user.username.contains(keyword);
     }
 
     public BooleanExpression emailContains(String keyword){
