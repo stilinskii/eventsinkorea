@@ -87,10 +87,10 @@
                 type="text"
                 class="form-control"
                 id="inputId"
-                th:field="*{userId}"
+                th:field="*{username}"
                 th:errorclass="is-invalid"
               />
-              <div class="invalid-feedback" th:errors="*{userId}">
+              <div class="invalid-feedback" th:errors="*{username}">
                 회원아이디오류
               </div>
             </div>
@@ -104,10 +104,10 @@
                 type="text"
                 class="form-control"
                 id="inputUsername"
-                th:field="*{username}"
+                th:field="*{name}"
                 th:errorclass="is-invalid"
               />
-              <div class="invalid-feedback" th:errors="*{username}">
+              <div class="invalid-feedback" th:errors="*{name}">
                 회원이름오류
               </div>
             </div>

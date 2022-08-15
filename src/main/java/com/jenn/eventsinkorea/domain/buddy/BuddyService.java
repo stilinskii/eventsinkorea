@@ -2,6 +2,7 @@ package com.jenn.eventsinkorea.domain.buddy;
 
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
+import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.file.S3Uploader;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
 import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringOption;
@@ -16,6 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BuddyService {
     private final BuddyRepository buddyRepository;
+
+    private final BuddyRequestRepository buddyRequestRepository;
     private final UserRepository userRepository;
     private final S3Uploader s3Uploader;
 
@@ -46,5 +49,9 @@ public class BuddyService {
 
     public List<Buddy> getFilteredbuddies(BuddyFilteringOption option){
         return buddyRepository.filteringBuddy(option);
+    }
+
+    public List<BuddyRequest> getRequestsByBuddyId(long id){
+        return buddyRequestRepository.findByBuddy(buddyRepository.findById(id).get());
     }
 }

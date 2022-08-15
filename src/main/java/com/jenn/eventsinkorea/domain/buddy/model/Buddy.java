@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,18 +19,23 @@ public class Buddy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "native_lang")
     private String nativeLang;
+
     @Column(name = "learning_lang")
     private String learningLang;
     private String location;
+
     @Column(name = "created_at")
     private Date createdAt;
+
     @Column(name = "updated_at")
     private Date updatedAt;
 
     @Column(name = "img_url")
     private String imgUrl;
+
     private String intro;
 
     @OneToOne
@@ -38,6 +44,11 @@ public class Buddy {
 //            joinColumns = @JoinColumn(name = "buddy_id"),
 //            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private User user;
+
+
+    @OneToMany(mappedBy = "buddy")
+    private List<BuddyRequest> buddyRequests;
+
 
     public Buddy() {
     }

@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -27,7 +28,7 @@ public class BuddyController {
     @GetMapping
     public String index(Model model){
         model.addAttribute("buddies", buddyRepository.findAll());
-
+        log.info("buddyrequest={}",service.getRequestsByBuddyId(1).get(0));
         return "buddy/buddies";
     }
 
@@ -64,5 +65,12 @@ public class BuddyController {
         List<Buddy> buddies = service.getFilteredbuddies(buddyFiltering);
         model.addAttribute("buddies", buddies);
         return "buddy/buddies :: #buddies";
+    }
+
+    @GetMapping("/request")
+    public String buddyRequest(HttpServletRequest request){
+        String referer = request.getHeader("referer");
+
+        return "redirect/"+referer;
     }
 }

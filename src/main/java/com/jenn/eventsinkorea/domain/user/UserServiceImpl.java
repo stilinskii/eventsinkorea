@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -30,15 +32,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             log.error("User not found in the database");
             throw new UsernameNotFoundException("User not fount in the database");
         }else{
-            log.info("User found in the database: {}, username");
+            log.info("User found in the database: {}", user);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> {
+            log.info("role={}",role);
             authorities.add(new SimpleGrantedAuthority(role.getName()));});
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPwd(),authorities);
     }
     @Override
     public User saveUser(User user) {
+        String encoded = passwordEncoder.encode(user.getPwd());
+        user.setPwd(encoded);
+        Role role = roleRepository.getById(1L);
+        log.info("roles={}",user.getRoles());
+        user.getRoles().add(role);
+
         return userRepository.save(user);
     }
 

@@ -1,5 +1,6 @@
 package com.jenn.eventsinkorea.domain.user;
 
+import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.user.Role;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @Entity
@@ -26,7 +28,6 @@ public class User {
 
     @NotNull
     @Size(min=5,max=30)
-    @Column(name = "user_id")
     private String username;
 
     @NotNull
@@ -35,7 +36,6 @@ public class User {
 
     @NotNull
     @Size(min=2,max=30)
-    @Column(name = "username")
     private String name;
 
     @NotNull
@@ -48,9 +48,15 @@ public class User {
     @Column(name = "joined_date")
     private Date joinedDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<BuddyRequest> buddyRequests;
 
     public User(String user_id, String pwd, String username, String email, String nationality) {
         this.username = user_id;
