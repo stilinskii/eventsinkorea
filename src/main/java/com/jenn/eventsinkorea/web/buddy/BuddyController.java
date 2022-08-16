@@ -1,12 +1,15 @@
 package com.jenn.eventsinkorea.web.buddy;
 
+import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.buddy.BuddyRepository;
 import com.jenn.eventsinkorea.domain.buddy.BuddyService;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
+import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
 import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringOption;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,13 +25,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BuddyController {
 
-    private final BuddyService service;
+    private final BuddyService buddyService;
+
+    private final UserRepository userRepository;
     private final BuddyRepository buddyRepository;
     private final BeABuddyFormValidator buddyFormValidator;
+
     @GetMapping
     public String index(Model model){
         model.addAttribute("buddies", buddyRepository.findAll());
-        log.info("buddyrequest={}",service.getRequestsByBuddyId(1).get(0));
+        log.info("buddyrequest={}", buddyService.getRequestsByBuddyId(1).get(0));
         return "buddy/buddies";
     }
 
@@ -46,7 +52,7 @@ public class BuddyController {
             return "buddy/beABuddyForm";
         }
 
-        service.saveBuddy(buddyForm);
+        buddyService.saveBuddy(buddyForm);
 
         return "redirect:/buddy";
     }
@@ -62,15 +68,16 @@ public class BuddyController {
     @PostMapping("/filtering")
     public String buddyFiltering(BuddyFilteringOption buddyFiltering, Model model){
         log.info("buddyFiltering={}",buddyFiltering);
-        List<Buddy> buddies = service.getFilteredbuddies(buddyFiltering);
+        List<Buddy> buddies = buddyService.getFilteredbuddies(buddyFiltering);
         model.addAttribute("buddies", buddies);
         return "buddy/buddies :: #buddies";
     }
 
-    @GetMapping("/request")
-    public String buddyRequest(HttpServletRequest request){
+    @GetMapping("/request/{buddyId}")
+    public String buddyRequest(HttpServletRequest request,@PathVariable Long buddyId,Authentication auth){
         String referer = request.getHeader("referer");
-
-        return "redirect/"+referer;
+        buddyService.saveRequest(auth.getName(),buddyId);
+        log.info("auth test={}",auth.getName());
+        return "redirect:"+referer;
     }
 }

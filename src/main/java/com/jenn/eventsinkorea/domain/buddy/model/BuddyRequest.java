@@ -16,7 +16,7 @@ public class BuddyRequest {
     //완전헷갈려
 
     @EmbeddedId
-    private UserBuddyId userBuddyId;
+    private UserBuddyId userBuddyId = new UserBuddyId();
 
     @ManyToOne
     @MapsId("userId")

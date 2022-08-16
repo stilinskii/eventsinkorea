@@ -83,7 +83,11 @@
             </span>
           </p>
 
-          <a th:href="@{/buddy/request}" class="btn btn-primary m-3">request</a>
+          <a
+            th:href="@{|/buddy/request/${buddy.id}|}"
+            class="btn btn-primary m-3"
+            >request</a
+          >
         </div>
         <hr />
         <div>

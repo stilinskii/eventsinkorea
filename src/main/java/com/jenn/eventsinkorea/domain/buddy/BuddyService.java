@@ -54,4 +54,12 @@ public class BuddyService {
     public List<BuddyRequest> getRequestsByBuddyId(long id){
         return buddyRequestRepository.findByBuddy(buddyRepository.findById(id).get());
     }
+
+    public BuddyRequest saveRequest(String username,Long buddyId ){
+        BuddyRequest buddyRequest = new BuddyRequest();
+        buddyRequest.setStatus(0);//대기
+        buddyRequest.setUser(userRepository.findByUsername(username));
+        buddyRequest.setBuddy(buddyRepository.findById(buddyId).get());
+        return buddyRequestRepository.save(buddyRequest);
+    }
 }
