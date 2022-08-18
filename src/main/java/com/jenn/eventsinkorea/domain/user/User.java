@@ -1,5 +1,6 @@
 package com.jenn.eventsinkorea.domain.user;
 
+import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.user.Role;
 import lombok.*;
@@ -48,15 +49,15 @@ public class User {
     @Column(name = "joined_date")
     private Date joinedDate;
 
-    @ManyToMany
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(mappedBy = "users")
     private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<BuddyRequest> buddyRequests;
+
+    @ManyToMany(mappedBy = "likedUsers")
+    private List<Buddy> buddyILike;
+
 
     public User(String user_id, String pwd, String username, String email, String nationality) {
         this.username = user_id;

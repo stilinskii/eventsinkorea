@@ -135,38 +135,53 @@
           </div>
           <main id="buddies">
             <th:block th:each="buddy:${buddies}">
-              <a th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}" href="#">
-                <div
-                  class="buddy_info border-top"
-                  style="background-color: white"
-                >
-                  <div class="lang">
-                    <p
-                      th:text="|learning : ${buddy.learningLang} / native : ${buddy.nativeLang}|"
+              <div
+                class="buddy_info border-top"
+                style="background-color: white"
+              >
+                <div class="lang">
+                  <p
+                    th:text="|learning : ${buddy.learningLang} / native : ${buddy.nativeLang}|"
+                  >
+                    learning : English / native : Korean
+                  </p>
+                </div>
+                <div class="info d-flex justify-content-between">
+                  <div class="mt-2 p-4 buddy-detail-box">
+                    <a
+                      th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}"
+                      href="#"
                     >
-                      learning : English / native : Korean
-                    </p>
-                  </div>
-                  <div class="info d-flex justify-content-between">
-                    <div class="mt-2 p-4 buddy-detail-box">
                       <h3 th:text="${buddy.user.username}">name</h3>
                       <p th:text="${buddy.intro}" class="ellipsis">intro</p>
+                    </a>
+
+                    <div class="d-flex">
                       <div class="d-flex">
                         <i class="fa fa-star mt-1 mx-1"></i>
                         <p>2.0 (12)</p>
                       </div>
-                    </div>
-                    <div class="m-3">
-                      <img
-                        th:src="${buddy.imgUrl}"
-                        alt=""
-                        height="130"
-                        width="130"
-                      />
+                      <div class="d-flex mx-3">
+                        <i
+                          class="mt-1 mx-1 like-btn"
+                          th:classappend="${#lists.contains(buddyIds,__${buddy.id}__)}? 'fa fa-heart':'fa fa-heart-o'"
+                          th:onclick="|like(this,${buddy.id})|"
+                          onclick="like(this,1)"
+                        ></i>
+                        <p th:text="| ${buddy.likeCnt}|">2</p>
+                      </div>
                     </div>
                   </div>
+                  <div class="m-3">
+                    <img
+                      th:src="${buddy.imgUrl}"
+                      alt=""
+                      height="130"
+                      width="130"
+                    />
+                  </div>
                 </div>
-              </a>
+              </div>
             </th:block>
           </main>
           <div class="buddy_info border-top" style="background-color: white">
@@ -193,6 +208,10 @@
         </div>
         <div class="col-2"></div>
       </div>
+      <div class="d-flex justify-content-center m-5">
+        <button type="button" class="btn btn-warning more-btn">More</button>
+      </div>
+      <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
     </div>
 
     <div th:replace="/fragments/common :: scripts">
@@ -206,11 +225,16 @@
         crossorigin="anonymous"
       ></script>
     </div>
-    <script defer src="/static/js/events.js" th:src="@{/js/events.js}"></script>
+
     <script
       defer
       src="/static/js/buddies.js"
       th:src="@{/js/buddies.js}"
+    ></script>
+    <script
+      defer
+      src="/static/js/buddyCommon.js"
+      th:src="@{/js/buddyCommon.js}"
     ></script>
     <script
       src="https://kit.fontawesome.com/661f25159f.js"

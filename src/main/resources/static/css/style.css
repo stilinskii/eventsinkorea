@@ -511,3 +511,8 @@ div.search select {
   overflow: hidden;
   text-overflow: ellipsis;
 } */
+
+/* buddy */
+.like-btn {
+  color: red;
+}

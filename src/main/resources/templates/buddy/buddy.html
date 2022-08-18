@@ -58,6 +58,24 @@
     <div class="container mt-4">
       <div class="bg-light p-5 rounded">
         <div class="d-flex flex-column align-items-center">
+          <!-- <i
+            class="fa fa-heart-o bd-highlight like-btn"
+            id="like-btn"
+            th:class="${community.isLiked == true}? 'fa fa-heart bd-highlight like-btn':'fa fa-heart-o bd-highlight like-btn'"
+            th:text="| ${community.like_count}|"
+          >
+            0</i
+          > -->
+
+          <div class="d-flex ms-auto">
+            <i
+              class="mt-1 mx-1 like-btn"
+              th:classappend="${isLikedBuddy}? 'fa fa-heart':'fa fa-heart-o'"
+              th:onclick="|like(this,${buddy.id})|"
+            ></i>
+            <p th:text="| ${buddy.likeCnt}|" class="like-cnt">2</p>
+          </div>
+
           <img
             src="/static/images/roof-tile-4495550_960_720.jpg"
             th:src="${buddy.imgUrl}"
@@ -67,7 +85,11 @@
             class="mt-3"
           />
           <div class="p-3 m-3">
-            <h1 style="text-align: center" th:text="${buddy.user.username}">
+            <h1
+              class="buddyName"
+              style="text-align: center"
+              th:text="${buddy.user.username}"
+            >
               Buddy Name
             </h1>
           </div>
@@ -85,7 +107,7 @@
 
           <a
             th:href="@{|/buddy/request/${buddy.id}|}"
-            class="btn btn-primary m-3"
+            class="btn btn-primary m-3 confirmSendReq"
             >request</a
           >
         </div>
@@ -118,21 +140,12 @@
       </button>
     </div>
     <div>
-      <script
-        src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"
-      ></script>
-      <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
+      <div th:replace="/fragments/common :: scripts"></div>
+      <script src="/static/js/buddy.js" th:src="@{/js/buddy.js}"></script>
       <script
         defer
-        src="/static/js/events.js"
-        th:src="@{/js/events.js}"
+        src="/static/js/buddyCommon.js"
+        th:src="@{/js/buddyCommon.js}"
       ></script>
       <script
         src="https://kit.fontawesome.com/661f25159f.js"

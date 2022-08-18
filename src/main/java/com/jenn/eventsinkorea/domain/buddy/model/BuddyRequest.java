@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -29,5 +30,8 @@ public class BuddyRequest {
     private Buddy buddy; // 신청받은자
 
     private int status;//0:대기 1:수락 2:거절
+
+    @Column(name = "request_date")
+    private Date requestDate;
 
 }

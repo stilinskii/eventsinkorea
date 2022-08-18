@@ -4,15 +4,19 @@ import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.file.S3Uploader;
+import com.jenn.eventsinkorea.domain.user.User;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
 import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringOption;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BuddyService {
@@ -56,10 +60,46 @@ public class BuddyService {
     }
 
     public BuddyRequest saveRequest(String username,Long buddyId ){
+        User user = userRepository.findByUsername(username);
+        Integer duplicateCheck = buddyRequestRepository.duplicateRequest(user.getId(), buddyId);
+
+        if(duplicateCheck>0){
+            return null;
+        }
+
+        log.info("chk={}",userRepository.findByUsername(username));
+
         BuddyRequest buddyRequest = new BuddyRequest();
         buddyRequest.setStatus(0);//대기
-        buddyRequest.setUser(userRepository.findByUsername(username));
+        buddyRequest.setUser(user);
         buddyRequest.setBuddy(buddyRepository.findById(buddyId).get());
         return buddyRequestRepository.save(buddyRequest);
+    }
+
+    public List<BuddyRequest> getRequestByUsername(String name){
+        return buddyRequestRepository.findByUser(userRepository.findByUsername(name));
+    }
+
+
+    public void addLikeCnt(Long buddyId, String username) {
+        //buddy like 업데이트
+        Buddy buddyToBeUpdated = buddyRepository.getById(buddyId);
+        buddyToBeUpdated.setLikeCnt(buddyToBeUpdated.getLikeCnt()+1);
+        //like_table에 추가
+        User user = userRepository.findByUsername(username);
+        buddyToBeUpdated.getLikedUsers().add(user);
+
+        buddyRepository.save(buddyToBeUpdated);
+    }
+
+    public void subtractLikeCnt(Long buddyId, String username) {
+        //buddy like 업데이트
+        Buddy buddyToBeUpdated = buddyRepository.getById(buddyId);
+        buddyToBeUpdated.setLikeCnt(buddyToBeUpdated.getLikeCnt()-1);
+        //like_table에 추가
+        User user = userRepository.findByUsername(username);
+        buddyToBeUpdated.getLikedUsers().remove(user);
+
+        buddyRepository.save(buddyToBeUpdated);
     }
 }

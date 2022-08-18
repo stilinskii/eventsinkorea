@@ -18,17 +18,10 @@ console.dir(joinedDate);
 /**
  * 삭제 확인 alert 나오게 하기
  */
-$(function () {
-  $('a.confirmDeletion').click(function () {
-    if (!confirm('Are you sure you want to delete?')) return false;
-  });
-});
 
-function confirmDeletion() {
-  $('a.confirmDeletion').click(function () {
-    if (!confirm('Are you sure you want to delete?')) return false;
-  });
-}
+$('a.confirmDeletion').click(function () {
+  if (!confirm('Are you sure you want to delete?')) return false;
+});
 
 //페이지당 카테고리 나오게하기
 const pageNameSelect = document.querySelector('.pageName');

@@ -38,6 +38,9 @@ public class Buddy {
 
     private String intro;
 
+    @Column(name = "like_cnt")
+    private Long likeCnt;
+
     @OneToOne
     @JoinColumn(name = "user_id")
 //    @JoinTable(name = "buddies_users",
@@ -45,10 +48,15 @@ public class Buddy {
 //            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private User user;
 
-
     @OneToMany(mappedBy = "buddy")
     private List<BuddyRequest> buddyRequests;
 
+    @ManyToMany
+    @JoinTable(
+            name = "buddy_user_like",
+            joinColumns = @JoinColumn(name = "buddy_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_username"))
+    private List<User> likedUsers;
 
     public Buddy() {
     }
