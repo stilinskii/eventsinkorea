@@ -28,6 +28,15 @@ function handleFilteringAndSorting() {
   $.post('/buddy/filtering', data).done(function (fragment) {
     $('#buddies').replaceWith(fragment);
   });
+
+  $(document).ajaxComplete(function () {
+    if (document.body.contains(document.querySelector('.noMore'))) {
+      console.log('ajaxcompeleet access');
+      $('.more-btn').css('display', 'none');
+    } else {
+      $('.more-btn').css('display', 'block');
+    }
+  });
   newlyFiltered = true;
   page = 1;
 }
@@ -37,7 +46,7 @@ function handleFilteringAndSorting() {
  */
 const moreBtn = document.querySelector('.more-btn');
 moreBtn.addEventListener('click', showMore);
-// let index = true;
+let index = true;
 let page = 0;
 function showMore() {
   //새롭게 filtering 된게 아니라면(필터링 적용 전인 index도 포함)
@@ -51,6 +60,13 @@ function showMore() {
     $('#buddies').append(data);
   });
   newlyFiltered = false;
+
+  $(document).ajaxComplete(function () {
+    if (document.body.contains(document.querySelector('.noMore'))) {
+      console.log('ajaxcompeleet access');
+      $('.more-btn').css('display', 'none');
+    }
+  });
 }
 
 // //더이상 다음내용 없으면 더보기버튼 안보이게 하기

@@ -47,13 +47,12 @@ public class BuddyController {
 
     private final BeABuddyFormValidator buddyFormValidator;
 
-    private BuddyFilteringSortingOption option = new BuddyFilteringSortingOption();
+    private BuddyFilteringSortingOption option;
 
 //    int defaultPageSize = 3;
 
     @GetMapping
     public String index(@PageableDefault(size = 3) Pageable pageable, Model model, Authentication auth){
-
         //로그인 안했을땐 빈 리스트 넘기기.
         List<Integer> userLikedBuddyIds = new ArrayList<>();
         if(auth!=null){
@@ -62,7 +61,7 @@ public class BuddyController {
             userLikedBuddyIds = buddyILike.stream().map(Buddy::getId).map(Long::intValue).collect(Collectors.toList());
         //log.info("buddyIds={}",userLikedBuddyIds.get(0));
         }
-
+        option = new BuddyFilteringSortingOption();
         log.info("buddycont={}",buddyRepository.findAll().size());
         Slice<Buddy> indexBuddy = buddyService.getFilteredbuddies(option,pageable);
         model.addAttribute("buddies", indexBuddy);
@@ -70,13 +69,16 @@ public class BuddyController {
         return "buddy/buddies";
     }
 
+
     @PostMapping("/filtering")
     public String buddyFiltering(BuddyFilteringSortingOption inputtedOption, Model model, Authentication auth, @PageableDefault(size = 3) Pageable pageable){
-        option.setNativeLang(inputtedOption.getNativeLang());
-        option.setLearningLang(inputtedOption.getLearningLang());
-        option.setLocation(inputtedOption.getLocation());
-        option.setSorting(inputtedOption.getSorting());
-        log.info("option={}",option);
+        option = BuddyFilteringSortingOption.builder()
+                .nativeLang(inputtedOption.getNativeLang())
+                .learningLang(inputtedOption.getLearningLang())
+                .location(inputtedOption.getLocation())
+                .sorting(inputtedOption.getSorting()).build();
+
+        //log.info("option={}",option);
 
         Slice<Buddy> buddies = buddyService.getFilteredbuddies(inputtedOption,pageable);
         List<Integer> userLikedBuddyIds = new ArrayList<>();
@@ -85,6 +87,12 @@ public class BuddyController {
             List<Buddy> buddyILike = user.getBuddyILike();
             userLikedBuddyIds = buddyILike.stream().map(Buddy::getId).map(Long::intValue).collect(Collectors.toList());
         }
+
+        if(!buddies.hasNext()){
+            model.addAttribute("noMore",true);
+            log.info("hasnonext={}",!buddies.hasNext());
+        }
+
         model.addAttribute("buddyIds",userLikedBuddyIds);
         model.addAttribute("buddies", buddies);
         return "buddy/buddies :: #buddies";
@@ -96,7 +104,8 @@ public class BuddyController {
     public String more(@PageableDefault(size = 3) Pageable pageable, Authentication auth, Model model, HttpServletRequest request){
 
         Slice<Buddy> buddies = buddyService.getFilteredbuddies(option,pageable);
-
+        log.info("option={}",option);
+        //다음 페이지가 없을때 more버튼 숨기기 위해 정보 보내기
         if(!buddies.hasNext()){
             model.addAttribute("noMore",true);
             log.info("hasnonext={}",!buddies.hasNext());
@@ -173,7 +182,6 @@ public class BuddyController {
         if(buddyRequest==null){
             alert(response,"you have already requested.",referer);
         }
-
         return "redirect:"+referer;
     }
 
