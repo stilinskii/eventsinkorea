@@ -26,6 +26,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -163,13 +166,26 @@ public class BuddyController {
 //    }
 
     @GetMapping("/request/{buddyId}")
-    public String buddyRequest(HttpServletRequest request,@PathVariable Long buddyId,Authentication auth){
+    public String buddyRequest(HttpServletRequest request,@PathVariable Long buddyId,Authentication auth,HttpServletResponse response) throws IOException {
         log.info("auth test={}",auth.getName());
         BuddyRequest buddyRequest = buddyService.saveRequest(auth.getName(), buddyId);
-
         String referer = request.getHeader("referer");
+        if(buddyRequest==null){
+            alert(response,"you have already requested.",referer);
+        }
+
         return "redirect:"+referer;
     }
+
+    //알림 보내기
+    public static void alert(HttpServletResponse response, String alertText, String nextPage) throws IOException {
+        response.setContentType("text/html;charset=euc-kr");
+        response.setCharacterEncoding("euc-kr");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('"+alertText+"'); location.href='"+nextPage+"';</script> ");
+        out.flush();
+    }
+
 
     @Secured("Role_User")
     @ResponseBody
