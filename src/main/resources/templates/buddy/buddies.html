@@ -69,7 +69,7 @@
       </div>
       <div class="row">
         <!-- ===========buddy filter============== -->
-        <div class="col-2">
+        <div class="col-2 filtering-sec">
           <div class="d-flex">
             <h4 class="me-auto">filter</h4>
             <i
@@ -118,21 +118,19 @@
                 <label for="floatingSelect">location</label>
               </div>
             </div>
-            <button type="button" class="btn btn-primary btn-sm filter-btn">
-              filter
-            </button>
           </main>
         </div>
         <!-- ===========buddy filter end============== -->
         <div class="col-8">
           <div class="sorting-dropdown">
-            <select class="form-select mb-2">
-              <option value="Joined Date">sorting</option>
+            <select class="form-select mb-2 sorting">
+              <option value="">sorting</option>
               <option value="Review">Review</option>
               <option value="Rate">Rate</option>
               <option value="Latest">Latest</option>
             </select>
           </div>
+
           <main id="buddies">
             <th:block th:each="buddy:${buddies}">
               <div
@@ -184,31 +182,11 @@
               </div>
             </th:block>
           </main>
-          <div class="buddy_info border-top" style="background-color: white">
-            <div class="lang"><p>learning : English / native : Korean</p></div>
-            <div class="info d-flex justify-content-between">
-              <div class="mt-2 p-4">
-                <h3>name</h3>
-                <p>intro</p>
-                <div class="d-flex">
-                  <i class="fa fa-star mt-1 mx-1"></i>
-                  <p>2.0 (12)</p>
-                </div>
-              </div>
-              <div class="m-3">
-                <img
-                  src="/static/images/roof-tile-4495550_960_720.jpg"
-                  alt=""
-                  height="130"
-                  width="130"
-                />
-              </div>
-            </div>
-          </div>
         </div>
         <div class="col-2"></div>
       </div>
-      <div class="d-flex justify-content-center m-5">
+
+      <div th:unless="${noMore}" class="d-flex justify-content-center m-5">
         <button type="button" class="btn btn-warning more-btn">More</button>
       </div>
       <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>

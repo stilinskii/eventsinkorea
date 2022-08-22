@@ -6,15 +6,17 @@ import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.file.S3Uploader;
 import com.jenn.eventsinkorea.domain.user.User;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
-import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringOption;
+import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringSortingOption;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -51,8 +53,8 @@ public class BuddyService {
 
     }
 
-    public List<Buddy> getFilteredbuddies(BuddyFilteringOption option){
-        return buddyRepository.filteringBuddy(option);
+    public Slice<Buddy> getFilteredbuddies(BuddyFilteringSortingOption option , Pageable pageable){
+        return buddyRepository.filteringBuddy(option,pageable);
     }
 
     public List<BuddyRequest> getRequestsByBuddyId(long id){

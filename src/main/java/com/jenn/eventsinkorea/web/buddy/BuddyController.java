@@ -7,9 +7,16 @@ import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.user.User;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
-import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringOption;
+import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringSortingOption;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.bcel.Const;
+import org.springframework.aop.framework.AopConfigException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,8 +26,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,24 +44,77 @@ public class BuddyController {
 
     private final BeABuddyFormValidator buddyFormValidator;
 
+    private BuddyFilteringSortingOption option = new BuddyFilteringSortingOption();
+
+//    int defaultPageSize = 3;
 
     @GetMapping
-    public String index(Model model, Authentication auth){
-        //로그인한 유저가 좋아요한 버디의 아이디 가져오기
+    public String index(@PageableDefault(size = 3) Pageable pageable, Model model, Authentication auth){
 
         //로그인 안했을땐 빈 리스트 넘기기.
-        List<Integer> userLikedBuddyIds = Collections.EMPTY_LIST;
+        List<Integer> userLikedBuddyIds = new ArrayList<>();
+        if(auth!=null){
+            User user = userRepository.findByUsername(auth.getName());
+            List<Buddy> buddyILike = user.getBuddyILike();
+            userLikedBuddyIds = buddyILike.stream().map(Buddy::getId).map(Long::intValue).collect(Collectors.toList());
+        //log.info("buddyIds={}",userLikedBuddyIds.get(0));
+        }
+
+        log.info("buddycont={}",buddyRepository.findAll().size());
+        Slice<Buddy> indexBuddy = buddyService.getFilteredbuddies(option,pageable);
+        model.addAttribute("buddies", indexBuddy);
+        model.addAttribute("buddyIds",userLikedBuddyIds);
+        return "buddy/buddies";
+    }
+
+    @PostMapping("/filtering")
+    public String buddyFiltering(BuddyFilteringSortingOption inputtedOption, Model model, Authentication auth, @PageableDefault(size = 3) Pageable pageable){
+        option.setNativeLang(inputtedOption.getNativeLang());
+        option.setLearningLang(inputtedOption.getLearningLang());
+        option.setLocation(inputtedOption.getLocation());
+        option.setSorting(inputtedOption.getSorting());
+        log.info("option={}",option);
+
+        Slice<Buddy> buddies = buddyService.getFilteredbuddies(inputtedOption,pageable);
+        List<Integer> userLikedBuddyIds = new ArrayList<>();
         if(auth!=null){
             User user = userRepository.findByUsername(auth.getName());
             List<Buddy> buddyILike = user.getBuddyILike();
             userLikedBuddyIds = buddyILike.stream().map(Buddy::getId).map(Long::intValue).collect(Collectors.toList());
         }
-
-        model.addAttribute("buddies", buddyRepository.findAll());
         model.addAttribute("buddyIds",userLikedBuddyIds);
-
-        return "buddy/buddies";
+        model.addAttribute("buddies", buddies);
+        return "buddy/buddies :: #buddies";
     }
+
+
+    //ajax 페이지 추가.
+    @GetMapping("/buddypage")
+    public String more(@PageableDefault(size = 3) Pageable pageable, Authentication auth, Model model, HttpServletRequest request){
+
+        Slice<Buddy> buddies = buddyService.getFilteredbuddies(option,pageable);
+
+        if(!buddies.hasNext()){
+            model.addAttribute("noMore",true);
+            log.info("hasnonext={}",!buddies.hasNext());
+        }
+
+
+        log.info("buddysize={}",buddies.getSize());
+        List<Integer> userLikedBuddyIds = new ArrayList<>();
+        if(auth!=null){
+            User user = userRepository.findByUsername(auth.getName());
+            List<Buddy> buddyILike = user.getBuddyILike();
+            userLikedBuddyIds = buddyILike.stream().map(Buddy::getId).map(Long::intValue).collect(Collectors.toList());
+        }
+        model.addAttribute("buddyIds",userLikedBuddyIds);
+        model.addAttribute("buddies", buddies);
+
+        return "buddy/buddyPart";
+    }
+
+
+
 
     @GetMapping("/beABuddy")
     public String beABuddy(@ModelAttribute("buddyForm") BeABuddyForm buddyForm){
@@ -87,13 +146,21 @@ public class BuddyController {
     }
 
     //ajax
-    @PostMapping("/filtering")
-    public String buddyFiltering(BuddyFilteringOption buddyFiltering, Model model){
-        log.info("buddyFiltering={}",buddyFiltering);
-        List<Buddy> buddies = buddyService.getFilteredbuddies(buddyFiltering);
-        model.addAttribute("buddies", buddies);
-        return "buddy/buddies :: #buddies";
-    }
+//    @PostMapping("/filtering")
+//    public String buddyFiltering(BuddyFilteringSortingOption buddyFiltering, Model model, Authentication auth, @PageableDefault(size = 1) Pageable pageable){
+//        log.info("buddyFiltering={}",buddyFiltering);
+//
+//        Page<Buddy> buddies = buddyService.getFilteredbuddies(buddyFiltering,pageable);
+//        List<Integer> userLikedBuddyIds = new ArrayList<>();
+//        if(auth!=null){
+//            User user = userRepository.findByUsername(auth.getName());
+//            List<Buddy> buddyILike = user.getBuddyILike();
+//            userLikedBuddyIds = buddyILike.stream().map(Buddy::getId).map(Long::intValue).collect(Collectors.toList());
+//        }
+//        model.addAttribute("buddyIds",userLikedBuddyIds);
+//        model.addAttribute("buddies", buddies);
+//        return "buddy/buddies :: #buddies";
+//    }
 
     @GetMapping("/request/{buddyId}")
     public String buddyRequest(HttpServletRequest request,@PathVariable Long buddyId,Authentication auth){

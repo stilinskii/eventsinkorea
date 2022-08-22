@@ -1,0 +1,22 @@
+<div class="col-2" th:fragment="myBuddyReq(title)">
+  <ul class="list-group">
+    <li
+      class="list-group-item"
+      th:classappend="${title}=='Liked'? 'bg-secondary'"
+    >
+      <a href="/MyBuddy" class="category">Buddy I Liked</a>
+    </li>
+    <li
+      class="list-group-item"
+      th:classappend="${title}=='Sent'? 'bg-secondary'"
+    >
+      <a href="/MyBuddy/sentRequest" class="category">Sent Request</a>
+    </li>
+    <li
+      class="list-group-item"
+      th:classappend="${title}=='Received'? 'bg-secondary'"
+    >
+      <a href="/MyBuddy/receivedRequest" class="category">Received Request</a>
+    </li>
+  </ul>
+</div>

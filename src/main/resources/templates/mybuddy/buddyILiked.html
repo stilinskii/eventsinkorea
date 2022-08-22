@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- bootstrap core css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link
+      href="/static/css/style.css"
+      th:href="@{/css/style.css}"
+      rel="stylesheet"
+    />
+
+    <!-- <link
+      href="/static/css/signin.css"
+      th:href="@{/css/signin.css}"
+      rel="stylesheet"
+    /> -->
+    <title>Events</title>
+  </head>
+  <body class="bg-light">
+    <!-- navbar -->
+    <div class="sub-page" th:replace="/fragments/nav :: nav-front(' ')">
+      <header>
+        <nav class="navbar">
+          <div class="container" id="nav-container">
+            <ul class="navbar-nav" id="nav">
+              <a class="navbar-brand" href="#" th:href="@{/}"
+                ><span>Brand</span></a
+              >
+              <li class="nav-item">
+                <a class="nav-link" href="#">Events</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Guides</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Community</a>
+              </li>
+              <li class="nav-item">
+                <a th:href="">
+                  <i class="fa fa-cog"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="user_link">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li class="user_link nav-item">
+                <a href="" class="user_option"> Login </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    </div>
+    <main class="container">
+      <div class="bg-white p-5 rounded d-flex flex-column align-items-center">
+        <h1>My Buddy</h1>
+        <h4 class="">Buddy I Liked</h4>
+
+        <div class="caption">
+          <p class="p-2 bd-highlight" th:text="|글 수 : |">글 수:</p>
+        </div>
+
+        <div class="container-fluid">
+          <div class="row">
+            <div
+              class="col-2"
+              th:replace="fragments/myBuddyCategories :: myBuddyReq('Liked')"
+            >
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <a href="/MyBuddy/liked" class="category">Buddy I liked</a>
+                </li>
+                <li class="list-group-item">
+                  <a href="/MyBuddy/sentRequest" class="category"
+                    >Sent Request</a
+                  >
+                </li>
+                <li class="list-group-item">
+                  <a href="/MyBuddy/receivedRequest" class="category"
+                    >Received Request</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-8">
+              <div class="sorting-dropdown">
+                <select class="form-select mb-2">
+                  <option value="Joined Date">sorting</option>
+                  <option value="Review">Review</option>
+                  <option value="Rate">Rate</option>
+                  <option value="Latest">Latest</option>
+                </select>
+              </div>
+              <main id="buddies">
+                <th:block th:each="buddy:${buddies}">
+                  <a th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}" href="#">
+                    <div
+                      class="buddy_info border-top"
+                      style="background-color: white"
+                    >
+                      <div class="lang">
+                        <p
+                          th:text="|learning : ${buddy.learningLang} / native : ${buddy.nativeLang}|"
+                        >
+                          learning : English / native : Korean
+                        </p>
+                      </div>
+                      <div class="info d-flex justify-content-between">
+                        <div class="mt-2 p-4 buddy-detail-box">
+                          <h3 th:text="${buddy.user.username}">name</h3>
+                          <p th:text="${buddy.intro}" class="ellipsis">intro</p>
+                          <div class="d-flex">
+                            <i class="fa fa-star mt-1 mx-1"></i>
+                            <p>2.0 (12)</p>
+                          </div>
+                        </div>
+                        <div class="m-3">
+                          <img
+                            th:src="${buddy.imgUrl}"
+                            alt=""
+                            height="130"
+                            width="130"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </th:block>
+              </main>
+              <div class="buddy_info border-top" style="background-color: white">
+                <div class="lang"><p>learning : English / native : Korean</p></div>
+                <div class="info d-flex justify-content-between">
+                  <div class="mt-2 p-4">
+                    <h3>name</h3>
+                    <p>intro</p>
+                    <div class="d-flex">
+                      <i class="fa fa-star mt-1 mx-1"></i>
+                      <p>2.0 (12)</p>
+                    </div>
+                  </div>
+                  <div class="m-3">
+                    <img
+                      src="/static/images/roof-tile-4495550_960_720.jpg"
+                      alt=""
+                      height="130"
+                      width="130"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-2"></div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
