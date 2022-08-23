@@ -62,31 +62,33 @@
     <main class="container">
       <div class="bg-white p-5 rounded d-flex flex-column align-items-center">
         <h1>My Buddy</h1>
-        <h4 class="">Sent Request</h4>
-
-        <div class="caption">
-          <p class="p-2 bd-highlight" th:text="|글 수 : |">글 수:</p>
-        </div>
+        <h4 class="my-4">Sent Request</h4>
 
         <div class="container-fluid">
           <div class="row">
             <div
               class="col-2"
-              th:replace="fragments/myBuddyCategories :: myBuddyReq('Sent')"
+              th:replace="fragments/myBuddyCategories :: myBuddy('Sent')"
             >
               <ul class="list-group">
                 <li class="list-group-item">
-                  <a href="/MyBuddy/liked" class="category">Buddy I liked</a>
+                  <a href="/mybuddy" class="category">My Buddy Profile</a>
                 </li>
                 <li class="list-group-item">
-                  <a href="/MyBuddy/sentRequest" class="category"
+                  <a href="/mybuddy/liked" class="category">Buddy I liked</a>
+                </li>
+                <li class="list-group-item">
+                  <a href="/mybuddy/sentRequest" class="category"
                     >Sent Request</a
                   >
                 </li>
                 <li class="list-group-item">
-                  <a href="/MyBuddy/receivedRequest" class="category"
+                  <a href="/mybuddy/receivedRequest" class="category"
                     >Received Request</a
                   >
+                </li>
+                <li class="list-group-item">
+                  <a href="/mybuddy/review" class="category">Review</a>
                 </li>
               </ul>
             </div>

@@ -1,6 +1,7 @@
 package com.jenn.eventsinkorea.domain.user;
 
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
+import com.jenn.eventsinkorea.web.account.form.UserLoginForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,13 +42,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPwd(),authorities);
     }
     @Override
-    public User saveUser(User user) {
-        String encoded = passwordEncoder.encode(user.getPwd());
-        user.setPwd(encoded);
+    public User saveUser(UserLoginForm form) {
+        String encoded = passwordEncoder.encode(form.getPwd());
         Role role = roleRepository.getById(1L);
-        log.info("roles={}",user.getRoles());
-        user.getRoles().add(role);
+        log.info("roles={}",role);
 
+        User user = User.builder()
+                .username(form.getUsername())
+                .pwd(encoded)
+                .name(form.getName())
+                .email(form.getEmail())
+                .nationality(form.getNationality())
+                .roles(List.of(role))
+                .build();
+//        User save = userRepository.save(user);
+//        addRoleToUser(save.getName(),role.getName());
         return userRepository.save(user);
     }
 

@@ -208,13 +208,13 @@
                     />
                   </div>
                 </div>
+                <input type="hidden" th:if="${noMore}" class="noMore" />
               </div>
             </th:block>
           </main>
         </div>
         <div class="col-2"></div>
       </div>
-
       <div th:unless="${noMore}" class="d-flex justify-content-center m-5">
         <button type="button" class="btn btn-warning more-btn">More</button>
       </div>

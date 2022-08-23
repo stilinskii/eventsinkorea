@@ -49,7 +49,11 @@ public class User {
     @Column(name = "joined_date")
     private Date joinedDate;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")

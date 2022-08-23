@@ -69,6 +69,16 @@ function showMore() {
   });
 }
 
+/**
+ *
+ * to the top of the page button구현
+ */
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
 // //더이상 다음내용 없으면 더보기버튼 안보이게 하기
 // if (document.body.contains(document.getElementById('.noMore'))) {
 //   $('.more-btn').css('display', 'none');
@@ -108,17 +118,6 @@ function showMore() {
 //       e.classList.remove('hidden');
 //     }
 //   });
-// }
-
-/**
- *
- * to the top of the page button구현
- */
-// When the user clicks on the button, scroll to the top of the document
-// function topFunction() {
-//   document.body.scrollTop = 0; // For Safari
-//   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-//   showEvents(1); //글들 다시 숨기기
 // }
 
 // let learningLangSelector = document.querySelector(

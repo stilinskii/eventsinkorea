@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments/common :: head('Events')">
+    <meta charset="utf-8" />
+
+    <!-- bootstrap core css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link
+      href="/static/css/style.css"
+      th:href="@{/css/style.css}"
+      rel="stylesheet"
+    />
+
+    <title>Events</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <div class="sub-page" th:replace="/fragments/nav :: nav-front('Buddy')">
+      <header>
+        <nav class="navbar">
+          <div class="container" id="nav-container">
+            <ul class="navbar-nav" id="nav">
+              <a class="navbar-brand" href="#" th:href="@{/}"
+                ><span>Brand</span></a
+              >
+              <li class="nav-item">
+                <a class="nav-link" href="#">Events</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Guides</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Community</a>
+              </li>
+              <li class="nav-item">
+                <a th:href="">
+                  <i class="fa fa-cog"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="user_link">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li class="user_link nav-item">
+                <a href="" class="user_option"> Login </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    </div>
+
+    <div class="container">
+      <div class="bg-light p-5 rounded d-flex flex-column align-items-center">
+        <div class="p-3 m-5">
+          <h1 style="text-align: center">Edit Buddy Profile</h1>
+        </div>
+        <form
+          th:action=@{/mybuddy/edit}
+          method="post"
+          th:object="${buddy}"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" th:field="*{id}" />
+          <div class="mb-3">
+            <label for="formFileSm" class="form-label">Choose an image</label>
+            <input
+              class="form-control form-control-sm"
+              name="image"
+              type="file"
+            />
+          </div>
+          <div>
+            <label for="" class="form-label">Current image : </label>
+            <img
+            th:src="${buddy.imgUrl}"
+            width="60px"
+            height="60px"
+            alt=""
+            class="mt-3"
+          />
+          </div>
+
+          <div class="row mb-4">
+            <label for="" class="col-sm-4 col-form-label"
+              >Native language :
+            </label>
+            <div class="col-sm-8">
+              <select
+                class="form-select"
+                aria-label=".form-select-sm example"
+                th:field="*{nativeLang}"
+              >
+                <th:block
+                  th:replace="/fragments/dropDownRef :: languages"
+                ></th:block>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <label for="" class="col-sm-4 col-form-label"
+              >Learning language :
+            </label>
+            <div class="col-sm-8">
+              <select
+                class="form-select"
+                aria-label=".form-select-sm example"
+                th:field="*{learningLang}"
+                th:errorclass="is-invalid"
+              >
+                <th:block
+                  th:replace="/fragments/dropDownRef :: languages"
+                ></th:block>
+              </select>
+              <div class="invalid-feedback" th:errors="*{learningLang}">
+                learning lang error
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <label for="" class="col-sm-4 col-form-label">Location : </label>
+            <div class="col-sm-8">
+              <select
+                class="form-select"
+                aria-label=".form-select-sm example"
+                th:field="*{location}"
+              >
+                <th:block
+                  th:replace="/fragments/dropDownRef :: locations"
+                ></th:block>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="" class="form-label">Introduction</label>
+            <textarea
+              class="form-control"
+              rows="3"
+              th:field="*{intro}"
+            ></textarea>
+          </div>
+
+          <button class="btn btn-secondary" type="submit">ok</button>
+          <a href="javascript:history.back();" class="btn btn-outline-secondary"
+            >cancle</a
+          >
+        </form>
+      </div>
+    </div>
+
+    <div>
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
+      <script src="/static/js/events.js" th:src="@{/js/events.js}"></script>
+      <script
+        src="https://kit.fontawesome.com/661f25159f.js"
+        crossorigin="anonymous"
+      ></script>
+      <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+    </div>
+  </body>
+</html>

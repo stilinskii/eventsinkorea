@@ -53,13 +53,14 @@ public class BuddyController {
 
     @GetMapping
     public String index(@PageableDefault(size = 3) Pageable pageable, Model model, Authentication auth){
+        //사용자가 좋아요한 버디목록 넘겨서 좋아요 하트 채우기
         //로그인 안했을땐 빈 리스트 넘기기.
         List<Integer> userLikedBuddyIds = new ArrayList<>();
         if(auth!=null){
             User user = userRepository.findByUsername(auth.getName());
             List<Buddy> buddyILike = user.getBuddyILike();
             userLikedBuddyIds = buddyILike.stream().map(Buddy::getId).map(Long::intValue).collect(Collectors.toList());
-        //log.info("buddyIds={}",userLikedBuddyIds.get(0));
+
         }
         option = new BuddyFilteringSortingOption();
         log.info("buddycont={}",buddyRepository.findAll().size());
@@ -126,8 +127,6 @@ public class BuddyController {
     }
 
 
-
-
     @GetMapping("/beABuddy")
     public String beABuddy(@ModelAttribute("buddyForm") BeABuddyForm buddyForm){
         return "buddy/beABuddyForm";
@@ -135,12 +134,13 @@ public class BuddyController {
 
     @PostMapping("/beABuddy")
     public String forSubmitOfBeABuddy(@Validated  @ModelAttribute("buddyForm") BeABuddyForm buddyForm,
-                                      BindingResult bindingResult){
+                                      BindingResult bindingResult, Authentication auth){
         buddyFormValidator.validate(buddyForm,bindingResult);
         if(bindingResult.hasErrors()){
             log.info("errors={}",bindingResult);
             return "buddy/beABuddyForm";
         }
+        buddyForm.setUsername(auth.getName());
         buddyService.saveBuddy(buddyForm);
         return "redirect:/buddy";
     }

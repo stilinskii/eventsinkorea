@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "buddies")
+@ToString
 public class Buddy {
 
     @Id
@@ -35,6 +36,9 @@ public class Buddy {
 
     @Column(name = "img_url")
     private String imgUrl;
+
+    @Column(name="file_name")
+    private String fileName;
 
     private String intro;
 

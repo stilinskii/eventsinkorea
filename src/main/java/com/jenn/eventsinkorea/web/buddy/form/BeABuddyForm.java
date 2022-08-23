@@ -21,4 +21,5 @@ public class BeABuddyForm {
     private String location;
     private String intro;
     private MultipartFile image;
+    private String username;
 }

@@ -33,19 +33,24 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Guides</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Community</a>
-              </li>
+
               <li class="nav-item">
                 <a th:href="">
                   <i class="fa fa-cog"></i>
                 </a>
               </li>
               <li class="nav-item">
+                <a href="" class="user_link" title="My Buddy Page">
+                  <i class="fa fa-smile-o"></i>
+                </a>
+              </li>
+
+              <li class="nav-item">
                 <a href="" class="user_link">
                   <i class="fa fa-user" aria-hidden="true"></i>
                 </a>
               </li>
+
               <li class="user_link nav-item">
                 <a href="" class="user_option"> Login </a>
               </li>
@@ -58,15 +63,6 @@
     <div class="container mt-4">
       <div class="bg-light p-5 rounded">
         <div class="d-flex flex-column align-items-center">
-          <!-- <i
-            class="fa fa-heart-o bd-highlight like-btn"
-            id="like-btn"
-            th:class="${community.isLiked == true}? 'fa fa-heart bd-highlight like-btn':'fa fa-heart-o bd-highlight like-btn'"
-            th:text="| ${community.like_count}|"
-          >
-            0</i
-          > -->
-
           <div class="d-flex ms-auto">
             <i
               class="mt-1 mx-1 like-btn"
@@ -102,6 +98,9 @@
             </span>
             <span th:text="|location : ${buddy.location}|">
               location : all
+            </span>
+            <span th:text="|updated at : ${buddy.updatedAt}|">
+              updated at : 2020-202/2
             </span>
           </p>
 
