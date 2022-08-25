@@ -15,6 +15,5 @@ public interface BuddyRepository extends JpaRepository<Buddy, Long> , BuddyDAO{
     Page<Buddy> findAllByOrderByUpdatedAtDesc(Pageable pageable);
 
 
-
     Optional<Buddy> findByUser(User user);
 }

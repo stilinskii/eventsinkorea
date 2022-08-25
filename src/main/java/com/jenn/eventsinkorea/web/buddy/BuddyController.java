@@ -6,6 +6,7 @@ import com.jenn.eventsinkorea.domain.buddy.BuddyService;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.user.User;
+import com.jenn.eventsinkorea.web.ScriptUtils;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
 import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringSortingOption;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,8 @@ public class BuddyController {
     private final BeABuddyFormValidator buddyFormValidator;
 
     private BuddyFilteringSortingOption option;
+
+    private ScriptUtils scriptUtils = new ScriptUtils();
 
 //    int defaultPageSize = 3;
 
@@ -111,7 +114,6 @@ public class BuddyController {
             model.addAttribute("noMore",true);
             log.info("hasnonext={}",!buddies.hasNext());
         }
-
 
         log.info("buddysize={}",buddies.getSize());
         List<Integer> userLikedBuddyIds = new ArrayList<>();
@@ -180,19 +182,12 @@ public class BuddyController {
         BuddyRequest buddyRequest = buddyService.saveRequest(auth.getName(), buddyId);
         String referer = request.getHeader("referer");
         if(buddyRequest==null){
-            alert(response,"you have already requested.",referer);
+            scriptUtils.alertAndMovePage(response,"you have already requested.",referer);
         }
         return "redirect:"+referer;
     }
 
-    //알림 보내기
-    public static void alert(HttpServletResponse response, String alertText, String nextPage) throws IOException {
-        response.setContentType("text/html;charset=euc-kr");
-        response.setCharacterEncoding("euc-kr");
-        PrintWriter out = response.getWriter();
-        out.println("<script>alert('"+alertText+"'); location.href='"+nextPage+"';</script> ");
-        out.flush();
-    }
+
 
 
     @Secured("Role_User")

@@ -55,6 +55,7 @@ public class BuddyService {
                 .imgUrl(S3Url.get(UPLOAD_IMAGE_URL))
                 .fileName(S3Url.get(UPLOAD_FILE_NAME))
                 .user(userRepository.findByUsername(form.getUsername()))
+                .likeCnt(0L)
                 .build();
 
         buddyRepository.save(buddy);
@@ -108,9 +109,7 @@ public class BuddyService {
         return buddyRequestRepository.save(buddyRequest);
     }
 
-    public List<BuddyRequest> getRequestByUsername(String name){
-        return buddyRequestRepository.findByUser(userRepository.findByUsername(name));
-    }
+
 
 
     public void addLikeCnt(Long buddyId, String username) {
@@ -139,5 +138,11 @@ public class BuddyService {
         User user = userRepository.findByUsername(name);
         return buddyRepository.findByUser(user)
                 .orElse(null);
+    }
+
+    public void deleteBuddy(Long id) {
+        Buddy buddy = buddyRepository.getOne(id);
+        s3Uploader.deleteFile(buddy.getFileName());
+        buddyRepository.delete(buddy);
     }
 }

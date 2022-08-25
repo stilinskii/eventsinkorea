@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -21,12 +23,10 @@ public class BuddyRequest {
 
     @ManyToOne
     @MapsId("userId")
-//    @JoinColumn(name = "user_id", nullable = false)
     private User user; //신청자
 
     @ManyToOne
     @MapsId("buddyId")
-//    @JoinColumn(name = "buddy_id")
     private Buddy buddy; // 신청받은자
 
     private int status;//0:대기 1:수락 2:거절
@@ -34,4 +34,11 @@ public class BuddyRequest {
     @Column(name = "request_date")
     private Date requestDate;
 
+    @Transient
+    private String formattedRequestDate;
+
+    public String getFormattedRequestDate() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(requestDate);
+    }
 }

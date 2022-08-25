@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
+  <head th:replace="fragments/common :: head('My Buddy')">
     <meta charset="utf-8" />
 
     <!-- bootstrap core css -->
@@ -62,12 +62,9 @@
     <main class="container">
       <div class="bg-white p-5 rounded d-flex flex-column align-items-center">
         <h1>My Buddy</h1>
-        <h4 class="">Buddy I Liked</h4>
+        <h4 class="my-4">Buddy I Liked</h4>
 
-        <div class="caption">
-          <p class="p-2 bd-highlight" th:text="|글 수 : |">글 수:</p>
-        </div>
-
+ 
         <div class="container-fluid">
           <div class="row">
             <div
@@ -92,48 +89,57 @@
             </div>
 
             <div class="col-8">
-              <div class="sorting-dropdown">
-                <select class="form-select mb-2">
-                  <option value="Joined Date">sorting</option>
-                  <option value="Review">Review</option>
-                  <option value="Rate">Rate</option>
-                  <option value="Latest">Latest</option>
-                </select>
-              </div>
+      
               <main id="buddies">
                 <th:block th:each="buddy:${buddies}">
-                  <a th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}" href="#">
-                    <div
-                      class="buddy_info border-top"
-                      style="background-color: white"
-                    >
-                      <div class="lang">
-                        <p
-                          th:text="|learning : ${buddy.learningLang} / native : ${buddy.nativeLang}|"
+                  <div
+                    class="buddy_info border-top"
+                    style="background-color: white"
+                  >
+                    <div class="lang">
+                      <p
+                        th:text="|learning : ${buddy.learningLang} / native : ${buddy.nativeLang}|"
+                      >
+                        learning : English / native : Korean
+                      </p>
+                    </div>
+                    <div class="info d-flex justify-content-between">
+                      <div class="mt-2 p-4 buddy-detail-box">
+                        <a
+                          th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}"
+                          href="#"
                         >
-                          learning : English / native : Korean
-                        </p>
-                      </div>
-                      <div class="info d-flex justify-content-between">
-                        <div class="mt-2 p-4 buddy-detail-box">
                           <h3 th:text="${buddy.user.username}">name</h3>
                           <p th:text="${buddy.intro}" class="ellipsis">intro</p>
+                        </a>
+    
+                        <div class="d-flex">
                           <div class="d-flex">
                             <i class="fa fa-star mt-1 mx-1"></i>
                             <p>2.0 (12)</p>
                           </div>
-                        </div>
-                        <div class="m-3">
-                          <img
-                            th:src="${buddy.imgUrl}"
-                            alt=""
-                            height="130"
-                            width="130"
-                          />
+                          <div class="d-flex mx-3">
+                            <!-- th:classappend="${#lists.contains(buddyIds,__${buddy.id}__)}? 'fa fa-heart':'fa fa-heart-o'" -->
+                            <i
+                              class="mt-1 mx-1 like-btn fa fa-heart"
+                              th:onclick="|like(this,${buddy.id})|"
+                              onclick="like(this,1)"
+                            ></i>
+                            <p th:text="| ${buddy.likeCnt}|">2</p>
+                          </div>
                         </div>
                       </div>
+                      <div class="m-3">
+                        <img
+                          th:src="${buddy.imgUrl}"
+                          alt=""
+                          height="130"
+                          width="130"
+                        />
+                      </div>
                     </div>
-                  </a>
+                    <input type="hidden" th:if="${noMore}" class="noMore" />
+                  </div>
                 </th:block>
               </main>
               <div class="buddy_info border-top" style="background-color: white">
