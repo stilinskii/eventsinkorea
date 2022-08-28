@@ -22,6 +22,11 @@ public class BuddyRequestService {
         return buddyRequestRepository.findByUser(userRepository.findByUsername(name));
     }
 
+
+    public List<BuddyRequest> getSentRequestByUsernameAndStatus(String name, Integer status, Integer reviewStatus){
+        return buddyRequestRepository.findByUserAndStatusAndReview(userRepository.findByUsername(name),status,reviewStatus);
+    }
+
     public void deleteRequest(Long buddyId,String username){
        buddyRequestRepository.deleteByUserAndBuddy(userRepository.findByUsername(username).getId(),buddyId);
     }

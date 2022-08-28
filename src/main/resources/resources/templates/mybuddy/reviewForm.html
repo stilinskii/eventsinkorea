@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments/common :: head('Events')">
+    <meta charset="utf-8" />
+
+    <!-- bootstrap core css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link
+      href="/static/css/style.css"
+      th:href="@{/css/style.css}"
+      rel="stylesheet"
+    />
+    <link
+      href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+
+    <title>Events</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <div class="sub-page" th:replace="/fragments/nav :: nav-front('Buddy')">
+      <header>
+        <nav class="navbar">
+          <div class="container" id="nav-container">
+            <ul class="navbar-nav" id="nav">
+              <a class="navbar-brand" href="#" th:href="@{/}"
+                ><span>Brand</span></a
+              >
+              <li class="nav-item">
+                <a class="nav-link" href="#">Events</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Guides</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Community</a>
+              </li>
+              <li class="nav-item">
+                <a th:href="">
+                  <i class="fa fa-cog"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="user_link">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li class="user_link nav-item">
+                <a href="" class="user_option"> Login </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    </div>
+
+    <div class="container">
+      <!-- buddy -->
+      <div class="bg-light p-5 rounded d-flex flex-column align-items-center">
+        <div class="p-3 m-5">
+          <h1 style="text-align: center">Write Review</h1>
+        </div>
+
+        <div class="buddy_info border-top" style="background-color: white">
+          <div class="lang">
+            <p
+              th:text="|learning : ${buddy.learningLang} / native : ${buddy.nativeLang}|"
+            >
+              learning : English / native : Korean
+            </p>
+          </div>
+          <div class="info d-flex justify-content-between">
+            <div class="mt-2 p-4 buddy-detail-box">
+              <a th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}" href="#">
+                <h3 th:text="${buddy.user.username}">name</h3>
+                <p th:text="${buddy.intro}" class="ellipsis">intro</p>
+              </a>
+
+              <div class="d-flex">
+                <div class="d-flex">
+                  <i class="fa fa-star mt-1 mx-1"></i>
+                  <p>2.0 (12)</p>
+                </div>
+                <div class="d-flex mx-3">
+                  <i class="mt-1 mx-1 like-btn fa fa-heart"></i>
+                  <p th:text="| ${buddy.likeCnt}|">2</p>
+                </div>
+              </div>
+            </div>
+            <div class="m-3">
+              <img th:src="${buddy.imgUrl}" alt="" height="130" width="130" />
+            </div>
+          </div>
+        </div>
+        <!-- buddy end -->
+        <form action="" method="post" th:object="${buddyReview}">
+          <div class="row mb-4">
+            <label for="" class="col-sm-4 col-form-label">Rating : </label>
+            <div class="col-sm-8">
+              <select
+                class="form-select rating"
+                aria-label=".form-select-sm example"
+                th:field="*{rate}"
+              >
+                <option value="5">
+                  <p>5</p>
+                  &nbsp; &nbsp; &#xf005; &#xf005; &#xf005; &#xf005; &#xf005;
+                </option>
+                <option value="4.5">
+                  <p>4.5</p>
+                  &nbsp; &#xf005; &#xf005; &#xf005; &#xf005; &#xf089;
+                </option>
+                <option value="4">
+                  <p>4</p>
+                  &nbsp; &nbsp; &#xf005; &#xf005; &#xf005; &#xf005;
+                </option>
+                <option value="3.5">
+                  <p>3.5</p>
+                  &nbsp; &#xf005; &#xf005; &#xf005; &#xf089;
+                </option>
+                <option value="3">
+                  <p>3</p>
+                  &nbsp; &nbsp; &#xf005; &#xf005; &#xf005;
+                </option>
+                <option value="2.5">
+                  <p>2.5</p>
+                  &nbsp; &#xf005; &#xf005; &#xf089;
+                </option>
+                <option value="2">
+                  <p>2</p>
+                  &nbsp; &nbsp; &#xf005; &#xf005;
+                </option>
+                <option value="1.5">
+                  <p>1.5</p>
+                  &nbsp; &#xf005; &#xf089;
+                </option>
+                <option value="1">
+                  <p>1</p>
+                  &nbsp; &nbsp; &#xf005;
+                </option>
+                <option value="0.5">
+                  <p>0.5</p>
+                  &nbsp; &#xf089;
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="" class="form-label">Comment</label>
+            <textarea
+              class="form-control"
+              rows="3"
+              th:field="*{comment}"
+            ></textarea>
+          </div>
+          <button class="btn btn-secondary">ok</button>
+          <a href="javascript:history.back();" class="btn btn-secondary"
+            >cancle</a
+          >
+        </form>
+      </div>
+    </div>
+
+    <div>
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
+      <script src="/static/js/events.js" th:src="@{/js/events.js}"></script>
+      <script
+        src="https://kit.fontawesome.com/661f25159f.js"
+        crossorigin="anonymous"
+      ></script>
+      <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+    </div>
+  </body>
+</html>

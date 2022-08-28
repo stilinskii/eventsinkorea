@@ -2,6 +2,7 @@ package com.jenn.eventsinkorea.domain.user;
 
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
+import com.jenn.eventsinkorea.domain.buddy.model.BuddyReview;
 import com.jenn.eventsinkorea.domain.user.Role;
 import lombok.*;
 
@@ -62,6 +63,8 @@ public class User {
     @ManyToMany(mappedBy = "likedUsers")
     private List<Buddy> buddyILike;
 
+    @OneToMany(mappedBy = "user")
+    private List<BuddyReview> buddyReviews = new ArrayList<>();
 
     public User(String user_id, String pwd, String username, String email, String nationality) {
         this.username = user_id;

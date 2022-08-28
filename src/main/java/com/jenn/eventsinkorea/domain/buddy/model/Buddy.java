@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +53,7 @@ public class Buddy {
     @ColumnDefault("0")
     private Long likeCnt;
 
+
     @OneToOne
     @JoinColumn(name = "user_id")
 //    @JoinTable(name = "buddies_users",
@@ -68,6 +70,11 @@ public class Buddy {
             joinColumns = @JoinColumn(name = "buddy_id"),
             inverseJoinColumns = @JoinColumn(name = "user_username"))
     private List<User> likedUsers;
+
+
+    @OneToMany(mappedBy = "buddy")
+    private List<BuddyReview> buddyReviews = new ArrayList<>();
+
 
     public Buddy() {
     }

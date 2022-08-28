@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,8 @@ import java.util.Optional;
 public interface BuddyRequestRepository extends JpaRepository<BuddyRequest, UserBuddyId> {
     List<BuddyRequest> findByBuddy(Buddy buddy);
     List<BuddyRequest> findByUser(User user);
+
+    List<BuddyRequest> findByUserAndStatusAndReview(User user, Integer status, Integer reviewStatus);
 
     Optional<BuddyRequest> findByBuddyAndUser(Buddy buddy, User user);
 

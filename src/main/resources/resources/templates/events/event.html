@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- bootstrap core css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link
+      href="/static/css/style.css"
+      th:href="@{/css/style.css}"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $('.slider').bxSlider({
+          adaptiveHeight: true,
+        });
+      });
+    </script>
+
+    <title>Events</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <div class="sub-page" th:replace="fragments/nav :: nav-front('Events')">
+      <header>
+        <nav class="navbar">
+          <div class="container" id="nav-container">
+            <ul class="navbar-nav" id="nav">
+              <a class="navbar-brand" href="#" th:href="@{/}"
+                ><span>Brand</span></a
+              >
+              <li class="nav-item">
+                <a class="nav-link" href="#">Events</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Guides</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Community</a>
+              </li>
+              <a href="" class="user_link">
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </a>
+              <li class="user_link">
+                <a href="" class="user_option"> Login </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    </div>
+    <!-- navbar end -->
+    <!-- content start -->
+
+    <div class="container mt-5 p-5" id="event-detail">
+      <div class="icons d-flex justify-content-end">
+        <i class="fa fa-heart-o like-icon"> 155</i>
+        <i class="fa fa-share-alt" onclick="clipboardShare()"></i>
+      </div>
+      <div class="event-detail-box">
+        <div class="title pb-4">
+          <h1 th:text="${eventDetail.eventCommonInfo.title}">
+            Discover Seoul Pass
+          </h1>
+        </div>
+        <div class="slider">
+          <th:block th:each="img : ${eventDetail.imgs}">
+            <img
+              th:src="${img}"
+              src="/static/images/roof-tile-4495550_960_720.jpg"
+              alt=""
+            />
+          </th:block>
+        </div>
+        <div class="container quick-info">
+          <ul class="row">
+            <li class="col">
+              <p class="title">EVENT PERIOD</p>
+              <p
+                th:text="|${eventDetail.formattedEventStartDate} ~ ${eventDetail.formattedEventEndDate}|"
+              >
+                2222-55-55 ~ 2022-88-88
+              </p>
+            </li>
+            <li class="col">
+              <p class="title">EVENT PLACE</p>
+              <p th:utext="${eventDetail.eventPlace}">Area around Bosingak B</p>
+            </li>
+            <li class="col">
+              <p class="title">ADMISSION FEE</p>
+              <p th:utext="${eventDetail.admissionFee}">Free</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="intro">
+          <hr />
+          <h2 class="py-3">Introduction</h2>
+          <h5 th:utext="${eventDetail.eventCommonInfo.introduction}">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam,
+            sit unde? Enim iure delectus dolorum, magnam provident minima
+            molestiae. In eaque aliquid aspernatur dolorem fugiat iusto quam
+            corrupti tenetur ullam.
+          </h5>
+          <div class="program mt-4" th:if="${eventDetail.program != ''}">
+            <h4>Program</h4>
+            <h5 th:utext="program">dfsdfa</h5>
+          </div>
+          <hr />
+        </div>
+        <div class="detail">
+          <h2 class="py-3">Location & More Info</h2>
+          <div class="detail-box d-flex">
+            <div
+              class="map"
+              th:if="not ${eventDetail.eventCommonInfo.map.isEmpty()}"
+            >
+              <input
+                type="hidden"
+                class="mapX"
+                th:value="${eventDetail.eventCommonInfo.map['mapx']}"
+              />
+              <input
+                type="hidden"
+                class="mapY"
+                th:value="${eventDetail.eventCommonInfo.map['mapy']}"
+              />
+              <div id="map" style="width: 400px; height: 500px"></div>
+            </div>
+            <div class="content">
+              <div class="location">
+                <h4>Location</h4>
+                <ul>
+                  <li th:utext="|Event Place : ${eventDetail.eventPlace}|">
+                    Event Place : 행사장소
+                  </li>
+                  <li
+                    th:text="|Address : ${eventDetail.eventCommonInfo.address}|"
+                  >
+                    Address : 주소
+                  </li>
+                  <p th:utext="${eventDetail.contact}">Contact : 연락처</p>
+                </ul>
+              </div>
+              <br />
+              <div class="more-info">
+                <h4>More Info</h4>
+                <ul>
+                  <li th:text="|Sponsor : ${eventDetail.sponsor}|">
+                    Sponsor : 주최자정보
+                  </li>
+                  <li
+                    th:if="${eventDetail.eventCommonInfo.homepage}"
+                    th:utext="|Homepage : ${eventDetail.eventCommonInfo.homepage}|"
+                  >
+                    Homepage : dkfjdkfjdkfjdkj
+                  </li>
+                  <li
+                    th:if="${eventDetail.playtime != ''}"
+                    th:utext="|Play time : ${eventDetail.playtime}|"
+                  >
+                    Play time : 공연시간
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container p-5 d-flex justify-content-center">
+      <button class="btn btn-secondary" onclick="javascript:history.back();">
+        back to list
+      </button>
+    </div>
+
+    <div>
+      <script
+        async
+        defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALSsMnJDu2daXSQKmlKMXDYoqeymOuPZ8&callback=initMap&region=kr"
+      ></script>
+      <script src="/static/js/event.js" th:src="@{/js/event.js}"></script>
+      <!-- <script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"
+      ></script> -->
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"
+      ></script>
+
+      <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
+      <!-- <script src="/static/js/app.js" th:src="@{/js/app.js}"></script> -->
+      <script
+        src="https://kit.fontawesome.com/661f25159f.js"
+        crossorigin="anonymous"
+      ></script>
+    </div>
+  </body>
+</html>

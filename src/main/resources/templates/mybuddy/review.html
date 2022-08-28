@@ -62,10 +62,10 @@
     <main class="container">
       <div class="bg-white p-5 rounded d-flex flex-column align-items-center">
         <h1>My Buddy</h1>
-        <h4 class="my-4">Recived Request</h4>
+        <h4 class="my-4">Review</h4>
         <div class="mb-2">
           <button type="button" class="btn btn-outline-success requests active">
-            Requests
+            write Review
           </button>
           <button type="button" class="btn btn-outline-secondary history">
             History
@@ -75,12 +75,12 @@
           <div class="row">
             <div
               class="col-2"
-              th:replace="fragments/myBuddyCategories :: myBuddy('Received')"
+              th:replace="fragments/myBuddyCategories :: myBuddy('Review')"
             ></div>
 
-            <div class="col-10 requests-list">
+            <div class="col-10 history-list">
               <div th:if="${#lists.isEmpty(requests)}">
-                <h4>no waiting requests</h4>
+                <h4>no accepted requests</h4>
               </div>
               <table
                 th:unless="${#lists.isEmpty(requests)}"
@@ -89,10 +89,9 @@
                 <thead class="bg-secondary bg-gradient">
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">User</th>
+                    <th scope="col">Buddy</th>
                     <th scope="col">request date</th>
-
-                    <th scope="col"></th>
+                    <th scope="col">status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -106,19 +105,14 @@
                       >
                     </td>
                     <td th:text="${request.formattedRequestDate}">
-                      request date
+                      review date
                     </td>
 
                     <td>
                       <a
-                        th:href="@{|/mybuddy/sent-request/accept/${request.user.id}|}"
-                        class="btn btn-primary btn-sm confirmAccept"
-                        >accept</a
-                      >
-                      <a
-                        th:href="@{|/mybuddy/sent-request/decline/${request.user.id}|}"
-                        class="btn btn-danger btn-sm confirmDecline"
-                        >turn down</a
+                        th:href="@{|/mybuddy/write-review/${request.buddy.id}|}"
+                        class="btn btn-primary btn-sm"
+                        >write review</a
                       >
                     </td>
                   </tr>
@@ -126,12 +120,12 @@
               </table>
             </div>
 
-            <div class="col-10 history-list d-none">
-              <div th:if="${#lists.isEmpty(requests_history)}">
-                <h4>no History!</h4>
+            <div class="col-10 requests-list d-none">
+              <div th:if="${#lists.isEmpty(reviews)}">
+                <h4>There is no review at the moment.</h4>
               </div>
               <table
-                th:unless="${#lists.isEmpty(requests_history)}"
+                th:unless="${#lists.isEmpty(reviews)}"
                 class="table caption-top"
               >
                 <thead class="bg-secondary bg-gradient">
@@ -139,27 +133,29 @@
                     <th scope="col">#</th>
                     <th scope="col">User</th>
                     <th scope="col">request date</th>
-                    <th scope="col">status</th>
+                    <th scope="col">rate</th>
+                    <th scope="col">view</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="request,iterStat:${requests_history}">
+                  <tr th:each="review,iterStat:${reviews}">
                     <th scope="row" th:text="${iterStat.count}">1</th>
-                    <td class="d-flex">
+                    <td>
                       <a
-                        th:href="@{|/buddy/${request.buddy.id}|}"
-                        th:text="${request.user.name}"
+                        th:href="@{|/buddy/${review.buddy.id}|}"
+                        th:text="${review.buddy.user.name}"
                         >buddy</a
                       >
                     </td>
-                    <td th:text="${request.formattedRequestDate}">
-                      request date
-                    </td>
+                    <td th:text="${review.formattedCreatedAt}">review date</td>
+                    <td th:text="${review.rating}">rating</td>
 
-                    <td
-                      th:text="${request.status}==0? 'waiting':(${request.status}==1? 'accepted':'canceled')"
-                    >
-                      @status
+                    <td>
+                      <a
+                        th:href="@{|/mybuddy/review-detail/${review.id}|}"
+                        class="btn btn-primary btn-sm"
+                        >view</a
+                      >
                     </td>
                   </tr>
                 </tbody>

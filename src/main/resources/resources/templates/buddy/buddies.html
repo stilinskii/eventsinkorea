@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments/common :: head('Events')">
+    <meta charset="utf-8" />
+
+    <!-- bootstrap core css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom styles for this template -->
+    <link
+      href="/static/css/style.css"
+      th:href="@{/css/style.css}"
+      rel="stylesheet"
+    />
+
+    <title>Events</title>
+  </head>
+  <body>
+    <!-- navbar -->
+
+    <div class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sub-page" th:replace="/fragments/nav :: nav-front('Buddy')">
+      <header>
+        <nav class="navbar">
+          <div class="container" id="nav-container">
+            <ul class="navbar-nav" id="nav">
+              <a class="navbar-brand" href="#" th:href="@{/}"
+                ><span>Brand</span></a
+              >
+              <li class="nav-item">
+                <a class="nav-link" href="#">Events</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Guides</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Community</a>
+              </li>
+              <li class="nav-item">
+                <a th:href="">
+                  <i class="fa fa-cog"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="user_link">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li class="user_link nav-item">
+                <a href="" class="user_option"> Login </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    </div>
+
+    <div class="container">
+      <div class="d-flex flex-column align-items-center">
+        <div class="write_buddy pt-3">
+          <a th:href="@{/buddy/beABuddy}" class="btn btn-secondary"
+            >be a buddy</a
+          >
+        </div>
+        <div class="p-3 m-5">
+          <h1 style="text-align: center">Buddy</h1>
+          <p>Find your local travel buddy</p>
+        </div>
+      </div>
+      <div class="row">
+        <!-- ===========buddy filter============== -->
+        <div class="col-2 filtering-sec">
+          <div class="d-flex">
+            <h4 class="me-auto">filter</h4>
+            <i
+              class="fa fa-repeat mx-2 pt-2"
+              onClick="window.location.reload();"
+            ></i>
+          </div>
+          <main>
+            <div class="filters my-3">
+              <div class="form-floating">
+                <select
+                  class="form-select my-2 learning-lang"
+                  id="floatingSelect"
+                  aria-label="Floating label select example"
+                >
+                  <th:block
+                    th:replace="/fragments/dropDownRef :: languages"
+                  ></th:block>
+                </select>
+                <label for="floatingSelect">Learning language</label>
+              </div>
+
+              <div class="form-floating">
+                <select
+                  class="form-select my-2 native-lang"
+                  id="floatingSelect"
+                  aria-label="Floating label select example"
+                >
+                  <th:block
+                    th:replace="/fragments/dropDownRef :: languages"
+                  ></th:block>
+                </select>
+                <label for="floatingSelect">native language</label>
+              </div>
+
+              <div class="form-floating">
+                <select
+                  class="form-select my-2 location"
+                  id="floatingSelect"
+                  aria-label="Floating label select example"
+                >
+                  <th:block
+                    th:replace="/fragments/dropDownRef :: locations"
+                  ></th:block>
+                </select>
+                <label for="floatingSelect">location</label>
+              </div>
+            </div>
+          </main>
+        </div>
+        <!-- ===========buddy filter end============== -->
+        <div class="col-8">
+          <div class="sorting-dropdown">
+            <select class="form-select mb-2 sorting">
+              <option value="">sorting</option>
+              <option value="Review">Review</option>
+              <option value="Rate">Rate</option>
+              <option value="Latest">Latest</option>
+            </select>
+          </div>
+
+          <main id="buddies">
+            <th:block th:each="buddy:${buddies}">
+              <div
+                class="buddy_info border-top"
+                style="background-color: white"
+              >
+                <div class="lang">
+                  <p
+                    th:text="|learning : ${buddy.learningLang} / native : ${buddy.nativeLang}|"
+                  >
+                    learning : English / native : Korean
+                  </p>
+                </div>
+                <div class="info d-flex justify-content-between">
+                  <div class="mt-2 p-4 buddy-detail-box">
+                    <a
+                      th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}"
+                      href="#"
+                    >
+                      <h3 th:text="${buddy.user.username}">name</h3>
+                      <p th:text="${buddy.intro}" class="ellipsis">intro</p>
+                    </a>
+
+                    <div class="d-flex">
+                      <div class="d-flex">
+                        <i class="fa fa-star mt-1 mx-1"></i>
+                        <p>2.0 (12)</p>
+                      </div>
+                      <div class="d-flex mx-3">
+                        <i
+                          class="mt-1 mx-1 like-btn"
+                          th:classappend="${#lists.contains(buddyIds,__${buddy.id}__)}? 'fa fa-heart':'fa fa-heart-o'"
+                          th:onclick="|like(this,${buddy.id})|"
+                          onclick="like(this,1)"
+                        ></i>
+                        <p th:text="| ${buddy.likeCnt}|">2</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="m-3">
+                    <img
+                      th:src="${buddy.imgUrl}"
+                      alt=""
+                      height="130"
+                      width="130"
+                    />
+                  </div>
+                </div>
+                <input type="hidden" th:if="${noMore}" class="noMore" />
+              </div>
+            </th:block>
+          </main>
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div th:unless="${noMore}" class="d-flex justify-content-center m-5">
+        <button type="button" class="btn btn-warning more-btn">More</button>
+      </div>
+      <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    </div>
+
+    <div th:replace="/fragments/common :: scripts">
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script
+        src="https://kit.fontawesome.com/661f25159f.js"
+        crossorigin="anonymous"
+      ></script>
+    </div>
+
+    <script
+      defer
+      src="/static/js/buddies.js"
+      th:src="@{/js/buddies.js}"
+    ></script>
+    <script
+      defer
+      src="/static/js/buddyCommon.js"
+      th:src="@{/js/buddyCommon.js}"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/661f25159f.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

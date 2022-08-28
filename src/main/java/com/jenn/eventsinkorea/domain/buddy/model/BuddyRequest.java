@@ -4,6 +4,7 @@ import com.jenn.eventsinkorea.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
@@ -30,9 +31,11 @@ public class BuddyRequest {
     private Buddy buddy; // 신청받은자
 
     private int status;//0:대기 1:수락 2:거절
-
+    @CreationTimestamp
     @Column(name = "request_date")
     private Date requestDate;
+
+    private Integer review;
 
     @Transient
     private String formattedRequestDate;
