@@ -2,9 +2,11 @@ package com.jenn.eventsinkorea.web.buddy;
 
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.buddy.BuddyRepository;
+import com.jenn.eventsinkorea.domain.buddy.BuddyReviewRepository;
 import com.jenn.eventsinkorea.domain.buddy.BuddyService;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
+import com.jenn.eventsinkorea.domain.buddy.model.BuddyReview;
 import com.jenn.eventsinkorea.domain.user.User;
 import com.jenn.eventsinkorea.web.ScriptUtils;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
@@ -46,13 +48,14 @@ public class BuddyController {
 
     private final BuddyRepository buddyRepository;
 
+    private final BuddyReviewRepository buddyReviewRepository;
+
     private final BeABuddyFormValidator buddyFormValidator;
 
     private BuddyFilteringSortingOption option;
 
     private ScriptUtils scriptUtils = new ScriptUtils();
 
-//    int defaultPageSize = 3;
 
     @GetMapping
     public String index(@PageableDefault(size = 3) Pageable pageable, Model model, Authentication auth){
@@ -155,26 +158,12 @@ public class BuddyController {
             model.addAttribute("buddyILiked",isLikedBuddy);
         }
         Buddy buddy = buddyRepository.getById(buddyId);
+        List<BuddyReview> reviews =buddyReviewRepository.findByBuddy(buddy);
         model.addAttribute("buddy",buddy);
+        model.addAttribute("reviews",reviews);
         return "buddy/buddy";
     }
 
-    //ajax
-//    @PostMapping("/filtering")
-//    public String buddyFiltering(BuddyFilteringSortingOption buddyFiltering, Model model, Authentication auth, @PageableDefault(size = 1) Pageable pageable){
-//        log.info("buddyFiltering={}",buddyFiltering);
-//
-//        Page<Buddy> buddies = buddyService.getFilteredbuddies(buddyFiltering,pageable);
-//        List<Integer> userLikedBuddyIds = new ArrayList<>();
-//        if(auth!=null){
-//            User user = userRepository.findByUsername(auth.getName());
-//            List<Buddy> buddyILike = user.getBuddyILike();
-//            userLikedBuddyIds = buddyILike.stream().map(Buddy::getId).map(Long::intValue).collect(Collectors.toList());
-//        }
-//        model.addAttribute("buddyIds",userLikedBuddyIds);
-//        model.addAttribute("buddies", buddies);
-//        return "buddy/buddies :: #buddies";
-//    }
 
     @GetMapping("/request/{buddyId}")
     public String buddyRequest(HttpServletRequest request,@PathVariable Long buddyId,Authentication auth,HttpServletResponse response) throws IOException {
@@ -186,7 +175,6 @@ public class BuddyController {
         }
         return "redirect:"+referer;
     }
-
 
 
 

@@ -112,53 +112,12 @@
           <div class="row mb-4">
             <h4 class="col-sm-4">Rating : </h4>
             <div class="col-sm-8">
-              <select
-                class="form-select rating"
-                aria-label=".form-select-sm example"
-                th:field="${review.rating}"
-                disabled
-              >
-                <option value="5">
-                  <p>5</p>
-                  &nbsp; &nbsp; &#xf005; &#xf005; &#xf005; &#xf005; &#xf005;
-                </option>
-                <option value="4.5">
-                  <p>4.5</p>
-                  &nbsp; &#xf005; &#xf005; &#xf005; &#xf005; &#xf089;
-                </option>
-                <option value="4">
-                  <p>4</p>
-                  &nbsp; &nbsp; &#xf005; &#xf005; &#xf005; &#xf005;
-                </option>
-                <option value="3.5">
-                  <p>3.5</p>
-                  &nbsp; &#xf005; &#xf005; &#xf005; &#xf089;
-                </option>
-                <option value="3">
-                  <p>3</p>
-                  &nbsp; &nbsp; &#xf005; &#xf005; &#xf005;
-                </option>
-                <option value="2.5">
-                  <p>2.5</p>
-                  &nbsp; &#xf005; &#xf005; &#xf089;
-                </option>
-                <option value="2">
-                  <p>2</p>
-                  &nbsp; &nbsp; &#xf005; &#xf005;
-                </option>
-                <option value="1.5">
-                  <p>1.5</p>
-                  &nbsp; &#xf005; &#xf089;
-                </option>
-                <option value="1">
-                  <p>1</p>
-                  &nbsp; &nbsp; &#xf005;
-                </option>
-                <option value="0.5">
-                  <p>0.5</p>
-                  &nbsp; &#xf089;
-                </option>
-              </select>
+              <div class="d-flex">
+                <p class="mx-3 rating-num">5</p>
+                <div class="me-auto rating">
+                  
+                </div>
+              </div>
             </div>
           </div>
 
@@ -197,7 +156,11 @@
         src="/static/js/common.js"
         th:src="@{/js/common.js}"
       ></script>
-
+      <script
+        defer
+        src="/static/js/ratingStars.js"
+        th:src="@{/js/ratingStars.js}"
+      ></script>
       <script
         src="https://kit.fontawesome.com/661f25159f.js"
         crossorigin="anonymous"

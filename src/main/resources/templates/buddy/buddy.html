@@ -119,17 +119,42 @@
         <div class="d-flex justify-content-end">
           <h4>Review</h4>
           <div class="ms-auto">
-            <div class="d-flex">
+            <div class="d-flex average-rating">
               <i class="fa fa-star mt-1 mx-1"></i>
               <p>2.0</p>
             </div>
             <p>based on 3 reviews</p>
           </div>
         </div>
-        <div class="d-flex justify-content-between">
-          <h6>Lily</h6>
-          <div>It was nice to see you !</div>
-          <p>2022/08/88</p>
+        <div class="reviews">
+          <div class="border" th:each="review:${reviews}">
+            <div class="d-flex justify-content-between">
+              <h6 class="pt-1" th:text="${review.user.name}">Lily</h6>
+              <div class="d-flex">
+                <p class="mx-3 rating-num" th:text="${review.rating}">4.5</p>
+                <div class="me-auto rating">
+                  <!-- <i class="fa fa-star"></i> <i class="fa fa-star-half"></i> -->
+                </div>
+              </div>
+              <p class="ms-auto" th:text="${review.formattedCreatedAt}">
+                2022/08/88
+              </p>
+            </div>
+            <div th:text="${review.comment}">It was nice to see you !</div>
+          </div>
+          <div class="border">
+            <div class="d-flex justify-content-between">
+              <h6 class="pt-1">Lily</h6>
+              <div class="d-flex">
+                <p class="mx-3 rating-num">5</p>
+                <div class="me-auto rating">
+                  <!-- <i class="fa fa-star"></i> <i class="fa fa-star-half"></i> -->
+                </div>
+              </div>
+              <p class="ms-auto">2022/08/88</p>
+            </div>
+            <div>It was nice to see you !</div>
+          </div>
         </div>
       </div>
     </div>
@@ -143,9 +168,15 @@
       <script src="/static/js/buddy.js" th:src="@{/js/buddy.js}"></script>
       <script
         defer
+        src="/static/js/ratingStars.js"
+        th:src="@{/js/ratingStars.js}"
+      ></script>
+      <script
+        defer
         src="/static/js/buddyCommon.js"
         th:src="@{/js/buddyCommon.js}"
       ></script>
+
       <script
         src="https://kit.fontawesome.com/661f25159f.js"
         crossorigin="anonymous"

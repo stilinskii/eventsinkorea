@@ -19,7 +19,8 @@ h2 {
   font-family: 'Ibarra Real Nova', serif;
 }
 
-i.fa.fa-star {
+i.fa.fa-star,
+i.fa.fa-star-half {
   color: #ffda33;
 }
 
@@ -536,4 +537,19 @@ div.search select {
 
 form {
   width: 100%;
+}
+
+.rating-num {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.rating > i {
+  font-size: 25px;
+}
+
+.average-rating > p,
+.average-rating > i {
+  font-size: 25px;
+  font-weight: 600;
 }

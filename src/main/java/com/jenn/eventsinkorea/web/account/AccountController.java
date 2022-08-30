@@ -42,16 +42,8 @@ public class AccountController {
         }
         log.info("form={}",form);
 
-        User user = User.builder()
-                        .username(form.getUsername())
-                        .pwd(form.getPwd())
-                        .name(form.getName())
-                        .email(form.getEmail())
-                        .nationality(form.getNationality())
-                        .roles(new ArrayList<>())
-                        .build();
 
-        UserService.saveUser(user);
+        UserService.saveUser(form);
         return "redirect:/login";
     }
 

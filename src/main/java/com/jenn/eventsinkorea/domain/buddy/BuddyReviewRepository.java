@@ -1,5 +1,6 @@
 package com.jenn.eventsinkorea.domain.buddy;
 
+import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyReview;
 import com.jenn.eventsinkorea.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,6 @@ import java.util.List;
 public interface BuddyReviewRepository extends JpaRepository<BuddyReview,Long> {
 
     List<BuddyReview> findByUser(User user);
+
+    List<BuddyReview> findByBuddy(Buddy buddy);
 }
