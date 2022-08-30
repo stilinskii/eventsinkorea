@@ -18,41 +18,41 @@ class TourApiTest {
 
     private String contentId = tourApi.getRandomContentIdForTest();
 
-    @Test
-    void canGetEventsInfoFromAPI(){
-        List<Event> events = tourApi.getEventsInfoFromAPI();
-
-        assertThat(events).isNotNull();
-    }
-
-
-    @Test
-    void getEventCommonInfo(){
-        //given contentId
-        //when
-        EventCommonInfo eventDetail = tourApi.getEventCommonInfo(contentId);
-        //then
-        assertThat(eventDetail.getTitle()).isNotEmpty();
-
-    }
-    @Test
-    void getEventDetail(){
-        //given contentId
-        //when
-        EventDetail eventDetail = tourApi.getEventDetail(contentId);
-        //then
-        assertThat(eventDetail.getContentId()).isEqualTo(contentId);
-
-    }
-
-    @Test
-    void getDetailImgs(){
-        //given contentId
-        //when
-        List<String> subImgs = tourApi.getDetailImgs(contentId);
-        //then
-        assertThat(subImgs).isNotNull();
-
-    }
+//    @Test
+//    void canGetEventsInfoFromAPI(){
+//        List<Event> events = tourApi.getEventsInfoFromAPI();
+//
+//        assertThat(events).isNotNull();
+//    }
+//
+//
+//    @Test
+//    void getEventCommonInfo(){
+//        //given contentId
+//        //when
+//        EventCommonInfo eventDetail = tourApi.getEventCommonInfo(contentId);
+//        //then
+//        assertThat(eventDetail.getTitle()).isNotEmpty();
+//
+//    }
+//    @Test
+//    void getEventDetail(){
+//        //given contentId
+//        //when
+//        EventDetail eventDetail = tourApi.getEventDetail(contentId);
+//        //then
+//        assertThat(eventDetail.getContentId()).isEqualTo(contentId);
+//
+//    }
+//
+//    @Test
+//    void getDetailImgs(){
+//        //given contentId
+//        //when
+//        List<String> subImgs = tourApi.getDetailImgs(contentId);
+//        //then
+//        assertThat(subImgs).isNotNull();
+//
+//    }
 
 }

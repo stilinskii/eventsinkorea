@@ -121,9 +121,13 @@
           <div class="ms-auto">
             <div class="d-flex average-rating">
               <i class="fa fa-star mt-1 mx-1"></i>
-              <p>2.0</p>
+              <p th:text="${buddy.rating}">2.0</p>
             </div>
-            <p>based on 3 reviews</p>
+            <p
+              th:text="|based on ${{#lists.size(buddy.buddyReviews)}} reviews|"
+            >
+              based on 3 reviews
+            </p>
           </div>
         </div>
         <div class="reviews">

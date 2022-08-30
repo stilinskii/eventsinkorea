@@ -88,7 +88,7 @@
               <div class="d-flex">
                 <div class="d-flex">
                   <i class="fa fa-star mt-1 mx-1"></i>
-                  <p>2.0 (12)</p>
+                  <p th:text="|${review.buddy.rating} (${{#lists.size(review.buddy.buddyReviews)}})|">2.0 (12)</p>
                 </div>
                 <div class="d-flex mx-3">
                   <i class="mt-1 mx-1 like-btn fa fa-heart"></i>
@@ -113,7 +113,7 @@
             <h4 class="col-sm-4">Rating : </h4>
             <div class="col-sm-8">
               <div class="d-flex">
-                <p class="mx-3 rating-num">5</p>
+                <p class="mx-3 rating-num" th:text="${review.rating}">5</p>
                 <div class="me-auto rating">
                   
                 </div>

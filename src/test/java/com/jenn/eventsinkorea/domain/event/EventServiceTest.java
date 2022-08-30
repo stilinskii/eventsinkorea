@@ -106,14 +106,14 @@ class EventServiceTest {
     }
 
 
-    @Test
-    void getEventDetail() {
-        //given
-        String contentId = tourApi.getRandomContentIdForTest();
-        //when
-        EventDetail eventDetail = underTest.getEventDetail(contentId);
-        //then
-        //대표이미지가 2장이고 서브이미지는 있을때도있고 없을떄도 있어서 사진은 적어도 2장이 있어야함.
-        assertThat(eventDetail.getImgs().size()).isGreaterThanOrEqualTo(2);
-    }
+//    @Test
+//    void getEventDetail() {
+//        //given
+//        String contentId = tourApi.getRandomContentIdForTest();
+//        //when
+//        EventDetail eventDetail = underTest.getEventDetail(contentId);
+//        //then
+//        //대표이미지가 2장이고 서브이미지는 있을때도있고 없을떄도 있어서 사진은 적어도 2장이 있어야함.
+//        assertThat(eventDetail.getImgs().size()).isGreaterThanOrEqualTo(2);
+//    }
 }

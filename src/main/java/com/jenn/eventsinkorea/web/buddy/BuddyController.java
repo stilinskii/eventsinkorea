@@ -13,10 +13,6 @@ import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
 import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringSortingOption;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.bcel.Const;
-import org.springframework.aop.framework.AopConfigException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
@@ -31,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -108,7 +103,7 @@ public class BuddyController {
 
     //ajax 페이지 추가.
     @GetMapping("/buddypage")
-    public String more(@PageableDefault(size = 3) Pageable pageable, Authentication auth, Model model, HttpServletRequest request){
+    public String more(@PageableDefault(size = 3) Pageable pageable, Authentication auth, Model model){
 
         Slice<Buddy> buddies = buddyService.getFilteredbuddies(option,pageable);
         log.info("option={}",option);
@@ -159,6 +154,7 @@ public class BuddyController {
         }
         Buddy buddy = buddyRepository.getById(buddyId);
         List<BuddyReview> reviews =buddyReviewRepository.findByBuddy(buddy);
+        model.addAttribute("reviewCnt",buddyReviewRepository.countReviewByBuddyId(buddyId));
         model.addAttribute("buddy",buddy);
         model.addAttribute("reviews",reviews);
         return "buddy/buddy";
@@ -170,9 +166,11 @@ public class BuddyController {
         log.info("auth test={}",auth.getName());
         BuddyRequest buddyRequest = buddyService.saveRequest(auth.getName(), buddyId);
         String referer = request.getHeader("referer");
+        log.info("referer buddy req={}",referer);
         if(buddyRequest==null){
-            scriptUtils.alertAndMovePage(response,"you have already requested.",referer);
+            scriptUtils.alertAndBackPage(response,"you have already requested.");
         }
+
         return "redirect:"+referer;
     }
 

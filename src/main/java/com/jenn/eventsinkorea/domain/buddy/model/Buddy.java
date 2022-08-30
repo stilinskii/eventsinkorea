@@ -1,14 +1,11 @@
 package com.jenn.eventsinkorea.domain.buddy.model;
 
 import com.jenn.eventsinkorea.domain.user.User;
-
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +50,7 @@ public class Buddy {
     @ColumnDefault("0")
     private Long likeCnt;
 
-
+    private Double rating;
     @OneToOne
     @JoinColumn(name = "user_id")
 //    @JoinTable(name = "buddies_users",

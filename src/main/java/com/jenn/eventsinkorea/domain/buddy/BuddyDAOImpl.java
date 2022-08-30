@@ -60,9 +60,9 @@ public class BuddyDAOImpl implements BuddyDAO{
             return buddy.updatedAt.desc();
             //밑에꺼 임시.
         }else if(sorting.equals("Review")){
-            return buddy.location.desc();
-        }else if(sorting.equals("Rate")){
-            return buddy.nativeLang.desc();
+            return buddy.buddyReviews.size().desc();
+        }else if(sorting.equals("Rating")){
+            return buddy.rating.desc();
         }else if(sorting.equals("Latest")){
             return buddy.id.desc();
         }else{

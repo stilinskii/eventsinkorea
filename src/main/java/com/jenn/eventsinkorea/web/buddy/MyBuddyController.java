@@ -40,6 +40,7 @@ public class MyBuddyController {
         Buddy buddy = buddyService.findBuddyByUsername(auth.getName());
         log.info("mybuddy access");
         log.info("buddy?={}",buddy);
+//        model.addAttribute("reviewCnt",buddyReviewRepository.countReviewByBuddyId(buddy.getId()));
         model.addAttribute("buddy",buddy);
 
         return "mybuddy/buddyProfile";
@@ -140,7 +141,7 @@ public class MyBuddyController {
     @GetMapping("/review")
     public String reviewPage(Authentication auth, Model model){
         //수락된 리퀘중에 리뷰 안남긴것들
-        List<BuddyRequest> requests_accepted = buddyRequestService.getSentRequestByUsernameAndStatus(auth.getName(),1,0);
+        List<BuddyRequest> requests_accepted = buddyRequestService.getSentRequestByUsernameAndStatus(auth.getName(),1,null);
         model.addAttribute("requests",requests_accepted);
 
         //사용자가 작성한 리뷰들 넘기기.
@@ -160,6 +161,7 @@ public class MyBuddyController {
         model.addAttribute("buddy",buddy);
         return "mybuddy/reviewForm";
     }
+
     @PostMapping("/write-review/{buddyId}")
     public String reviewPageSubmit(@PathVariable Long buddyId, @ModelAttribute BuddyReview buddyReview, Authentication auth, RedirectAttributes redirectAttributes){
         //버디정보넘기기
@@ -182,7 +184,7 @@ public class MyBuddyController {
     public String editReview(@PathVariable Long reviewId, Model model){
         //리뷰정보 넘기기.
         model.addAttribute("review",buddyReviewRepository.getOne(reviewId));
-        return "mybuddy/reviewForm";
+        return "mybuddy/reviewEditForm";
     }
 
     @PostMapping("/review/edit/{reviewId}")
@@ -195,7 +197,8 @@ public class MyBuddyController {
 
     @GetMapping("/review/delete/{reviewId}")
     public String deleteReview(@PathVariable Long reviewId){
-        buddyReviewRepository.deleteById(reviewId);
+        buddyReviewService.deleteReview(reviewId);
+
         return "redirect:/mybuddy/review";
     }
 
