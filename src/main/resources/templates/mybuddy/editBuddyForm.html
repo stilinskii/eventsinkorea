@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="fragments/common :: head('Events')">
+  <head>
     <meta charset="utf-8" />
-
-    <!-- bootstrap core css -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Custom styles for this template -->
-    <link
-      href="/static/css/style.css"
-      th:href="@{/css/style.css}"
-      rel="stylesheet"
-    />
-
+    <th:block th:replace="fragments/common :: links">
+      <!-- bootstrap core css -->
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+      />
+      <!-- Custom styles for this template -->
+      <link
+        href="/static/css/style.css"
+        th:href="@{/css/style.css}"
+        rel="stylesheet"
+      />
+      <link
+        href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet"
+      />
+    </th:block>
     <title>Events</title>
   </head>
   <body>
     <!-- navbar -->
-    <div class="sub-page" th:replace="/fragments/nav :: nav-front('Buddy')">
+    <div class="sub-page" th:replace="fragments/nav :: nav-front('Buddy')">
       <header>
         <nav class="navbar">
           <div class="container" id="nav-container">
@@ -97,7 +101,7 @@
                 th:field="*{nativeLang}"
               >
                 <th:block
-                  th:replace="/fragments/dropDownRef :: languages"
+                  th:replace="fragments/dropDownRef :: languages"
                 ></th:block>
               </select>
             </div>
@@ -114,7 +118,7 @@
                 th:errorclass="is-invalid"
               >
                 <th:block
-                  th:replace="/fragments/dropDownRef :: languages"
+                  th:replace="fragments/dropDownRef :: languages"
                 ></th:block>
               </select>
               <div class="invalid-feedback" th:errors="*{learningLang}">
@@ -131,7 +135,7 @@
                 th:field="*{location}"
               >
                 <th:block
-                  th:replace="/fragments/dropDownRef :: locations"
+                  th:replace="fragments/dropDownRef :: locations"
                 ></th:block>
               </select>
             </div>

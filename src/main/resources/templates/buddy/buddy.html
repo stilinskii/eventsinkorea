@@ -19,7 +19,7 @@
   </head>
   <body>
     <!-- navbar -->
-    <div class="sub-page" th:replace="/fragments/nav :: nav-front('Buddy')">
+    <div class="sub-page" th:replace="fragments/nav :: nav-front('Buddy')">
       <header>
         <nav class="navbar">
           <div class="container" id="nav-container">
@@ -168,7 +168,7 @@
       </button>
     </div>
     <div>
-      <div th:replace="/fragments/common :: scripts"></div>
+      <div th:replace="fragments/common :: scripts"></div>
       <script src="/static/js/buddy.js" th:src="@{/js/buddy.js}"></script>
       <script
         defer

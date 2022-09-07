@@ -397,6 +397,12 @@ i {
   flex-direction: column-reverse;
 }
 
+.sideBanner {
+  position: absolute;
+  top: 450px;
+  width: 100px;
+}
+
 /* .recentlyViewed-box::-webkit-scrollbar {
   display: none !important;
 } */

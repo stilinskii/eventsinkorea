@@ -15,7 +15,7 @@ public interface BuddyReviewRepository extends JpaRepository<BuddyReview,Long> {
 
     List<BuddyReview> findByUser(User user);
 
-    List<BuddyReview> findByBuddy(Buddy buddy);
+    List<BuddyReview> findByBuddyOrderByCreatedAtDesc(Buddy buddy);
 
 
 //    @Query(

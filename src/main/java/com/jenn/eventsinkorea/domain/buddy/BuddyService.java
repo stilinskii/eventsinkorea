@@ -7,9 +7,11 @@ import com.jenn.eventsinkorea.domain.file.S3Uploader;
 import com.jenn.eventsinkorea.domain.user.User;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
 import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringSortingOption;
+import com.jenn.eventsinkorea.web.email.EmailService;
+import com.jenn.eventsinkorea.web.email.MailInfo;
+import com.jenn.eventsinkorea.web.email.MailOption;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,8 @@ public class BuddyService {
     private final BuddyRequestRepository buddyRequestRepository;
     private final UserRepository userRepository;
     private final S3Uploader s3Uploader;
+
+    private final EmailService emailService;
 
     String UPLOAD_IMAGE_URL = "imageUrl";
     String UPLOAD_FILE_NAME = "fileName";
@@ -84,7 +88,7 @@ public class BuddyService {
     }
 
 
-    public Slice<Buddy> getFilteredbuddies(BuddyFilteringSortingOption option , Pageable pageable){
+    public Slice<Buddy> getFilteredBuddies(BuddyFilteringSortingOption option , Pageable pageable){
         return buddyRepository.filteringBuddy(option,pageable);
     }
 
@@ -100,12 +104,20 @@ public class BuddyService {
             return null;
         }
 
-        log.info("chk={}",userRepository.findByUsername(username));
-
         BuddyRequest buddyRequest = new BuddyRequest();
         buddyRequest.setStatus(0);//대기
         buddyRequest.setUser(user);
-        buddyRequest.setBuddy(buddyRepository.findById(buddyId).get());
+        Buddy buddy = buddyRepository.findById(buddyId).get();
+        buddyRequest.setBuddy(buddy);
+
+        MailInfo mailInfo = MailInfo.builder()
+                .to(buddy.getUser().getName())
+                .email(buddy.getUser().getEmail())
+                .by(user.getName())
+                .mailOption(MailOption.REQUESTED).build();
+        emailService.send(mailInfo);
+
+
         return buddyRequestRepository.save(buddyRequest);
     }
 

@@ -16,7 +16,7 @@
   </head>
   <body>
     <!-- navbar -->
-    <div class="sub-page" th:replace="/fragments/nav :: nav-front('Events')">
+    <div class="sub-page" th:replace="fragments/nav :: nav-front('Events')">
       <header>
         <nav class="navbar">
           <div class="container" id="nav-container">
@@ -140,7 +140,8 @@
       </div>
 
       <div class="col-1 recentlyViewed">
-        <span >Recently<br>Viewed</span>
+        <div class="sideBanner">
+        <span>Recently<br>Viewed</span>
         <div class="recentlyViewed-box mb-2 ">
           <div class="box-content">
              <div th:each="viewed : ${recentlyViewed}">
@@ -151,6 +152,7 @@
              </div> 
             </div>
           </div>  
+        </div>
       </div>
 
     </div>

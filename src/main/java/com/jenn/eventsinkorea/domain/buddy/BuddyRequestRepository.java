@@ -9,23 +9,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface BuddyRequestRepository extends JpaRepository<BuddyRequest, UserBuddyId> {
     List<BuddyRequest> findByBuddy(Buddy buddy);
-    List<BuddyRequest> findByUser(User user);
+    List<BuddyRequest> findByUserOrderByRequestDateDesc(User user);
 
     List<BuddyRequest> findByUserAndStatusAndReview(User user, Integer status, Integer reviewStatus);
 
     Optional<BuddyRequest> findByBuddyAndUser(Buddy buddy, User user);
 
     //waiting list 보기위해
-    List<BuddyRequest> findByBuddyAndStatus(Buddy buddy,Integer status);
+    List<BuddyRequest> findByBuddyAndStatusOrderByRequestDateDesc(Buddy buddy, Integer status);
     //waiting 제외한 다른것들
-    List<BuddyRequest> findByBuddyAndStatusNot(Buddy buddy,Integer status);
+    List<BuddyRequest> findByBuddyAndStatusNotOrderByRequestDateDesc(Buddy buddy, Integer status);
 
     @Query(value =
             "SELECT COUNT(*) " +

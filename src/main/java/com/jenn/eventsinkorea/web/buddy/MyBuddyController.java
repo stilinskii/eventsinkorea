@@ -40,8 +40,11 @@ public class MyBuddyController {
         Buddy buddy = buddyService.findBuddyByUsername(auth.getName());
         log.info("mybuddy access");
         log.info("buddy?={}",buddy);
-//        model.addAttribute("reviewCnt",buddyReviewRepository.countReviewByBuddyId(buddy.getId()));
+
+        List<BuddyReview> reviews =buddyReviewRepository.findByBuddyOrderByCreatedAtDesc(buddy);
+        model.addAttribute("reviewCnt",buddyReviewRepository.countReviewByBuddyId(buddy.getId()));
         model.addAttribute("buddy",buddy);
+        model.addAttribute("reviews",reviews);
 
         return "mybuddy/buddyProfile";
     }

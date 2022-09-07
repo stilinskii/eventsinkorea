@@ -4,11 +4,13 @@ import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.user.User;
+import com.jenn.eventsinkorea.web.email.EmailService;
+import com.jenn.eventsinkorea.web.email.MailInfo;
+import com.jenn.eventsinkorea.web.email.MailOption;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,9 +19,11 @@ public class BuddyRequestService {
     private final BuddyRepository buddyRepository;
     private final UserRepository userRepository;
 
+    private final EmailService emailService;
+
 
     public List<BuddyRequest> getSentRequestByUsername(String name){
-        return buddyRequestRepository.findByUser(userRepository.findByUsername(name));
+        return buddyRequestRepository.findByUserOrderByRequestDateDesc(userRepository.findByUsername(name));
     }
 
 
@@ -34,9 +38,9 @@ public class BuddyRequestService {
     public List<BuddyRequest> getReceivedRequestByUsername(String name, boolean waiting){
         Buddy buddy = buddyRepository.findByUser(userRepository.findByUsername(name)).orElse(null);
         if (waiting){
-            return buddy==null? null :buddyRequestRepository.findByBuddyAndStatus(buddy,0);
+            return buddy==null? null :buddyRequestRepository.findByBuddyAndStatusOrderByRequestDateDesc(buddy,0);
         }else{
-            return buddy==null? null :buddyRequestRepository.findByBuddyAndStatusNot(buddy,0);
+            return buddy==null? null :buddyRequestRepository.findByBuddyAndStatusNotOrderByRequestDateDesc(buddy,0);
         }
     }
 
@@ -60,8 +64,24 @@ public class BuddyRequestService {
         buddyRequest.setStatus(status);
         BuddyRequest updatedReq = buddyRequestRepository.save(buddyRequest);
 
+        //이게 밑에 와야할 거 같은 느낌..?
+        sendMail(request_user, buddy, status);
+
         //어떠한 이유로 업데이트가 제대로 안됐을때 null return
         return updatedReq.getStatus()==status?updatedReq:null;
 
+    }
+
+    private void sendMail(User request_user, Buddy buddy, Integer status) {
+        MailInfo mailInfo = new MailInfo();
+        mailInfo.setTo(request_user.getName());
+        mailInfo.setBy(buddy.getUser().getName());
+        mailInfo.setEmail(request_user.getEmail());
+        if(status == 1){
+            mailInfo.setMailOption(MailOption.ACCEPTED);
+        }else{
+            mailInfo.setMailOption(MailOption.REJECTED);
+        }
+        emailService.send(mailInfo);
     }
 }

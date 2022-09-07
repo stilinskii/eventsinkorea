@@ -34,7 +34,7 @@ public class EventController {
             model.addAttribute("recentlyViewed",recentlyViewed);
             log.info("recentlyView={}",recentlyViewed.toString());
         }
-        return "/events/events";
+        return "events/events";
     }
 
     @GetMapping("/ongoing")
@@ -42,7 +42,7 @@ public class EventController {
         List<Event> ongoingEvents = eService.getOngoingEvents();
         model.addAttribute("ongoingEvents","active");
         model.addAttribute("eventsList",ongoingEvents);
-        return "/events/events";
+        return "events/events";
     }
 
     @GetMapping("/ended")

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8" />
-    <div th:replace="/fragments/common :: links">
+    <th:block th:replace="fragments/common :: links">
       <!-- bootstrap core css -->
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
@@ -14,18 +14,16 @@
         th:href="@{/css/style.css}"
         rel="stylesheet"
       />
-
-      <!-- <link
-      href="/static/css/signin.css"
-      th:href="@{/css/signin.css}"
-      rel="stylesheet"
-    /> -->
-    </div>
+      <link
+        href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet"
+      />
+    </th:block>
     <title>Events</title>
   </head>
   <body class="bg-light">
     <!-- navbar -->
-    <div class="sub-page" th:replace="/fragments/nav :: nav-front(' ')">
+    <div class="sub-page" th:replace="fragments/nav :: nav-front(' ')">
       <header>
         <nav class="navbar">
           <div class="container" id="nav-container">
@@ -224,6 +222,11 @@
       </div>
     </main>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script defer src="/static/js/common.js" th:src="@{/js/common.js}"></script>
+    <script src="/static/js/common.js" th:src="@{/js/common.js}"></script>
+    <script
+    defer
+    src="/static/js/ratingStars.js"
+    th:src="@{/js/ratingStars.js}"
+  ></script>
   </body>
 </html>

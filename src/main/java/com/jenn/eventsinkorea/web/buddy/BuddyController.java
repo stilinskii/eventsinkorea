@@ -65,7 +65,7 @@ public class BuddyController {
         }
         option = new BuddyFilteringSortingOption();
         log.info("buddycont={}",buddyRepository.findAll().size());
-        Slice<Buddy> indexBuddy = buddyService.getFilteredbuddies(option,pageable);
+        Slice<Buddy> indexBuddy = buddyService.getFilteredBuddies(option,pageable);
         model.addAttribute("buddies", indexBuddy);
         model.addAttribute("buddyIds",userLikedBuddyIds);
         return "buddy/buddies";
@@ -82,7 +82,7 @@ public class BuddyController {
 
         //log.info("option={}",option);
 
-        Slice<Buddy> buddies = buddyService.getFilteredbuddies(inputtedOption,pageable);
+        Slice<Buddy> buddies = buddyService.getFilteredBuddies(inputtedOption,pageable);
         List<Integer> userLikedBuddyIds = new ArrayList<>();
         if(auth!=null){
             User user = userRepository.findByUsername(auth.getName());
@@ -105,7 +105,7 @@ public class BuddyController {
     @GetMapping("/buddypage")
     public String more(@PageableDefault(size = 3) Pageable pageable, Authentication auth, Model model){
 
-        Slice<Buddy> buddies = buddyService.getFilteredbuddies(option,pageable);
+        Slice<Buddy> buddies = buddyService.getFilteredBuddies(option,pageable);
         log.info("option={}",option);
         //다음 페이지가 없을때 more버튼 숨기기 위해 정보 보내기
         if(!buddies.hasNext()){
@@ -153,7 +153,7 @@ public class BuddyController {
             model.addAttribute("buddyILiked",isLikedBuddy);
         }
         Buddy buddy = buddyRepository.getById(buddyId);
-        List<BuddyReview> reviews =buddyReviewRepository.findByBuddy(buddy);
+        List<BuddyReview> reviews =buddyReviewRepository.findByBuddyOrderByCreatedAtDesc(buddy);
         model.addAttribute("reviewCnt",buddyReviewRepository.countReviewByBuddyId(buddyId));
         model.addAttribute("buddy",buddy);
         model.addAttribute("reviews",reviews);
