@@ -33,9 +33,9 @@
   </head>
   <body>
     <!-- navbar -->
-    <div class="sub-page" th:replace="fragments/nav :: nav-front('Events')">
+    <div class="sub-page">
       <header>
-        <nav class="navbar">
+        <nav class="navbar" th:replace="fragments/nav :: nav-front('Events')">
           <div class="container" id="nav-container">
             <ul class="navbar-nav" id="nav">
               <a class="navbar-brand" href="#" th:href="@{/}"
@@ -63,116 +63,145 @@
     </div>
     <!-- navbar end -->
     <!-- content start -->
-
-    <div class="container mt-5 p-5" id="event-detail">
-      <div class="icons d-flex justify-content-end">
-        <i class="fa fa-share-alt" onclick="clipboardShare()"></i>
-      </div>
-      <div class="event-detail-box">
-        <div class="title pb-4">
-          <h1 th:text="${eventDetail.eventCommonInfo.title}">
-            Discover Seoul Pass
-          </h1>
+    <div class="row mt-5 p-5">
+      <div class="container p-5 col-11" id="event-detail">
+        <div class="icons d-flex justify-content-end">
+          <i class="fa fa-share-alt" onclick="clipboardShare()"></i>
         </div>
-        <div class="slider">
-          <th:block th:each="img : ${eventDetail.imgs}">
-            <img
-              th:src="${img}"
-              src="/static/images/roof-tile-4495550_960_720.jpg"
-              alt=""
-            />
-          </th:block>
-        </div>
-        <div class="container quick-info">
-          <ul class="row">
-            <li class="col">
-              <p class="title">EVENT PERIOD</p>
-              <p
-                th:text="|${eventDetail.formattedEventStartDate} ~ ${eventDetail.formattedEventEndDate}|"
-              >
-                2222-55-55 ~ 2022-88-88
-              </p>
-            </li>
-            <li class="col">
-              <p class="title">EVENT PLACE</p>
-              <p th:utext="${eventDetail.eventPlace}">Area around Bosingak B</p>
-            </li>
-            <li class="col">
-              <p class="title">ADMISSION FEE</p>
-              <p th:utext="${eventDetail.admissionFee}">Free</p>
-            </li>
-          </ul>
-        </div>
-
-        <div class="intro">
-          <hr />
-          <h2 class="py-3">Introduction</h2>
-          <h5 th:utext="${eventDetail.eventCommonInfo.introduction}">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam,
-            sit unde? Enim iure delectus dolorum, magnam provident minima
-            molestiae. In eaque aliquid aspernatur dolorem fugiat iusto quam
-            corrupti tenetur ullam.
-          </h5>
-          <div class="program mt-4" th:if="${eventDetail.program != ''}">
-            <h4>Program</h4>
-            <h5 th:utext="program">dfsdfa</h5>
+        <div class="event-detail-box">
+          <div class="title pb-4">
+            <h1 th:text="${eventDetail.eventCommonInfo.title}">
+              Discover Seoul Pass
+            </h1>
           </div>
-          <hr />
-        </div>
-        <div class="detail">
-          <h2 class="py-3">Location & More Info</h2>
-          <div class="detail-box d-flex">
-            <div
-              class="map"
-              th:if="not ${eventDetail.eventCommonInfo.map.isEmpty()}"
-            >
-              <input
-                type="hidden"
-                class="mapX"
-                th:value="${eventDetail.eventCommonInfo.map['mapx']}"
+          <div class="slider">
+            <th:block th:each="img : ${eventDetail.imgs}">
+              <img
+                th:src="${img}"
+                src="/static/images/roof-tile-4495550_960_720.jpg"
+                alt=""
               />
-              <input
-                type="hidden"
-                class="mapY"
-                th:value="${eventDetail.eventCommonInfo.map['mapy']}"
-              />
-              <div id="map" style="width: 400px; height: 500px"></div>
+            </th:block>
+          </div>
+          <div class="container quick-info">
+            <ul class="row">
+              <li class="col">
+                <p class="title">EVENT PERIOD</p>
+                <p
+                  th:text="|${eventDetail.formattedEventStartDate} ~ ${eventDetail.formattedEventEndDate}|"
+                >
+                  2222-55-55 ~ 2022-88-88
+                </p>
+              </li>
+              <li class="col">
+                <p class="title">EVENT PLACE</p>
+                <p th:utext="${eventDetail.eventPlace}">
+                  Area around Bosingak B
+                </p>
+              </li>
+              <li class="col">
+                <p class="title">ADMISSION FEE</p>
+                <p th:utext="${eventDetail.admissionFee}">Free</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="intro">
+            <hr />
+            <h2 class="py-3">Introduction</h2>
+            <h5 th:utext="${eventDetail.eventCommonInfo.introduction}">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam,
+              sit unde? Enim iure delectus dolorum, magnam provident minima
+              molestiae. In eaque aliquid aspernatur dolorem fugiat iusto quam
+              corrupti tenetur ullam.
+            </h5>
+            <div class="program mt-4" th:if="${eventDetail.program != ''}">
+              <h4>Program</h4>
+              <h5 th:utext="program">dfsdfa</h5>
             </div>
-            <div class="content">
-              <div class="location">
-                <h4>Location</h4>
-                <ul>
-                  <li th:utext="|Event Place : ${eventDetail.eventPlace}|">
-                    Event Place : 행사장소
-                  </li>
-                  <li
-                    th:text="|Address : ${eventDetail.eventCommonInfo.address}|"
-                  >
-                    Address : 주소
-                  </li>
-                  <p th:utext="${eventDetail.contact}">Contact : 연락처</p>
-                </ul>
+            <hr />
+          </div>
+          <div class="detail">
+            <h2 class="py-3">Location & More Info</h2>
+            <div class="detail-box d-flex">
+              <div
+                class="map"
+                th:if="not ${eventDetail.eventCommonInfo.map.isEmpty()}"
+              >
+                <input
+                  type="hidden"
+                  class="mapX"
+                  th:value="${eventDetail.eventCommonInfo.map['mapx']}"
+                />
+                <input
+                  type="hidden"
+                  class="mapY"
+                  th:value="${eventDetail.eventCommonInfo.map['mapy']}"
+                />
+                <div id="map" style="width: 400px; height: 500px"></div>
               </div>
-              <br />
-              <div class="more-info">
-                <h4>More Info</h4>
-                <ul>
-                  <li th:text="|Sponsor : ${eventDetail.sponsor}|">
-                    Sponsor : 주최자정보
-                  </li>
-                  <li
-                    th:if="${eventDetail.eventCommonInfo.homepage}"
-                    th:utext="|Homepage : ${eventDetail.eventCommonInfo.homepage}|"
-                  >
-                    Homepage : dkfjdkfjdkfjdkj
-                  </li>
-                  <li
-                    th:if="${eventDetail.playtime != ''}"
-                    th:utext="|Play time : ${eventDetail.playtime}|"
-                  >
-                    Play time : 공연시간
-                  </li>
-                </ul>
+              <div class="content">
+                <div class="location">
+                  <h4>Location</h4>
+                  <ul>
+                    <li th:utext="|Event Place : ${eventDetail.eventPlace}|">
+                      Event Place : 행사장소
+                    </li>
+                    <li
+                      th:text="|Address : ${eventDetail.eventCommonInfo.address}|"
+                    >
+                      Address : 주소
+                    </li>
+                    <p th:utext="${eventDetail.contact}">Contact : 연락처</p>
+                  </ul>
+                </div>
+                <br />
+                <div class="more-info">
+                  <h4>More Info</h4>
+                  <ul>
+                    <li th:text="|Sponsor : ${eventDetail.sponsor}|">
+                      Sponsor : 주최자정보
+                    </li>
+                    <li
+                      th:if="${eventDetail.eventCommonInfo.homepage}"
+                      th:utext="|Homepage : ${eventDetail.eventCommonInfo.homepage}|"
+                    >
+                      Homepage : dkfjdkfjdkfjdkj
+                    </li>
+                    <li
+                      th:if="${eventDetail.playtime != ''}"
+                      th:utext="|Play time : ${eventDetail.playtime}|"
+                    >
+                      Play time : 공연시간
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-1 recentlyViewed"
+        th:replace="fragments/eventsRecentlyViewed :: recentlyViewed"
+      >
+        <div class="sideBanner">
+          <span>Recently<br />Viewed</span>
+          <div class="recentlyViewed-box mb-2">
+            <div class="box-content">
+              <div th:each="viewed : ${recentlyViewed}">
+                <a
+                  th:href="@{/events/eventDetail(contentId=${viewed.key})}"
+                  th:title="${viewed.value.title}"
+                >
+                  <img
+                    th:src="${viewed.value.img}"
+                    alt=""
+                    width="80px"
+                    height="80px"
+                  />
+                  <p th:text="${viewed.value.title}"></p>
+                </a>
               </div>
             </div>
           </div>
@@ -203,8 +232,6 @@
         crossorigin="anonymous"
       ></script>
 
-      <script src="/static/js/sorting.js" th:src="@{/js/sorting.js}"></script>
-      <!-- <script src="/static/js/app.js" th:src="@{/js/app.js}"></script> -->
       <script
         src="https://kit.fontawesome.com/661f25159f.js"
         crossorigin="anonymous"

@@ -57,11 +57,8 @@ public class AdminUsersController {
 //            log.info("searchForm={}",searchForm);
 //        }
 
-//        log.info("searchForm origin={}",searchForm);
         Page<User> users = userRepository.findUsersBySearchPage(searchForm,pageable);
 
-
-        log.info("users={}",users.getTotalPages());
         int[] pageNum = pageNum(users);
         model.addAttribute("startPage",pageNum[0]);
         model.addAttribute("endPage",pageNum[1]);

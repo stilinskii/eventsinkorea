@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,18 +23,24 @@ import java.util.*;
 public class EventController {
     private final EventService eService;
 
+    @ModelAttribute("recentlyViewed")
+    private HashMap<String,RecentlyViewed> recentlyViewedModel(HttpSession session, Model model){
+        HashMap<String,RecentlyViewed> recentlyViewed;
+        if(session.getAttribute("recentlyViewed")!=null){
+            recentlyViewed = (HashMap<String, RecentlyViewed>) session.getAttribute("recentlyViewed");
+            model.addAttribute("recentlyViewed",recentlyViewed);
+        }else{
+            recentlyViewed=null;
+        }
+        return recentlyViewed;
+    }
 
     @GetMapping
-    public String eventsIndex(Model model, HttpSession session){
+    public String eventsIndex(Model model){
         model.addAttribute("All","active");
         model.addAttribute("eventsList",eService.getEvents());
         log.info("infoCnt={}",eService.getEvents().size());
 
-        if(session.getAttribute("recentlyViewed")!=null){
-            HashMap<String,RecentlyViewed> recentlyViewed = (HashMap<String, RecentlyViewed>) session.getAttribute("recentlyViewed");
-            model.addAttribute("recentlyViewed",recentlyViewed);
-            log.info("recentlyView={}",recentlyViewed.toString());
-        }
         return "events/events";
     }
 
@@ -42,6 +49,7 @@ public class EventController {
         List<Event> ongoingEvents = eService.getOngoingEvents();
         model.addAttribute("ongoingEvents","active");
         model.addAttribute("eventsList",ongoingEvents);
+
         return "events/events";
     }
 
@@ -50,6 +58,7 @@ public class EventController {
         List<Event> endedEvents = eService.getEndedEvents();
         model.addAttribute("endedEvents","active");
         model.addAttribute("eventsList",endedEvents);
+
         return "events/events";
     }
 
@@ -58,6 +67,7 @@ public class EventController {
         List<Event> eventsByKeyword = eService.getEventsByKeyword(keyword);
         model.addAttribute("keyword",keyword);
         model.addAttribute("eventsList",eventsByKeyword);
+
         return "events/events";
     }
 
@@ -85,7 +95,6 @@ public class EventController {
             }
             recentlyViewed.put(contentId,new RecentlyViewed(eventDetail.getEventCommonInfo().getTitle(),eventDetail.getEventCommonInfo().getImgs().get(0)));
         }
-
 
         session.setAttribute("recentlyViewed",recentlyViewed);
 

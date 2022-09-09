@@ -149,9 +149,12 @@ public class BuddyController {
     public String buddyDetail(@PathVariable Long buddyId, Model model, Authentication auth){
         if(auth!=null){
             User user = userRepository.findByUsername(auth.getName());
-            boolean isLikedBuddy = user.getBuddyILike().contains(buddyId);
-            model.addAttribute("buddyILiked",isLikedBuddy);
+            boolean isLikedBuddy = user.getBuddyILike().contains(buddyRepository.getById(buddyId));
+            log.info("user.getBuddyILike()={}",user.getBuddyILike().size());
+            log.info("isLikedBuddy={}",isLikedBuddy);
+            model.addAttribute("isLikedBuddy",isLikedBuddy);
         }
+
         Buddy buddy = buddyRepository.getById(buddyId);
         List<BuddyReview> reviews =buddyReviewRepository.findByBuddyOrderByCreatedAtDesc(buddy);
         model.addAttribute("reviewCnt",buddyReviewRepository.countReviewByBuddyId(buddyId));

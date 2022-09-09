@@ -1,0 +1,23 @@
+<div th:fragment="recentlyViewed" class="col-1 recentlyViewed">
+  <div class="sideBanner">
+    <span>Recently<br />Viewed</span>
+    <div class="recentlyViewed-box mb-2">
+      <div class="box-content">
+        <div th:each="viewed : ${recentlyViewed}">
+          <a
+            th:href="@{/events/eventDetail(contentId=${viewed.key})}"
+            th:title="${viewed.value.title}"
+          >
+            <img
+              th:src="${viewed.value.img}"
+              alt=""
+              width="80px"
+              height="80px"
+            />
+            <p th:text="${viewed.value.title}"></p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,9 +16,9 @@
   </head>
   <body>
     <!-- navbar -->
-    <div class="sub-page" th:replace="fragments/nav :: nav-front('Events')">
+    <div class="sub-page"z>
       <header>
-        <nav class="navbar">
+        <nav class="navbar" th:replace="fragments/nav :: nav-front('Events')">
           <div class="container" id="nav-container">
             <ul class="navbar-nav" id="nav">
               <a class="navbar-brand" href="#" th:href="@{/}"><span>Brand</span></a>
@@ -139,7 +139,7 @@
         </div>
       </div>
 
-      <div class="col-1 recentlyViewed">
+      <div class="col-1 recentlyViewed" th:replace="fragments/eventsRecentlyViewed :: recentlyViewed">
         <div class="sideBanner">
         <span>Recently<br>Viewed</span>
         <div class="recentlyViewed-box mb-2 ">

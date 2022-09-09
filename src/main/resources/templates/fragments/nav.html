@@ -1,57 +1,58 @@
 <!-- navbar -->
-<div
-  th:fragment="nav-front(menu)"
-  th:class="${menu}=='index'? 'hero-image':'sub-page'"
->
-  <header>
-    <nav class="navbar">
-      <div class="container" id="nav-container">
-        <ul class="navbar-nav" id="nav">
-          <a class="navbar-brand" href="#" th:href="@{/}"
-            ><span>KoreanBuddy</span></a
+
+<header>
+  <nav class="navbar" th:fragment="nav-front(menu)">
+    <div class="container" id="nav-container">
+      <ul class="navbar-nav" id="nav">
+        <a class="navbar-brand" href="#" th:href="@{/}"
+          ><span>KoreanBuddy</span></a
+        >
+        <li
+          class="nav-item"
+          th:each="page:${cpages}"
+          th:if="${page.slug != 'home'}"
+        >
+          <a
+            class="nav-link"
+            aria-current="page"
+            th:id="${menu} == ${page.title} ? 'active'"
+            th:href="@{|/${page.slug}|}"
+            th:text="${page.title}"
+            >Home</a
           >
-          <li
-            class="nav-item"
-            th:each="page:${cpages}"
-            th:if="${page.slug != 'home'}"
+        </li>
+        <li class="nav-item">
+          <a
+            th:href="@{/admin}"
+            class="user_link"
+            title="Admin Page"
+            sec:authorize="hasRole('ROLE_ADMIN')"
           >
-            <a
-              class="nav-link"
-              aria-current="page"
-              th:id="${menu} == ${page.title} ? 'active'"
-              th:href="@{|/${page.slug}|}"
-              th:text="${page.title}"
-              >Home</a
-            >
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/admin}" class="user_link" title="Admin Page">
-              <i class="fa fa-cog"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/mybuddy}" class="user_link" title="My Buddy Page">
-              <i class="fa fa-smile-o"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/mypage}" class="user_link" title="My Page">
-              <i class="fa fa-user" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li class="user_link nav-item" sec:authorize="!isAuthenticated()">
-            <a th:href="@{/login}" class="user_option"> Login </a>
-          </li>
-          <li class="user_link nav-item" sec:authorize="isAuthenticated()">
-            <form th:action="@{/logout}" method="post">
-              <button type="submit" class="user_option">Logout</button>
-            </form>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-</div>
+            <i class="fa fa-cog"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/mybuddy}" class="user_link" title="My Buddy Page">
+            <i class="fa fa-smile-o"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/mypage}" class="user_link" title="My Page">
+            <i class="fa fa-user" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li class="user_link nav-item" sec:authorize="!isAuthenticated()">
+          <a th:href="@{/login}" class="user_option"> Login </a>
+        </li>
+        <li class="user_link nav-item" sec:authorize="isAuthenticated()">
+          <form th:action="@{/logout}" method="post">
+            <button type="submit" class="user_option">Logout</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
 
 <nav
   th:fragment="nav-admin(menu)"
