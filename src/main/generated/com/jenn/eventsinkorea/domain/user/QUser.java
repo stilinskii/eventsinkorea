@@ -2,6 +2,8 @@ package com.jenn.eventsinkorea.domain.user;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
+import com.jenn.eventsinkorea.domain.user.model.Role;
+import com.jenn.eventsinkorea.domain.user.model.User;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;

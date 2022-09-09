@@ -3,10 +3,12 @@ package com.jenn.eventsinkorea.domain.buddy;
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
-import com.jenn.eventsinkorea.domain.user.User;
-import com.jenn.eventsinkorea.web.email.EmailService;
-import com.jenn.eventsinkorea.web.email.MailInfo;
-import com.jenn.eventsinkorea.web.email.MailOption;
+import com.jenn.eventsinkorea.domain.buddy.repository.BuddyRepository;
+import com.jenn.eventsinkorea.domain.buddy.repository.BuddyRequestRepository;
+import com.jenn.eventsinkorea.domain.user.model.User;
+import com.jenn.eventsinkorea.domain.email.EmailService;
+import com.jenn.eventsinkorea.domain.email.MailInfo;
+import com.jenn.eventsinkorea.domain.email.MailOption;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

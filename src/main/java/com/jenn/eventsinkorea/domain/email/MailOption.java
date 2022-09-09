@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.web.email;
+package com.jenn.eventsinkorea.domain.email;
 
 public enum MailOption {
     REQUESTED(0), ACCEPTED(1), REJECTED(2);

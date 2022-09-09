@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.domain.buddy;
+package com.jenn.eventsinkorea.domain.buddy.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;

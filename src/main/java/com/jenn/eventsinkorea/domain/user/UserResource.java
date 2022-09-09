@@ -1,5 +1,7 @@
 package com.jenn.eventsinkorea.domain.user;
 
+import com.jenn.eventsinkorea.domain.user.model.Role;
+import com.jenn.eventsinkorea.domain.user.model.User;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

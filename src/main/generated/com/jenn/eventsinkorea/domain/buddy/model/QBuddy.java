@@ -2,6 +2,7 @@ package com.jenn.eventsinkorea.domain.buddy.model;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
+import com.jenn.eventsinkorea.domain.user.model.User;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -40,7 +41,7 @@ public class QBuddy extends EntityPathBase<Buddy> {
 
     public final NumberPath<Long> likeCnt = createNumber("likeCnt", Long.class);
 
-    public final ListPath<com.jenn.eventsinkorea.domain.user.User, com.jenn.eventsinkorea.domain.user.QUser> likedUsers = this.<com.jenn.eventsinkorea.domain.user.User, com.jenn.eventsinkorea.domain.user.QUser>createList("likedUsers", com.jenn.eventsinkorea.domain.user.User.class, com.jenn.eventsinkorea.domain.user.QUser.class, PathInits.DIRECT2);
+    public final ListPath<User, com.jenn.eventsinkorea.domain.user.QUser> likedUsers = this.<User, com.jenn.eventsinkorea.domain.user.QUser>createList("likedUsers", User.class, com.jenn.eventsinkorea.domain.user.QUser.class, PathInits.DIRECT2);
 
     public final StringPath location = createString("location");
 

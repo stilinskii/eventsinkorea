@@ -1,6 +1,5 @@
 package com.jenn.eventsinkorea.web.account;
 
-import com.jenn.eventsinkorea.domain.user.User;
 import com.jenn.eventsinkorea.domain.user.UserService;
 import com.jenn.eventsinkorea.web.account.form.UserLoginForm;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.naming.Binding;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 @Slf4j
 @Controller

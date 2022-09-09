@@ -138,12 +138,15 @@
                       <h1
                         class="buddyName"
                         style="text-align: center"
-                        th:text="${buddy.user.username}"
+                        th:text="${buddy.user.name}"
                       >
                         Buddy Name
                       </h1>
                     </div>
                     <p class="d-flex flex-column align-items-center">
+                      <span th:text="|ID : ${buddy.user.username}|">
+                        location : all
+                      </span>
                       <span
                         th:text="|learning language : ${buddy.learningLang}|"
                       >
@@ -155,16 +158,18 @@
                       <span th:text="|location : ${buddy.location}|">
                         location : all
                       </span>
+                      <span th:text="|updated at : ${buddy.updatedAt}|">
+                        updated at : 2020-202/2
+                      </span>
                     </p>
 
                     <a
+                      th:unless="${#authentication.getPrincipal().getUsername()} ==  ${buddy.user.username}"
                       th:href="@{|/buddy/request/${buddy.id}|}"
                       class="btn btn-primary m-3 confirmSendReq"
                       >request</a
                     >
-                    <span th:text="|updated at : ${buddy.updatedAt}|">
-                      updated at : 2020-202/2
-                    </span>
+                    
                   </div>
                   <hr />
                   <div>

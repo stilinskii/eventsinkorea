@@ -1,5 +1,7 @@
 package com.jenn.eventsinkorea.domain.user;
 
+import com.jenn.eventsinkorea.domain.user.model.Role;
+import com.jenn.eventsinkorea.domain.user.model.User;
 import com.jenn.eventsinkorea.web.account.form.UserLoginForm;
 
 import java.util.List;

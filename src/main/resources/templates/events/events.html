@@ -87,7 +87,7 @@
       <button type="button" onclick="sortElementByDate('event_date',this)">Date 
         <i class="fa fa-sort-asc"></i></button>
       <button type="button" onclick="sortElementByDate('event_readcount',this)">View <i class="fa fa-sort"></i></button>
-      <button type="button" onclick="sortElementByDate('event_like',this)">Like <i class="fa fa-sort"></i></button>
+      <!-- <button type="button" onclick="sortElementByDate('event_like',this)">Like <i class="fa fa-sort"></i></button> -->
   </div>
 </section>
 <!-- sorting buttons end -->
@@ -128,7 +128,7 @@
               </p>
               <div class="d-flex justify-content-between align-items-center">
                 <small class="text-muted" th:text="|read count : ${event.readcount}|">read count : 0</small>
-                <i class="fa fa-heart-o like-icon"> 155</i>
+                
               </div>
               <input type="hidden" class="event_date" th:value="${event.eventStartDate}">
               <input type="hidden" class="event_readcount" th:value="${event.readcount}">

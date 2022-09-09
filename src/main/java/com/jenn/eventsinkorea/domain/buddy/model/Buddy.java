@@ -1,6 +1,6 @@
 package com.jenn.eventsinkorea.domain.buddy.model;
 
-import com.jenn.eventsinkorea.domain.user.User;
+import com.jenn.eventsinkorea.domain.user.model.User;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;

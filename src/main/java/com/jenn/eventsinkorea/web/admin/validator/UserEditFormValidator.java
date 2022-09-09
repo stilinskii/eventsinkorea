@@ -1,7 +1,7 @@
 package com.jenn.eventsinkorea.web.admin.validator;
 
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
-import com.jenn.eventsinkorea.domain.user.User;
+import com.jenn.eventsinkorea.domain.user.model.User;
 import com.jenn.eventsinkorea.web.admin.form.UserEditForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

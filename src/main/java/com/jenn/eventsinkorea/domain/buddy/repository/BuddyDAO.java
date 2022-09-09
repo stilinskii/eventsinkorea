@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.domain.buddy;
+package com.jenn.eventsinkorea.domain.buddy.repository;
 
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringSortingOption;

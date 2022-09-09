@@ -1,9 +1,9 @@
-package com.jenn.eventsinkorea.domain.user;
+package com.jenn.eventsinkorea.domain.user.model;
 
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyReview;
-import com.jenn.eventsinkorea.domain.user.Role;
+import com.jenn.eventsinkorea.domain.user.model.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +11,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 

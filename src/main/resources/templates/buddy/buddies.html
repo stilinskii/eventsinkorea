@@ -179,7 +179,8 @@
                       th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}"
                       href="#"
                     >
-                      <h3 th:text="${buddy.user.username}">name</h3>
+                      <h3 th:text="${buddy.user.name}">name</h3>
+                      <p th:text="|ID : ${buddy.user.username}|">id</p>
                       <p th:text="${buddy.intro}" class="ellipsis">intro</p>
                     </a>
 

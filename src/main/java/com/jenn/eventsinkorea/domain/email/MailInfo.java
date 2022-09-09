@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.web.email;
+package com.jenn.eventsinkorea.domain.email;
 
 import lombok.*;
 

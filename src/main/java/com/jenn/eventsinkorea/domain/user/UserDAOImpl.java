@@ -1,11 +1,13 @@
 package com.jenn.eventsinkorea.domain.user;
 
-import com.jenn.eventsinkorea.domain.user.User;
-import com.jenn.eventsinkorea.domain.user.UserDAO;
+import com.jenn.eventsinkorea.domain.user.model.User;
 import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Calendar;
@@ -30,6 +32,28 @@ public class UserDAOImpl implements UserDAO {
                 .fetch();
     }
 
+    @Override
+    public Page<User> findUsersBySearchPage(UserSearchForm searchForm, Pageable pageable) {
+           List<User> content = query.selectFrom(user)
+                .where(joinedDateBetween(searchForm)
+                        ,nationality(searchForm.getNationality())
+                        ,optionContains(searchForm.getOption(),searchForm.getKeyword())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+           Long count = query.select(user.count())
+                .from(user)
+                   .where(joinedDateBetween(searchForm)
+                           ,nationality(searchForm.getNationality())
+                           ,optionContains(searchForm.getOption(),searchForm.getKeyword())
+                   )
+                   .fetchOne();
+
+           return new PageImpl<>(content, pageable, count);
+    }
+
     public BooleanExpression joinedDateBetween(UserSearchForm searchForm){
         //1 week , 1 month , 6 month , Enter Date.
         Calendar date = Calendar.getInstance();
@@ -37,7 +61,7 @@ public class UserDAOImpl implements UserDAO {
 //        Integer weekAgo = Integer.parseInt(format.format(week.getTime()));
 
         String joinedDateOption = searchForm.getJoinedDate();
-        if(Objects.isNull(joinedDateOption) || joinedDateOption.equals("Joined Date")){
+        if(Objects.isNull(joinedDateOption)|| joinedDateOption.isBlank() || joinedDateOption.equals("Joined Date")){
             return null;
         }else{
             if(joinedDateOption.equals("1 week")){
@@ -59,11 +83,11 @@ public class UserDAOImpl implements UserDAO {
 
 
     public BooleanExpression nationality(String nationality){
-        return Objects.isNull(nationality) || nationality.equals("Nationality")? null : user.nationality.eq(nationality);
+        return Objects.isNull(nationality) ||nationality.isBlank() || nationality.equals("Nationality")? null : user.nationality.eq(nationality);
     }
 
     public BooleanExpression optionContains(String option, String keyword){
-        if(Objects.isNull(option)){
+        if((Objects.isNull(keyword) || keyword.isBlank()) || (Objects.isNull(option) || option.isBlank())){
             return null;
         }else{
             if(option.equals("All")){
@@ -80,14 +104,14 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public BooleanExpression usernameContains(String keyword){
-        return Objects.isNull(keyword) ? null : user.username.contains(keyword);
+        return Objects.isNull(keyword) || keyword.isBlank()? null : user.username.contains(keyword);
     }
 
     public BooleanExpression userIdContains(String keyword){
-        return Objects.isNull(keyword) ? null : user.username.contains(keyword);
+        return Objects.isNull(keyword) || keyword.isBlank() ? null : user.username.contains(keyword);
     }
 
     public BooleanExpression emailContains(String keyword){
-        return Objects.isNull(keyword) ? null : user.email.contains(keyword);
+        return Objects.isNull(keyword) || keyword.isBlank() ? null : user.email.contains(keyword);
     }
 }

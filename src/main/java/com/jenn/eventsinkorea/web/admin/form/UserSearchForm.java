@@ -2,12 +2,14 @@ package com.jenn.eventsinkorea.web.admin.form;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@ToString
 public class UserSearchForm {
 
     private String keyword;

@@ -1,13 +1,13 @@
 package com.jenn.eventsinkorea.web.buddy;
 
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
-import com.jenn.eventsinkorea.domain.buddy.BuddyRepository;
-import com.jenn.eventsinkorea.domain.buddy.BuddyReviewRepository;
+import com.jenn.eventsinkorea.domain.buddy.repository.BuddyRepository;
+import com.jenn.eventsinkorea.domain.buddy.repository.BuddyReviewRepository;
 import com.jenn.eventsinkorea.domain.buddy.BuddyService;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyReview;
-import com.jenn.eventsinkorea.domain.user.User;
+import com.jenn.eventsinkorea.domain.user.model.User;
 import com.jenn.eventsinkorea.web.ScriptUtils;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
 import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringSortingOption;
@@ -163,10 +163,10 @@ public class BuddyController {
 
     @GetMapping("/request/{buddyId}")
     public String buddyRequest(HttpServletRequest request,@PathVariable Long buddyId,Authentication auth,HttpServletResponse response) throws IOException {
-        log.info("auth test={}",auth.getName());
-        BuddyRequest buddyRequest = buddyService.saveRequest(auth.getName(), buddyId);
+
+        BuddyRequest buddyRequest = buddyService.requestBuddy(auth.getName(), buddyId);
         String referer = request.getHeader("referer");
-        log.info("referer buddy req={}",referer);
+
         if(buddyRequest==null){
             scriptUtils.alertAndBackPage(response,"you have already requested.");
         }

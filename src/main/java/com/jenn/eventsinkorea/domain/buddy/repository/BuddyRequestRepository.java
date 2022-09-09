@@ -1,9 +1,9 @@
-package com.jenn.eventsinkorea.domain.buddy;
+package com.jenn.eventsinkorea.domain.buddy.repository;
 
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.buddy.model.UserBuddyId;
-import com.jenn.eventsinkorea.domain.user.User;
+import com.jenn.eventsinkorea.domain.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

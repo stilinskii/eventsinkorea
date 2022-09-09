@@ -3,14 +3,16 @@ package com.jenn.eventsinkorea.domain.buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyReview;
-import com.jenn.eventsinkorea.domain.user.User;
+import com.jenn.eventsinkorea.domain.buddy.repository.BuddyRepository;
+import com.jenn.eventsinkorea.domain.buddy.repository.BuddyRequestRepository;
+import com.jenn.eventsinkorea.domain.buddy.repository.BuddyReviewRepository;
+import com.jenn.eventsinkorea.domain.user.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j

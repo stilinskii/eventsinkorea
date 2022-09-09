@@ -1,9 +1,8 @@
-package com.jenn.eventsinkorea.domain.buddy;
+package com.jenn.eventsinkorea.domain.buddy.repository;
 
 
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringSortingOption;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,7 +18,7 @@ import static com.jenn.eventsinkorea.domain.buddy.model.QBuddy.buddy;
 
 @Repository(value="buddyDAOImpl")
 @RequiredArgsConstructor
-public class BuddyDAOImpl implements BuddyDAO{
+public class BuddyDAOImpl implements BuddyDAO {
 
     private final JPAQueryFactory query;
     private final RepositorySliceHelper sliceHelper;

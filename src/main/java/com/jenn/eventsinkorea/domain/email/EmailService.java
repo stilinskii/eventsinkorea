@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.web.email;
+package com.jenn.eventsinkorea.domain.email;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import static com.jenn.eventsinkorea.web.email.MailOption.*;
+import static com.jenn.eventsinkorea.domain.email.MailOption.*;
 
 @Service
 @RequiredArgsConstructor

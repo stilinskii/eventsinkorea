@@ -65,17 +65,12 @@
       <div class="bg-light p-5 rounded d-flex flex-column align-items-center">
         <table class="table caption-top">
           <h1 class="display-2 py-3 mb-5">Users</h1>
-          <form
-            role="search"
-            method="post"
-            th:action="@{/admin/users/search}"
-            th:object="${searchForm}"
-          >
+          <form role="search" method="post" th:action="@{/admin/users/search}">
             <div class="search d-flex flex-row">
               <select
                 class="form-select"
                 id="joinedDate"
-                th:field="*{joinedDate}"
+                name="joinedDate"
                 onchange="OnChange();"
               >
                 <option value="Joined Date">Joined Date</option>
@@ -84,23 +79,18 @@
                 <option value="6 month">6 month</option>
                 <option value="Enter Date">Enter Date</option>
               </select>
-              <select
-                class="form-select"
-                name="nationality"
-                th:field="*{nationality}"
-              >
+              <select class="form-select" name="nationality">
                 <th:block
                   th:replace="/fragments/dropDownRef :: countries"
                 ></th:block>
               </select>
-              <select class="form-select" name="option" th:field="*{option}">
+              <select class="form-select" name="option">
                 <option value="All">All</option>
                 <option value="Id">Id</option>
                 <option value="Username">Username</option>
                 <option value="Email">Email</option>
               </select>
               <input
-                th:field="*{keyword}"
                 name="keyword"
                 class="form-control"
                 type="search"
@@ -113,11 +103,11 @@
               <ul>
                 <li>
                   <label for="from">From</label>
-                  <input type="date" id="from" name="from" th:field="*{from}" />
+                  <input type="date" id="from" name="from" />
                 </li>
                 <li>
                   <label for="To" class="px-2"> To </label>
-                  <input type="date" id="to" name="to" th:field="*{to}" />
+                  <input type="date" id="to" name="to" />
                 </li>
               </ul>
             </div>
@@ -138,8 +128,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr th:each="user : ${users}">
-              <th scope="row">1</th>
+            <tr th:each="user,iterStat : ${users}">
+              <th
+                scope="row"
+                th:text="${users.pageable.pageSize * users.pageable.pageNumber + iterStat.count}"
+              >
+                1
+              </th>
               <td th:text="${user.username}">Mark</td>
               <td th:text="${user.name}">Otto</td>
               <td th:text="${user.email}">@mdo</td>
@@ -194,6 +189,48 @@
             </tr>
           </tbody>
         </table>
+
+        <nav aria-label="Page navigation example" th:if="${startPage>0}">
+          <ul class="pagination justify-content-center">
+            <li
+              class="page-item"
+              th:classappend="${1 == users.pageable.pageNumber + 1} ? 'disabled'"
+            >
+              <a
+                class="page-link"
+                href="#"
+                th:href="@{/admin/users(page=${users.pageable.pageNumber-1})}"
+                tabindex="-1"
+                aria-disabled="true"
+                >Previous</a
+              >
+            </li>
+            <li
+              th:each="i: ${#numbers.sequence(startPage,endPage)}"
+              th:classappend="${i == users.pageable.pageNumber + 1} ? 'disabled'"
+              class="page-item"
+            >
+              <a
+                class="page-link"
+                href="#"
+                th:href="@{/admin/users(page=${i-1})}"
+                th:text="${i}"
+                >1</a
+              >
+            </li>
+            <li
+              class="page-item"
+              th:classappend="${users.totalPages == users.pageable.pageNumber + 1} ? 'disabled'"
+            >
+              <a
+                class="page-link"
+                href="#"
+                th:href="@{/admin/users(page=${users.pageable.pageNumber+1})}"
+                >Next</a
+              >
+            </li>
+          </ul>
+        </nav>
       </div>
     </main>
     <div th:replace="fragments/common :: scripts">

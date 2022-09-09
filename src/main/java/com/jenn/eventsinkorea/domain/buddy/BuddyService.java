@@ -3,13 +3,15 @@ package com.jenn.eventsinkorea.domain.buddy;
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
+import com.jenn.eventsinkorea.domain.buddy.repository.BuddyRepository;
+import com.jenn.eventsinkorea.domain.buddy.repository.BuddyRequestRepository;
 import com.jenn.eventsinkorea.domain.file.S3Uploader;
-import com.jenn.eventsinkorea.domain.user.User;
+import com.jenn.eventsinkorea.domain.user.model.User;
 import com.jenn.eventsinkorea.web.buddy.form.BeABuddyForm;
 import com.jenn.eventsinkorea.web.buddy.form.BuddyFilteringSortingOption;
-import com.jenn.eventsinkorea.web.email.EmailService;
-import com.jenn.eventsinkorea.web.email.MailInfo;
-import com.jenn.eventsinkorea.web.email.MailOption;
+import com.jenn.eventsinkorea.domain.email.EmailService;
+import com.jenn.eventsinkorea.domain.email.MailInfo;
+import com.jenn.eventsinkorea.domain.email.MailOption;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -96,7 +98,7 @@ public class BuddyService {
         return buddyRequestRepository.findByBuddy(buddyRepository.findById(id).get());
     }
 
-    public BuddyRequest saveRequest(String username,Long buddyId ){
+    public BuddyRequest requestBuddy(String username, Long buddyId ){
         User user = userRepository.findByUsername(username);
         Integer duplicateCheck = buddyRequestRepository.duplicateRequest(user.getId(), buddyId);
 
