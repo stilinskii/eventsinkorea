@@ -70,9 +70,9 @@
 <main class="container">
     <div class="bg-light p-5 rounded d-flex flex-column align-items-center">
         <h1 class="display-2 pb-5">Admin page</h1>
-        <p>Today visited : 0</p>
-        <p th:text="|Today joined : ${usersCnt}|">Today joined : 0</p>
-        <p>Today out : 0</p>
+        <p th:text="|Today visited : ${visitorCnt}|">Today visited : 0</p>
+        <p th:text="|Today joined user : ${usersCnt}|">Today joined user: 0</p>
+
         <div class="mt-4">
             <a class="btn btn-lg btn-secondary" th:href="@{/admin/users}" role="button">Users</a>
             <a class="btn btn-lg btn-secondary" th:href="@{/admin/pages}" role="button">Pages</a>

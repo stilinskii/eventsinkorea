@@ -5,6 +5,7 @@ import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +15,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-import static com.jenn.eventsinkorea.domain.user.QUser.user;
+import static com.jenn.eventsinkorea.domain.user.model.QUser.user;
 
+@Slf4j
 @Repository(value="userDAOImpl")
 @RequiredArgsConstructor
 public class UserDAOImpl implements UserDAO {
@@ -54,11 +56,27 @@ public class UserDAOImpl implements UserDAO {
            return new PageImpl<>(content, pageable, count);
     }
 
+    @Override
+    public Long todayJoinedUsersCnt() {
+       Calendar date = Calendar.getInstance();
+       date.set(Calendar.HOUR_OF_DAY,0);
+       date.set(Calendar.MINUTE,0);
+       date.set(Calendar.SECOND,0);
+
+       log.info("date={}",date.getTime());
+
+        return query.select(user.count())
+                .from(user)
+                .where(user.joinedDate.goe(date.getTime()))
+                .fetchOne();
+    }
+
     public BooleanExpression joinedDateBetween(UserSearchForm searchForm){
         //1 week , 1 month , 6 month , Enter Date.
         Calendar date = Calendar.getInstance();
-//        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-//        Integer weekAgo = Integer.parseInt(format.format(week.getTime()));
+        date.set(Calendar.HOUR_OF_DAY,0);
+        date.set(Calendar.MINUTE,0);
+        date.set(Calendar.SECOND,0);
 
         String joinedDateOption = searchForm.getJoinedDate();
         if(Objects.isNull(joinedDateOption)|| joinedDateOption.isBlank() || joinedDateOption.equals("Joined Date")){

@@ -1,19 +1,24 @@
 package com.jenn.eventsinkorea.domain.admin;
 
+import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.core.userdetails.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 class UserRepositoryTest {
 
-//    @Autowired
-//    private UserRepository underTest;
-//
-//    @AfterEach
-//    void tearDown() {
-//        underTest.deleteAll();
-//    }
+    @Autowired
+    private UserRepository underTest;
+
+    @AfterEach
+    void tearDown() {
+        underTest.deleteAll();
+    }
 
 //    @Test
 //    void findByUserIdAndIdNot() {
@@ -32,5 +37,11 @@ class UserRepositoryTest {
 //
 //        //then
 //        assertThat(byUserIdAndIdNot).isNotNull();
+//    }
+
+//    @Test
+//    void todayJoinedUsers(){
+//        Integer i = underTest.todayJoinedUsersCnt();
+//        assertThat(i).isNotNull();
 //    }
 }

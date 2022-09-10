@@ -11,4 +11,6 @@ public interface UserDAO {
 
     List<User> findUsersBySearch(UserSearchForm searchForm);
     Page<User> findUsersBySearchPage(UserSearchForm searchForm, Pageable pageable);
+
+    Long todayJoinedUsersCnt();
 }

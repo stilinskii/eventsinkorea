@@ -35,8 +35,8 @@ public class AccountController {
 
     @PostMapping("/signup")
     public String signUpSumbit(@ModelAttribute("form") UserLoginForm form, BindingResult bindingResult){
-
         if(bindingResult.hasErrors()){
+            log.info("bindingresult={}",bindingResult);
            return "account/signup";
         }
         log.info("form={}",form);
@@ -55,7 +55,6 @@ public class AccountController {
 
     @PostMapping("/mypage")
     public String mypageEdit(User user, Authentication auth, Model model){
-
 
         model.addAttribute("user",user);
         return "account/mypage";

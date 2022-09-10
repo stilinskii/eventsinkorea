@@ -65,12 +65,6 @@
         <main class="form-signin">
           <form th:action="@{/signup}" method="post" th:object="${form}">
             <h1 class="h3 mb-3 fw-normal">Join us!</h1>
-            <div th:if="${param.error}" class="alert alert-danger" role="alert">
-              Invalid username or password.
-            </div>
-            <div th:if="${param.logout}" class="alert alert-info" role="alert">
-              You have been logged out.
-            </div>
 
             <div class="form-floating">
               <input
@@ -78,8 +72,10 @@
                 class="form-control"
                 placeholder="Name"
                 th:field="*{name}"
+                th:errorclass="is-invalid"
               />
               <label for="name">Name</label>
+              <div class="invalid-feedback" th:errors="*{name}">이름오류</div>
             </div>
 
             <div class="form-floating">
@@ -90,6 +86,9 @@
                 th:field="*{username}"
               />
               <label for="username">Username</label>
+              <div class="invalid-feedback" th:errors="*{username}">
+                아이디오류
+              </div>
             </div>
             <div class="form-floating">
               <input
@@ -97,8 +96,10 @@
                 class="form-control"
                 placeholder="Password"
                 th:field="*{pwd}"
+                th:errorclass="is-invalid"
               />
               <label for="password">Password</label>
+              <div class="invalid-feedback" th:errors="*{pwd}">비번오류</div>
             </div>
             <div class="form-floating">
               <input
@@ -108,6 +109,7 @@
                 name="Confirmpassword"
               />
               <label for="password">Confirm Password</label>
+              <div class="invalid-feedback" th:errors="*{pwd}">비번오류</div>
             </div>
 
             <div class="form-floating">
@@ -116,8 +118,12 @@
                 class="form-control"
                 placeholder="Username"
                 th:field="*{email}"
+                th:errorclass="is-invalid"
               />
               <label for="email">Email</label>
+              <div class="invalid-feedback" th:errors="*{email}">
+                이메일오류
+              </div>
             </div>
 
             <div class="form-floating">
@@ -126,11 +132,15 @@
                 id="floatingSelect"
                 aria-label="Floating label select example"
                 th:field="*{nationality}"
+                th:errorclass="is-invalid"
               >
                 <th:block
                   th:replace="/fragments/dropDownRef :: countries"
                 ></th:block>
               </select>
+              <div class="invalid-feedback" th:errors="*{nationality}">
+                국적오류
+              </div>
               <label for="floatingSelect">Nationality</label>
             </div>
             <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">
