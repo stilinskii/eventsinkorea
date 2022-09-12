@@ -1,4 +1,4 @@
-bbbㅠbㅠ# :laughing: KoreanBuddy
+# :laughing: KoreanBuddy
 
 > 한국어 의사소통이 어려운 외국인 여행객과 언어를 연습하고싶어하는 한국인 매칭 및 축제 정보 제공 사이트.
 
@@ -7,6 +7,7 @@ bbbㅠbㅠ# :laughing: KoreanBuddy
 도메인:
 <br/>
 테스트 아이디/비번 (관리자 권한O) :
+
 
 ## 1. 제작 기간 & 참여 인원
 
