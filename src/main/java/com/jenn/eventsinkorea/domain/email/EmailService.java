@@ -52,11 +52,11 @@ public class EmailService{
 
     private String buildSentence(String receiver, String sender, MailOption mailOption){
         if(mailOption == REQUESTED){
-            return "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + receiver + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> You just got a buddy request from " + sender + "  </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\" localhost:8081\">go to KoreanBuddy</a> </p>\n <p>go check details</p>";
+            return "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + receiver + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> You just got a buddy request from " + sender + "  </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"3.37.145.69:8081\">go to KoreanBuddy</a> </p>\n <p>go check details</p>";
         }else if(mailOption == ACCEPTED){
-            return "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + receiver + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Your buddy request to " + sender + " has accepted.  </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\" localhost:8081\">go to KoreanBuddy</a> </p>\n <p>go contact your buddy!</p>";
+            return "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + receiver + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Your buddy request to " + sender + " has accepted.  </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"3.37.145.69:8081\">go to KoreanBuddy</a> </p>\n <p>go contact your buddy!</p>";
         }else{
-            return "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + receiver + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> I'm sorry but your buddy request to " + sender + " has rejected.  </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\" localhost:8081\">go to KoreanBuddy</a> </p>\n <p>go search for other buddies </p>";
+            return "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + receiver + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> I'm sorry but your buddy request to " + sender + " has rejected.  </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"3.37.145.69:8081\">go to KoreanBuddy</a> </p>\n <p>go search for other buddies </p>";
 
         }
     }

@@ -31,7 +31,6 @@ function handleFilteringAndSorting() {
 
   $(document).ajaxComplete(function () {
     if (document.body.contains(document.querySelector('.noMore'))) {
-      console.log('ajaxcompeleet access');
       $('.more-btn').css('display', 'none');
     } else {
       $('.more-btn').css('display', 'block');
@@ -55,7 +54,7 @@ function showMore() {
   }
 
   let url = '/buddy/buddypage?page=' + page;
-  console.log(url);
+
   $.get(url).done(function (data) {
     $('#buddies').append(data);
   });
@@ -63,7 +62,6 @@ function showMore() {
 
   $(document).ajaxComplete(function () {
     if (document.body.contains(document.querySelector('.noMore'))) {
-      console.log('ajaxcompeleet access');
       $('.more-btn').css('display', 'none');
     }
   });

@@ -27,6 +27,7 @@ public class EventsinkoreaApplication {
 		return new BCryptPasswordEncoder();
 	}
 
+
 	//방문자수 초기화
 	@Scheduled(cron = "0 0 0 * * *")
 	public void resetVisitCnt(){

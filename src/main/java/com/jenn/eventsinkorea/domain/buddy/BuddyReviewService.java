@@ -40,9 +40,14 @@ public class BuddyReviewService {
     }
 
     private void setRatingsAverageToBuddy(Double newlyAddedRating, Buddy buddy) {
+        //평점계산
+        setNewRatingToBuddy(newlyAddedRating, buddy);
+    }
+
+    private void setNewRatingToBuddy(Double newlyAddedRating, Buddy buddy) {
         //필요한 값 : 리뷰개수, 별점 합.
         List<BuddyReview> buddyReviews = buddy.getBuddyReviews();
-        Integer count = buddyReviews.size() + 1; // 리뷰개수
+        Integer count = newlyAddedRating==0D? buddyReviews.size() : buddyReviews.size() + 1; // 리뷰개수
         List<Double> ratings = buddyReviews.stream().map(BuddyReview::getRating).collect(Collectors.toList());
         double sum = ratings.stream().mapToDouble(Double::doubleValue).sum() + newlyAddedRating; //합계
         double average = sum / count;//평균
@@ -54,8 +59,14 @@ public class BuddyReviewService {
     public void deleteReview(Long reviewId) {
         BuddyReview review = buddyReviewRepository.findById(reviewId).get();
         //리퀘스트 리뷰 안했음으로 표시
-        buddyRequestRepository.findByBuddyAndUser(review.getBuddy(),review.getUser()).get().setReview(null);
+        Buddy buddy = review.getBuddy();
+        buddyRequestRepository.findByBuddyAndUser(buddy,review.getUser()).get().setReview(null);
+
+        //리뷰삭제
         buddyReviewRepository.deleteById(reviewId);
+
+        //평점 다시 계산
+        setNewRatingToBuddy(0D,buddy);
 
     }
 }

@@ -13,7 +13,7 @@
       th:href="@{/css/style.css}"
       rel="stylesheet"
     />
-    <title>Title</title>
+    <title>Admin</title>
   </head>
   <body>
     <nav
@@ -65,12 +65,13 @@
       <div class="bg-light p-5 rounded d-flex flex-column align-items-center">
         <table class="table caption-top">
           <h1 class="display-2 py-3 mb-5">Users</h1>
-          <form role="search" method="post" th:action="@{/admin/users/search}">
+          <form role="search" method="post" th:action="@{/admin/users/search}" th:object="${form}">
             <div class="search d-flex flex-row">
               <select
                 class="form-select"
                 id="joinedDate"
                 name="joinedDate"
+                th:field="*{joinedDate}"
                 onchange="OnChange();"
               >
                 <option value="Joined Date">Joined Date</option>
@@ -79,12 +80,13 @@
                 <option value="6 month">6 month</option>
                 <option value="Enter Date">Enter Date</option>
               </select>
-              <select class="form-select" name="nationality">
+              <select class="form-select" name="nationality" th:field="*{nationality}"
+              >
                 <th:block
                   th:replace="/fragments/dropDownRef :: countries"
                 ></th:block>
               </select>
-              <select class="form-select" name="option">
+              <select class="form-select" name="option" th:field="*{option}">
                 <option value="All">All</option>
                 <option value="Id">Id</option>
                 <option value="Username">Username</option>
@@ -103,19 +105,19 @@
               <ul>
                 <li>
                   <label for="from">From</label>
-                  <input type="date" id="from" name="from" />
+                  <input type="date" id="from" name="from" th:field="*{from}" />
                 </li>
                 <li>
                   <label for="To" class="px-2"> To </label>
-                  <input type="date" id="to" name="to" />
+                  <input type="date" id="to" name="to" th:field="*{to}"/>
                 </li>
               </ul>
             </div>
           </form>
 
-          <caption class="pt-4" th:text="|Total Users : ${#lists.size(users)}|">
-            Total Users :
-          </caption>
+<!--          <caption class="pt-4" th:text="|Total Users : ${#lists.size(users)}|">-->
+<!--            Total Users :-->
+<!--          </caption>-->
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -155,42 +157,11 @@
                 >
               </td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>
-                <button type="button" class="btn btn-primary btn-sm">
-                  Edit
-                </button>
-                <button type="button" class="btn btn-danger btn-sm">
-                  Delete
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>
-                <button type="button" class="btn btn-primary btn-sm">
-                  Edit
-                </button>
-                <button type="button" class="btn btn-danger btn-sm">
-                  Delete
-                </button>
-              </td>
-            </tr>
+
           </tbody>
         </table>
 
-        <nav aria-label="Page navigation example" th:if="${startPage>0}">
+        <nav aria-label="Page navigation example" >
           <ul class="pagination justify-content-center">
             <li
               class="page-item"

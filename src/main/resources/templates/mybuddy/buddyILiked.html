@@ -23,9 +23,9 @@
   </head>
   <body class="bg-light">
     <!-- navbar -->
-    <div class="sub-page" th:replace="fragments/nav :: nav-front(' ')">
+    <div class="sub-page" >
       <header>
-        <nav class="navbar">
+        <nav class="navbar" th:replace="fragments/nav :: nav-front(' ')">
           <div class="container" id="nav-container">
             <ul class="navbar-nav" id="nav">
               <a class="navbar-brand" href="#" th:href="@{/}"
@@ -108,8 +108,8 @@
                           th:href="@{/buddy/{buddyId}(buddyId=${buddy.id})}"
                           href="#"
                         >
-                          <h3 th:text="${buddy.user.username}">name</h3>
-                          <p th:text="|ID : ${buddy.user.username}|">id</p>
+                        <h3 th:text="${buddy.user.name}">name</h3>
+                        <p th:text="|ID : ${buddy.user.username}|">id</p>
                           <p th:text="${buddy.intro}" class="ellipsis">intro</p>
                         </a>
     
@@ -142,27 +142,6 @@
                   </div>
                 </th:block>
               </main>
-              <div class="buddy_info border-top" style="background-color: white">
-                <div class="lang"><p>learning : English / native : Korean</p></div>
-                <div class="info d-flex justify-content-between">
-                  <div class="mt-2 p-4">
-                    <h3>name</h3>
-                    <p>intro</p>
-                    <div class="d-flex">
-                      <i class="fa fa-star mt-1 mx-1"></i>
-                      <p>2.0 (12)</p>
-                    </div>
-                  </div>
-                  <div class="m-3">
-                    <img
-                      src="/static/images/roof-tile-4495550_960_720.jpg"
-                      alt=""
-                      height="130"
-                      width="130"
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
             <div class="col-2"></div>
           </div>

@@ -63,7 +63,7 @@ public class AdminUsersController {
 
 
     @PostMapping("/search")
-    public String search(UserSearchForm form, RedirectAttributes redirectAttributes){
+    public String search(UserSearchForm form){
         searchForm = form;
 
         return "redirect:/admin/users";

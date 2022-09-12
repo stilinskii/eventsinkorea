@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="fragments/common :: head('Events')">
+  <head th:replace="fragments/common :: head('Buddy')">
     <meta charset="utf-8" />
 
     <!-- bootstrap core css -->
@@ -150,19 +150,6 @@
               </p>
             </div>
             <div th:text="${review.comment}">It was nice to see you !</div>
-          </div>
-          <div class="border">
-            <div class="d-flex justify-content-between">
-              <h6 class="pt-1">Lily</h6>
-              <div class="d-flex">
-                <p class="mx-3 rating-num">5</p>
-                <div class="me-auto rating">
-                  <!-- <i class="fa fa-star"></i> <i class="fa fa-star-half"></i> -->
-                </div>
-              </div>
-              <p class="ms-auto">2022/08/88</p>
-            </div>
-            <div>It was nice to see you !</div>
           </div>
         </div>
       </div>

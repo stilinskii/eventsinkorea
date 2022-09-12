@@ -61,6 +61,7 @@ public class BuddyService {
                 .fileName(S3Url.get(UPLOAD_FILE_NAME))
                 .user(userRepository.findByUsername(form.getUsername()))
                 .likeCnt(0L)
+                .rating(0D)
                 .build();
 
         buddyRepository.save(buddy);

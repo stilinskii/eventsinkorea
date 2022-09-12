@@ -125,7 +125,8 @@ public class BuddyController {
 
 
     @GetMapping("/beABuddy")
-    public String beABuddy(@ModelAttribute("buddyForm") BeABuddyForm buddyForm){
+    public String beABuddy(@ModelAttribute("buddyForm") BeABuddyForm buddyForm, Authentication auth){
+
         return "buddy/beABuddyForm";
     }
 

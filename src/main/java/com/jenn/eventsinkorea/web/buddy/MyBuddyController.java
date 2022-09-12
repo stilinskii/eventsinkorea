@@ -40,11 +40,13 @@ public class MyBuddyController {
     @GetMapping
     public String buddyProfile(Authentication auth, Model model){
         Buddy buddy = buddyService.findBuddyByUsername(auth.getName());
+        if(buddy!=null){
+            List<BuddyReview> reviews =buddyReviewRepository.findByBuddyOrderByCreatedAtDesc(buddy);
+            model.addAttribute("reviewCnt",buddyReviewRepository.countReviewByBuddyId(buddy.getId()));
+            model.addAttribute("buddy",buddy);
+            model.addAttribute("reviews",reviews);
+        }
 
-        List<BuddyReview> reviews =buddyReviewRepository.findByBuddyOrderByCreatedAtDesc(buddy);
-        model.addAttribute("reviewCnt",buddyReviewRepository.countReviewByBuddyId(buddy.getId()));
-        model.addAttribute("buddy",buddy);
-        model.addAttribute("reviews",reviews);
 
         return "mybuddy/buddyProfile";
     }

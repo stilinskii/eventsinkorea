@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="fragments/common :: head('Events')">
+  <head th:replace="fragments/common :: head('KoreanBuddy')">
     <meta charset="utf-8" />
 
     <!-- bootstrap core css -->
@@ -19,12 +19,12 @@
   </head>
   <body>
     <!-- navbar -->
-    <div
-      class="sub-page"
-      th:replace="fragments/nav :: nav-front(${page.title})"
-    >
+    <div class="sub-page">
       <header>
-        <nav class="navbar">
+        <nav
+          class="navbar"
+          th:replace="fragments/nav :: nav-front(${page.title})"
+        >
           <div class="container" id="nav-container">
             <ul class="navbar-nav" id="nav">
               <a class="navbar-brand" href="#" th:href="@{/}"

@@ -24,9 +24,9 @@
   </head>
   <body>
     <!-- navbar -->
-    <div class="sub-page" th:replace="/fragments/nav :: nav-front('Buddy')">
+    <div class="sub-page" >
       <header>
-        <nav class="navbar">
+        <nav class="navbar" th:replace="/fragments/nav :: nav-front('Buddy')">
           <div class="container" id="nav-container">
             <ul class="navbar-nav" id="nav">
               <a class="navbar-brand" href="#" th:href="@{/}"
@@ -82,7 +82,8 @@
                 th:href="@{/buddy/{buddyId}(buddyId=${review.buddy.id})}"
                 href="#"
               >
-                <h3 th:text="${review.buddy.user.username}">name</h3>
+              <h3 th:text="${buddy.user.name}">name</h3>
+              <p th:text="|ID : ${buddy.user.username}|">id</p>
                 <p th:text="${review.buddy.intro}" class="ellipsis">intro</p>
               </a>
 

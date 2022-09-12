@@ -107,7 +107,6 @@ function sortElementByDate(sortMenu, clicked_this) {
  */
 function sortingOrder(clicked_this) {
   const sortBtn = clicked_this.querySelector('i');
-  console.log(sortBtn);
   //desc 있는 상태에서 버튼을 눌렀다는 건 asc를 하고싶다는 뜻.
   if (sortBtn.classList.contains('fa-sort-desc')) {
     return 'asc';

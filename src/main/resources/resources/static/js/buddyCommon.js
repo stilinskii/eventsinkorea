@@ -16,7 +16,7 @@ function like(ele, buddyId) {
 
   let value = { buddyId: buddyId, add: addVal };
   let likeCnt = ele.nextElementSibling;
-  console.log(likeCnt);
+
   $.ajax({
     type: 'post',
     url: '/buddy/like',
@@ -25,5 +25,4 @@ function like(ele, buddyId) {
       likeCnt.innerHTML = data;
     },
   });
-  alert('좋아용완료');
 }
