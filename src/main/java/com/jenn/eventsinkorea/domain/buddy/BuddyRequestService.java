@@ -20,7 +20,6 @@ public class BuddyRequestService {
     private final BuddyRequestRepository buddyRequestRepository;
     private final BuddyRepository buddyRepository;
     private final UserRepository userRepository;
-
     private final EmailService emailService;
 
 
@@ -65,12 +64,10 @@ public class BuddyRequestService {
         //바꾸기 바라는 상태로 set 1: 수락 / 2: 거절
         buddyRequest.setStatus(status);
         BuddyRequest updatedReq = buddyRequestRepository.save(buddyRequest);
-
-        //이게 밑에 와야할 거 같은 느낌..?
+        //메일보내기
         sendMail(request_user, buddy, status);
 
-        //어떠한 이유로 업데이트가 제대로 안됐을때 null return
-        return updatedReq.getStatus()==status?updatedReq:null;
+        return updatedReq;
 
     }
 

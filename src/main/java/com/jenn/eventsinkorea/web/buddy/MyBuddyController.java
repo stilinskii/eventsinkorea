@@ -40,8 +40,6 @@ public class MyBuddyController {
     @GetMapping
     public String buddyProfile(Authentication auth, Model model){
         Buddy buddy = buddyService.findBuddyByUsername(auth.getName());
-        log.info("mybuddy access");
-        log.info("buddy?={}",buddy);
 
         List<BuddyReview> reviews =buddyReviewRepository.findByBuddyOrderByCreatedAtDesc(buddy);
         model.addAttribute("reviewCnt",buddyReviewRepository.countReviewByBuddyId(buddy.getId()));
@@ -53,10 +51,8 @@ public class MyBuddyController {
 
     @GetMapping("/edit/{buddyId}")
     public String buddyProfileEdit(@PathVariable long buddyId, Model model){
-//        Buddy buddy = buddyService.findBuddyByUsername(auth.getName());
+
         Buddy buddy = buddyRepository.getOne(buddyId);
-        log.info("mybuddy access");
-        log.info("buddyget={}",buddy);
         model.addAttribute("buddy",buddy);
 
         return "mybuddy/editBuddyForm";
@@ -64,7 +60,6 @@ public class MyBuddyController {
 
     @PostMapping("/edit")
     public String buddyProfileEditSubmit(Buddy buddy, MultipartFile image){
-        log.info("buddypost={}",buddy);
         buddyService.saveBuddy(buddy,image);
 
         return "redirect:/mybuddy";

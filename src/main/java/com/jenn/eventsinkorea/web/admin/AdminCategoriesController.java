@@ -52,8 +52,6 @@ public class AdminCategoriesController {
 
         categoryValidator.validate(category,bindingResult);
         if(bindingResult.hasErrors()){
-            //model.addAttribute("errors",bindingResult); 생략가능
-            log.info("bindingResult={}",bindingResult);
             return "admin/categories/add";
         }
 

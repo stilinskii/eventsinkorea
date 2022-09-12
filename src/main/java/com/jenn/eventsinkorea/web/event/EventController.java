@@ -39,7 +39,7 @@ public class EventController {
     public String eventsIndex(Model model){
         model.addAttribute("All","active");
         model.addAttribute("eventsList",eService.getEvents());
-        log.info("infoCnt={}",eService.getEvents().size());
+
 
         return "events/events";
     }

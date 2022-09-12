@@ -64,7 +64,6 @@ public class BuddyController {
 
         }
         option = new BuddyFilteringSortingOption();
-        log.info("buddycont={}",buddyRepository.findAll().size());
         Slice<Buddy> indexBuddy = buddyService.getFilteredBuddies(option,pageable);
         model.addAttribute("buddies", indexBuddy);
         model.addAttribute("buddyIds",userLikedBuddyIds);
@@ -80,7 +79,7 @@ public class BuddyController {
                 .location(inputtedOption.getLocation())
                 .sorting(inputtedOption.getSorting()).build();
 
-        //log.info("option={}",option);
+
 
         Slice<Buddy> buddies = buddyService.getFilteredBuddies(inputtedOption,pageable);
         List<Integer> userLikedBuddyIds = new ArrayList<>();
@@ -92,7 +91,7 @@ public class BuddyController {
 
         if(!buddies.hasNext()){
             model.addAttribute("noMore",true);
-            log.info("hasnonext={}",!buddies.hasNext());
+
         }
 
         model.addAttribute("buddyIds",userLikedBuddyIds);
@@ -106,14 +105,12 @@ public class BuddyController {
     public String more(@PageableDefault(size = 3) Pageable pageable, Authentication auth, Model model){
 
         Slice<Buddy> buddies = buddyService.getFilteredBuddies(option,pageable);
-        log.info("option={}",option);
+
         //다음 페이지가 없을때 more버튼 숨기기 위해 정보 보내기
         if(!buddies.hasNext()){
             model.addAttribute("noMore",true);
-            log.info("hasnonext={}",!buddies.hasNext());
         }
 
-        log.info("buddysize={}",buddies.getSize());
         List<Integer> userLikedBuddyIds = new ArrayList<>();
         if(auth!=null){
             User user = userRepository.findByUsername(auth.getName());
@@ -137,7 +134,6 @@ public class BuddyController {
                                       BindingResult bindingResult, Authentication auth){
         buddyFormValidator.validate(buddyForm,bindingResult);
         if(bindingResult.hasErrors()){
-            log.info("errors={}",bindingResult);
             return "buddy/beABuddyForm";
         }
         buddyForm.setUsername(auth.getName());
@@ -150,8 +146,6 @@ public class BuddyController {
         if(auth!=null){
             User user = userRepository.findByUsername(auth.getName());
             boolean isLikedBuddy = user.getBuddyILike().contains(buddyRepository.getById(buddyId));
-            log.info("user.getBuddyILike()={}",user.getBuddyILike().size());
-            log.info("isLikedBuddy={}",isLikedBuddy);
             model.addAttribute("isLikedBuddy",isLikedBuddy);
         }
 

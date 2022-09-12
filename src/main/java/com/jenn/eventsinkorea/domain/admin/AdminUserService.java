@@ -30,13 +30,12 @@ public class AdminUserService {
     public void editUserInfo(UserEditForm form, Long id) {
 
         User userToBeEdited = userRepository.getById(id);
-        userToBeEdited.setUsername(form.getUserId());
-        userToBeEdited.setName(form.getUsername());
+        userToBeEdited.setUsername(form.getUsername());
+        userToBeEdited.setName(form.getName());
         userToBeEdited.setEmail(form.getEmail());
         userToBeEdited.setNationality(form.getNationality());
 
         userRepository.save(userToBeEdited);
-
 
     }
 

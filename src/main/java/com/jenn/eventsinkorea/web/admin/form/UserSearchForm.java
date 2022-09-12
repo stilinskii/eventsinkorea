@@ -24,10 +24,14 @@ public class UserSearchForm {
 
     public Date getTo() {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(to);
-        cal.set(Calendar.HOUR_OF_DAY,23);
-        cal.set(Calendar.MINUTE,59);
-        cal.set(Calendar.SECOND,59);
+        if(to!=null){
+
+            cal.setTime(to);
+            cal.set(Calendar.HOUR_OF_DAY,23);
+            cal.set(Calendar.MINUTE,59);
+            cal.set(Calendar.SECOND,59);
+        }
+
         return cal.getTime();
     }
 }

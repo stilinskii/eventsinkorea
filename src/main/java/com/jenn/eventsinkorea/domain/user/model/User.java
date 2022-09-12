@@ -3,7 +3,6 @@ package com.jenn.eventsinkorea.domain.user.model;
 import com.jenn.eventsinkorea.domain.buddy.model.Buddy;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyRequest;
 import com.jenn.eventsinkorea.domain.buddy.model.BuddyReview;
-import com.jenn.eventsinkorea.domain.user.model.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,7 +31,6 @@ public class User {
     private String username;
 
     @NotNull
-    //@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
     private String pwd;
 
     @NotNull

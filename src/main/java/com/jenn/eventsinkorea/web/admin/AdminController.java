@@ -1,6 +1,5 @@
 package com.jenn.eventsinkorea.web.admin;
 
-import com.jenn.eventsinkorea.domain.admin.AdminService;
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
 
-    private final AdminService adminService;
+
     private final UserRepository userRepository;
 
     @GetMapping

@@ -15,8 +15,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(){
-//        List<User> test = userRepository.findUsersByUsernameAndNationality("ha", null);
-//        log.info("test={}",test.size());
+
         return "index";
     }
 }

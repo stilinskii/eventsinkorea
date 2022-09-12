@@ -2,12 +2,12 @@ package com.jenn.eventsinkorea.domain.user;
 
 import com.jenn.eventsinkorea.domain.user.model.Role;
 import com.jenn.eventsinkorea.domain.user.model.User;
-import com.jenn.eventsinkorea.web.account.form.UserLoginForm;
+import com.jenn.eventsinkorea.web.account.form.UserSignUpForm;
 
 import java.util.List;
 
 public interface UserService {
-    User saveUser(UserLoginForm user);
+    User saveUser(UserSignUpForm user);
     Role saveRole(Role role);
     void addRoleToUser(String username, String roleName);
     User getUser(String username);

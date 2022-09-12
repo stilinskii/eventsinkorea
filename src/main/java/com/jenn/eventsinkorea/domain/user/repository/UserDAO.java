@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.domain.user;
+package com.jenn.eventsinkorea.domain.user.repository;
 
 import com.jenn.eventsinkorea.domain.user.model.User;
 import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;

@@ -1,4 +1,4 @@
-package com.jenn.eventsinkorea.domain.user;
+package com.jenn.eventsinkorea.domain.user.repository;
 
 import com.jenn.eventsinkorea.domain.user.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -12,18 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 public class EventDetail {
 
-
-
-
     //공통정보
     private EventCommonInfo eventCommonInfo;
-//    private Map<String,Double> map; // mapx , mapy
-//    private String introduction; //overview
-//    private String homepage;//homepage
-    //    //대표 imgs
-    //    //title
-    //formattedEventStartDate endDate
-
 
 
     //소개정보 api
@@ -41,8 +31,5 @@ public class EventDetail {
     private List<String> imgs;
 
 
-
-
-    //
 
 }

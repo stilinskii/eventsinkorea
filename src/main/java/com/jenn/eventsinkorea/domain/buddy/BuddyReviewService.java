@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BuddyReviewService {
 
-    private final BuddyRepository buddyRepository;
     private final BuddyReviewRepository buddyReviewRepository;
     private final BuddyRequestRepository buddyRequestRepository;
 
@@ -47,7 +46,6 @@ public class BuddyReviewService {
         List<Double> ratings = buddyReviews.stream().map(BuddyReview::getRating).collect(Collectors.toList());
         double sum = ratings.stream().mapToDouble(Double::doubleValue).sum() + newlyAddedRating; //합계
         double average = sum / count;//평균
-
 
         buddy.setRating(Math.round(average * 10) / 10.0);
     }

@@ -140,7 +140,7 @@
                 th:errorclass="is-invalid"
               >
                 <th:block
-                  th:replace="/fragments/countriesDropDown :: countries"
+                  th:replace="/fragments/dropDownRef :: countries"
                 ></th:block>
               </select>
               <div class="invalid-feedback" th:errors="*{nationality}">

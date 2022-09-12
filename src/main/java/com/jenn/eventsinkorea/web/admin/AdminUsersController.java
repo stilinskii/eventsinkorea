@@ -44,18 +44,10 @@ public class AdminUsersController {
     private UserSearchForm searchForm;
 
     @GetMapping
-    public String users(Model model,
-                        @PageableDefault(size = 2) Pageable pageable,
-                        HttpServletRequest request){
-        if(!request.getHeader("referer").contains("search")){
+    public String users(Model model, @PageableDefault(size = 10) Pageable pageable){
+        if(searchForm==null){
             searchForm = new UserSearchForm();
         }
-//        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-//        if(inputFlashMap!=null && !inputFlashMap.isEmpty()){
-//            searchForm = (UserSearchForm) inputFlashMap.get("searchForm");
-//            log.info("here access");
-//            log.info("searchForm={}",searchForm);
-//        }
 
         Page<User> users = userRepository.findUsersBySearchPage(searchForm,pageable);
 
@@ -63,16 +55,16 @@ public class AdminUsersController {
         model.addAttribute("startPage",pageNum[0]);
         model.addAttribute("endPage",pageNum[1]);
         model.addAttribute("users", users);
-        model.addAttribute("searchForm", searchForm);
+        model.addAttribute("form", searchForm);
+
 
         return "admin/users/index";
     }
 
 
     @PostMapping("/search")
-    public String search(UserSearchForm form, Model model,RedirectAttributes redirectAttributes){
+    public String search(UserSearchForm form, RedirectAttributes redirectAttributes){
         searchForm = form;
-//        redirectAttributes.addFlashAttribute("searchForm",form);
 
         return "redirect:/admin/users";
     }
@@ -89,7 +81,7 @@ public class AdminUsersController {
             startPage= Math.max(1, users.getPageable().getPageNumber()-1);
             endPage= Math.min(startPage+4, users.getTotalPages());
         }
-
+        startPage = startPage < 0 ? 1:startPage;
         return  new int[]  {startPage, endPage};
     }
 
@@ -101,7 +93,7 @@ public class AdminUsersController {
     }
 
 
-    //아이디를 꼭 넘겨야하나? 응. edit 할때 아이디중복확인때 필요함. 다른방법도있지만(같은아이디 2개인지확인) 굳이?
+
     @PostMapping("edit")
     public String editSubmit(@Validated @ModelAttribute("user") UserEditForm form, BindingResult bindingResult, Long id, RedirectAttributes redirectAttributes){
         userEditFormValidator.validate(form,bindingResult);

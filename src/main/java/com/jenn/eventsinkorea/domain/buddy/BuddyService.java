@@ -52,7 +52,6 @@ public class BuddyService {
             throw new RuntimeException(e);
         }
 
-        //user는 임시
         Buddy buddy = Buddy.builder()
                 .nativeLang(form.getNativeLang())
                 .learningLang(form.getSecondLang())

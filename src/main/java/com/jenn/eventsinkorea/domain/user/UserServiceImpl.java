@@ -3,7 +3,8 @@ package com.jenn.eventsinkorea.domain.user;
 import com.jenn.eventsinkorea.domain.admin.repository.UserRepository;
 import com.jenn.eventsinkorea.domain.user.model.Role;
 import com.jenn.eventsinkorea.domain.user.model.User;
-import com.jenn.eventsinkorea.web.account.form.UserLoginForm;
+import com.jenn.eventsinkorea.domain.user.repository.RoleRepository;
+import com.jenn.eventsinkorea.web.account.form.UserSignUpForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.findByUsername(username);
         if(user == null){
             log.error("User not found in the database");
-            throw new UsernameNotFoundException("User not fount in the database");
+            throw new UsernameNotFoundException("User not found in the database");
         }else{
             log.info("User found in the database: {}", user);
         }
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPwd(),authorities);
     }
     @Override
-    public User saveUser(UserLoginForm form) {
+    public User saveUser(UserSignUpForm form) {
         String encoded = passwordEncoder.encode(form.getPwd());
         Role role = roleRepository.getById(1L);
         log.info("roles={}",role);
@@ -57,8 +58,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .nationality(form.getNationality())
                 .roles(List.of(role))
                 .build();
-//        User save = userRepository.save(user);
-//        addRoleToUser(save.getName(),role.getName());
         return userRepository.save(user);
     }
 

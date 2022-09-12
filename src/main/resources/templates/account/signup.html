@@ -70,20 +70,9 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Name"
-                th:field="*{name}"
-                th:errorclass="is-invalid"
-              />
-              <label for="name">Name</label>
-              <div class="invalid-feedback" th:errors="*{name}">이름오류</div>
-            </div>
-
-            <div class="form-floating">
-              <input
-                type="text"
-                class="form-control"
                 placeholder="Username"
                 th:field="*{username}"
+                th:errorclass="is-invalid"
               />
               <label for="username">Username</label>
               <div class="invalid-feedback" th:errors="*{username}">
@@ -92,15 +81,32 @@
             </div>
             <div class="form-floating">
               <input
+                type="text"
+                class="form-control"
+                placeholder="Name"
+                th:field="*{name}"
+                th:errorclass="is-invalid"
+              />
+              <label for="name">Name</label>
+              <div class="invalid-feedback" th:errors="*{name}">이름오류</div>
+            </div>
+            <div class="form-floating">
+              <input
                 type="password"
                 class="form-control"
                 placeholder="Password"
                 th:field="*{pwd}"
                 th:errorclass="is-invalid"
+                pattern="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,16}"
               />
               <label for="password">Password</label>
+              <div class="">
+                8~16 long, must contain a character, a number and a special
+                character.
+              </div>
               <div class="invalid-feedback" th:errors="*{pwd}">비번오류</div>
             </div>
+
             <div class="form-floating">
               <input
                 type="password"
@@ -150,6 +156,7 @@
         </main>
       </div>
     </div>
+
     <div>
       <script
         src="https://code.jquery.com/jquery-3.6.0.js"

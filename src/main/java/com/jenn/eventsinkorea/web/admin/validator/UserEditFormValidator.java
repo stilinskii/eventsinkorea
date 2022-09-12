@@ -21,12 +21,11 @@ public class UserEditFormValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         UserEditForm form = (UserEditForm) target;
-//        User userIdExists = form.getId()==null ? userRepository.findByUserId(form.getUserId())
-//                : userRepository.findByUserIdAndIdNot(form.getUserId(), form.getId());
-        User userIdExists = userRepository.findByUsernameAndIdNot(form.getUserId(), form.getId());
+        User userIdExists = userRepository.findByUsernameAndIdNot(form.getUsername(), form.getId());
         if(userIdExists!=null){
-            errors.rejectValue("userId","userIdExists");
+            errors.rejectValue("userId","usernameExists"); //TODO
         }
+
 
     }
 }

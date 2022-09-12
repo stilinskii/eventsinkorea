@@ -1,6 +1,7 @@
-package com.jenn.eventsinkorea.domain.user;
+package com.jenn.eventsinkorea.domain.user.repository;
 
 import com.jenn.eventsinkorea.domain.user.model.User;
+import com.jenn.eventsinkorea.domain.user.repository.UserDAO;
 import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -93,7 +94,7 @@ public class UserDAOImpl implements UserDAO {
                 return user.joinedDate.goe(date.getTime());
             }else{
                 return user.joinedDate.goe(searchForm.getFrom()).and(user.joinedDate.loe(searchForm.getTo()));
-                //시간까지 같이 측정돼서 원하는대로 안나옴. TODO
+
             }
         }
     }
