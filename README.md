@@ -84,7 +84,9 @@
 ### 1. 버디 필터링 정렬, 더보기 페이징
 
 - QueryDSL을 사용하여 필터링과 정렬이 동시에 되도록 구현하였습니다.
+    -[코드보기](https://github.com/stilinskii/eventsinkorea/blob/b2bd8300e30cfc045161312102981e1f5cfafa3d/src/main/java/com/jenn/eventsinkorea/domain/buddy/repository/BuddyDAOImpl.java#L27)
 - Ajax를 이용하여 필터링이나 정렬 조건이 바뀔때마다 해당되는 데이터를 바로바로 불러오도록 하였습니다.
+    -[코드보기](https://github.com/stilinskii/eventsinkorea/blob/b2bd8300e30cfc045161312102981e1f5cfafa3d/src/main/resources/static/js/buddies.js#L15)
 
 ![buddysortfilter](https://user-images.githubusercontent.com/96387509/189753591-e2f7ee2c-7398-4a7f-90a9-1db22c90fd76.gif)
 
@@ -135,6 +137,7 @@
 ### 1. 유저 조건검색 및 페이징
 
 - QueryDSL로 구현해보았습니다.
+- [코드보기](https://github.com/stilinskii/eventsinkorea/blob/b2bd8300e30cfc045161312102981e1f5cfafa3d/src/main/java/com/jenn/eventsinkorea/domain/user/repository/UserDAOImpl.java#L39)
 
 ![adminusers](https://user-images.githubusercontent.com/96387509/189759563-dd9b0725-db5f-4414-97e1-929bbe699e0a.gif)
 
