@@ -1,12 +1,13 @@
-bbbㅠbㅠ# :laughing: KoreanBuddy
+# :laughing: KoreanBuddy
 
 > 한국어 의사소통이 어려운 외국인 여행객과 언어를 연습하고싶어하는 한국인 매칭 및 축제 정보 제공 사이트.
 
 </br>
 
-도메인:
+
+사이트 : http://3.37.145.69:8081/
 <br/>
-테스트 아이디/비번 (관리자 권한O) :
+테스트 아이디/비번 (관리자 권한O) : admin / admin123!
 
 ## 1. 제작 기간 & 참여 인원
 
@@ -82,7 +83,9 @@ bbbㅠbㅠ# :laughing: KoreanBuddy
 ### 1. 버디 필터링 정렬, 더보기 페이징
 
 - QueryDSL을 사용하여 필터링과 정렬이 동시에 되도록 구현하였습니다.
+    -[코드보기](https://github.com/stilinskii/eventsinkorea/blob/b2bd8300e30cfc045161312102981e1f5cfafa3d/src/main/java/com/jenn/eventsinkorea/domain/buddy/repository/BuddyDAOImpl.java#L27)
 - Ajax를 이용하여 필터링이나 정렬 조건이 바뀔때마다 해당되는 데이터를 바로바로 불러오도록 하였습니다.
+    -[코드보기](https://github.com/stilinskii/eventsinkorea/blob/b2bd8300e30cfc045161312102981e1f5cfafa3d/src/main/resources/static/js/buddies.js#L15)
 
 ![buddysortfilter](https://user-images.githubusercontent.com/96387509/189753591-e2f7ee2c-7398-4a7f-90a9-1db22c90fd76.gif)
 
@@ -133,6 +136,7 @@ bbbㅠbㅠ# :laughing: KoreanBuddy
 ### 1. 유저 조건검색 및 페이징
 
 - QueryDSL로 구현해보았습니다.
+- [코드보기](https://github.com/stilinskii/eventsinkorea/blob/b2bd8300e30cfc045161312102981e1f5cfafa3d/src/main/java/com/jenn/eventsinkorea/domain/user/repository/UserDAOImpl.java#L39)
 
 ![adminusers](https://user-images.githubusercontent.com/96387509/189759563-dd9b0725-db5f-4414-97e1-929bbe699e0a.gif)
 
@@ -222,6 +226,7 @@ JPA책에서는 복합키를 만드는 건 사용하는 과정에서 복잡해�
 - 아쉬운 점 <br>
 
   - 팀프로젝트와 개발기간이 겹쳐서 개인프로젝트에 할애할 시간이 많지 않아 너무 오래 끌게되었다. 그러다보니 마지막에는 조금 지쳐서 급하게 마무리를 짓게 되어버려서 아쉽다.
+  - AWS EC2에 배포하였으나 free tier라 메모리가 작아서그런지 사이트가 계속 다운된다...
 
 - 느낀 점
   - QueryDSL을 처음 써봤는데 신세계였다. QueryDSL을 자유자재로 쓰려면 JPA자체를 잘 이해하고 있어야 할 것 같다는 느낌이 들었다. Spring Data JPA를 해봤으니 기본적인 JPA를 공부하고싶다.
