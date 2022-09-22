@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head th:replace="/fragments/common::head('Admin')">
+  <head th:replace="fragments/common::head('Admin')">
     <meta charset="UTF-8" />
     <!-- bootstrap core css -->
     <link
@@ -17,7 +17,7 @@
   </head>
   <body>
     <nav
-      th:replace="/fragments/nav::nav-admin('Categories')"
+      th:replace="fragments/nav::nav-admin('Categories')"
       class="navbar navbar-expand-md navbar-dark bg-dark"
     >
       <div class="container-fluid">

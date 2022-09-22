@@ -24,9 +24,9 @@
   </head>
   <body class="text-center">
     <!-- navbar -->
-    <div class="sub-page" th:replace="/fragments/nav :: nav-front(' ')">
+    <div class="sub-page" >
       <header>
-        <nav class="navbar">
+        <nav class="navbar" th:replace="fragments/nav :: nav-front(' ')">
           <div class="container" id="nav-container">
             <ul class="navbar-nav" id="nav">
               <a class="navbar-brand" href="#" th:href="@{/}"
@@ -141,7 +141,7 @@
                 th:errorclass="is-invalid"
               >
                 <th:block
-                  th:replace="/fragments/dropDownRef :: countries"
+                  th:replace="fragments/dropDownRef :: countries"
                 ></th:block>
               </select>
               <div class="invalid-feedback" th:errors="*{nationality}">

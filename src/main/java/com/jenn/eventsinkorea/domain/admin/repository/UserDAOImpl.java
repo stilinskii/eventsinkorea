@@ -1,7 +1,7 @@
-package com.jenn.eventsinkorea.domain.user.repository;
+package com.jenn.eventsinkorea.domain.admin.repository;
 
 import com.jenn.eventsinkorea.domain.user.model.User;
-import com.jenn.eventsinkorea.domain.user.repository.UserDAO;
+import com.jenn.eventsinkorea.domain.admin.repository.UserDAO;
 import com.jenn.eventsinkorea.web.admin.form.UserSearchForm;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

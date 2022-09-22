@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="/fragments/common::head('Admin')">
+  <head th:replace="fragments/common::head('Admin')">
     <meta charset="UTF-8" />
     <!-- bootstrap core css -->
     <link
@@ -131,7 +131,7 @@
                 th:errorclass="is-invalid"
               >
                 <th:block
-                  th:replace="/fragments/dropDownRef :: countries"
+                  th:replace="fragments/dropDownRef :: countries"
                 ></th:block>
               </select>
               <div class="invalid-feedback" th:errors="*{nationality}">
