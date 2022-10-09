@@ -30,7 +30,6 @@
 - MariaDB
 - Spring Security
 - thymeleaf
-- Ajax
 
 #### `Server`
 
@@ -40,6 +39,7 @@
 #### `Front-end`
 
 - bootstrap
+- Ajax
 - JQuery
 
 </br>
