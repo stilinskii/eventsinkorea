@@ -42,6 +42,10 @@
 - Ajax
 - JQuery
 
+#### `Open API`
+- 한국 관광공사 Tour API
+- Google Maps API
+
 </br>
 </br>
 
